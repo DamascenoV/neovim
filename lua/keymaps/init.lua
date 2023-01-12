@@ -24,7 +24,12 @@ vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>') -- Close current buffer
 vim.keymap.set('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
 vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
 vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search references
-vim.keymap.set('n', '<leader>lg', '<cmd>Lspsaga open_floaterm lazygit<CR>') -- Float lazygit
+vim.keymap.set('n', '<leader>lg', '<cmd>Lspsaga open_floaterm lazygit<CR>', { silent = true }) -- Float lazygit
+
+
+-- Git DiffView
+vim.keymap.set('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
+vim.keymap.set('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
 
 
 -- See `:help telescope.builtin`

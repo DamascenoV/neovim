@@ -47,34 +47,7 @@ return {
 
   {
     "rcarriga/nvim-notify",
-    lazy = false,
-    config = function()
-      local log = require("plenary.log").new {
-        plugin = "notify",
-        level = "debug",
-        use_console = false,
-      }
-
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.notify = function(msg, level, opts)
-        log.info(msg, level, opts)
-        if string.find(msg, "method .* is not supported") then
-          return
-        end
-
-        require "notify"(msg, level, opts)
-      end
-    end,
-    cond = function()
-      if not pcall(require, "plenary") then
-        return false
-      end
-
-      if pcall(require, "noice") then
-        return false
-      end
-      return true
-    end,
+    lazy = false
   },
 
 -- Git related plugins
@@ -87,11 +60,18 @@ return {
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'jose-elias-alvarez/null-ls.nvim', -- configure formatters & linters
   'jayp0521/mason-null-ls.nvim', -- bridges gap b/w mason & null-ls
-  'mbbill/undotree',
-  'windwp/nvim-autopairs',
-  'karb94/neoscroll.nvim',
+  'mbbill/undotree', -- Three of Undo
+  'windwp/nvim-autopairs', -- Auto pairs
+  'karb94/neoscroll.nvim', -- Smooth scrolling
   'nvim-lualine/lualine.nvim', -- Fancier statusline
   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+-- Completion
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-nvim-lua',
+  'hrsh7th/cmp-cmdline',
+  'onsails/lspkind-nvim',
+
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -104,5 +84,8 @@ return {
 
   -- Tabnine
   { 'codota/tabnine-nvim', build = "./dl_binaries.sh" },
+
+  -- Git DiffView
+  { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 }
 

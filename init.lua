@@ -55,6 +55,14 @@ require('gitsigns').setup {
     topdelete = { text = '‾' },
     changedelete = { text = '~' },
   },
+  current_line_blame = true,
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 500,
+    ignore_whitespace = false,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
 }
 
 -- [[ Configure Telescope ]]
@@ -78,7 +86,7 @@ require('telescope').setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
-pcall(require('telescope').load_extension,'project')
+pcall(require('telescope').load_extension, 'project')
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -283,15 +291,52 @@ cmp.setup {
   },
 }
 
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
 -- tabnine setup
 require('tabnine').setup({
-  disable_auto_comment=true,
-  accept_keymap="<Tab>",
+  disable_auto_comment = true,
+  accept_keymap = "<Tab>",
   dismiss_keymap = "<C-]>",
   debounce_ms = 300,
-  suggestion_color = {gui = "#808080", cterm = 244},
-  execlude_filetypes = {"TelescopePrompt"}
+  suggestion_color = { gui = "#808080", cterm = 244 },
+  execlude_filetypes = { "TelescopePrompt" }
 })
+
+-- Git DiffView setup
+require("diffview").setup()
+
+-- Notify Setup
+local log = require("plenary.log").new {
+  plugin = "notify",
+  level = "debug",
+  use_console = false,
+}
+---@diagnostic disable-next-line: duplicate-set-field
+vim.notify = function(msg, level, opts)
+  log.info(msg, level, opts)
+  if string.find(msg, "method .* is not supported") then
+    return
+  end
+
+  require "notify" (msg, level, opts)
+end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
