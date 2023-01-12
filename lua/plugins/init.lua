@@ -71,7 +71,7 @@ return {
   'hrsh7th/cmp-nvim-lua',
   'hrsh7th/cmp-cmdline',
   'onsails/lspkind-nvim',
-
+  'windwp/nvim-ts-autotag',
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },

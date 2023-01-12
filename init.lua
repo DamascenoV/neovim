@@ -338,5 +338,8 @@ vim.notify = function(msg, level, opts)
   require "notify" (msg, level, opts)
 end
 
+-- Auto Pairs setup
+require("nvim-autopairs").setup {}
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
