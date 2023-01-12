@@ -3,6 +3,10 @@ vim.keymap.set('', '<C-h>', '<C-w>h') -- Move between window
 vim.keymap.set('', '<C-j>', '<C-w>j') -- Move between window
 vim.keymap.set('', '<C-k>', '<C-w>k') -- Move between window
 vim.keymap.set('', '<C-l>', '<C-w>l') -- Move between window
+vim.keymap.set('', '<C-Up>', '<cmd>resize -2<CR>') -- Resize window
+vim.keymap.set('', '<C-Down>', '<cmd>resize +2<CR>') -- Resize window
+vim.keymap.set('', '<C-Left>', '<cmd>vertical resize -2<CR>') -- Resize window
+vim.keymap.set('', '<C-Right>', '<cmd>vertical resize +2<CR>') -- Resize window
 vim.keymap.set('', '<C-e>', '<cmd>Lexplore<CR>') -- File Tree
 vim.keymap.set('n', '+', '<C-a>') -- Incremente
 vim.keymap.set('n', '-', '<C-x>') -- Decrement
@@ -14,10 +18,15 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('n', '<leader>Nc', '<cmd>edit ~/.config/nvim/init.lua<CR>') -- Go to Neovim config
 
+
 -- Buffer keymaps
 vim.keymap.set('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
 vim.keymap.set('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
 vim.keymap.set('n', '<leader>x', '<cmd>bdelete<CR>') -- Close current buffer
+
+
+-- Undo Tree
+vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Close current buffer
 
 
 -- Lspsaga keymaps
