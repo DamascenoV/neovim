@@ -45,6 +45,38 @@ return {
     end
   },
 
+  {
+    "rcarriga/nvim-notify",
+    lazy = false,
+    config = function()
+      local log = require("plenary.log").new {
+        plugin = "notify",
+        level = "debug",
+        use_console = false,
+      }
+
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.notify = function(msg, level, opts)
+        log.info(msg, level, opts)
+        if string.find(msg, "method .* is not supported") then
+          return
+        end
+
+        require "notify"(msg, level, opts)
+      end
+    end,
+    cond = function()
+      if not pcall(require, "plenary") then
+        return false
+      end
+
+      if pcall(require, "noice") then
+        return false
+      end
+      return true
+    end,
+  },
+
 -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -69,5 +101,8 @@ return {
 
   -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
+
+  -- Tabnine
+  { 'codota/tabnine-nvim', build = "./dl_binaries.sh" },
 }
 
