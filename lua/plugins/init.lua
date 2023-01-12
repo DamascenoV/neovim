@@ -65,13 +65,15 @@ return {
   'karb94/neoscroll.nvim', -- Smooth scrolling
   'nvim-lualine/lualine.nvim', -- Fancier statusline
   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+  'windwp/nvim-ts-autotag',
+  'tpope/vim-surround',
+
 -- Completion
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-nvim-lua',
   'hrsh7th/cmp-cmdline',
   'onsails/lspkind-nvim',
-  'windwp/nvim-ts-autotag',
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
