@@ -322,22 +322,6 @@ require('tabnine').setup({
 -- Git DiffView setup
 require("diffview").setup()
 
--- Notify Setup
-local log = require("plenary.log").new {
-  plugin = "notify",
-  level = "debug",
-  use_console = false,
-}
----@diagnostic disable-next-line: duplicate-set-field
-vim.notify = function(msg, level, opts)
-  log.info(msg, level, opts)
-  if string.find(msg, "method .* is not supported") then
-    return
-  end
-
-  require "notify" (msg, level, opts)
-end
-
 -- Auto Pairs setup
 require("nvim-autopairs").setup {}
 

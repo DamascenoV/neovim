@@ -45,11 +45,6 @@ return {
     end
   },
 
-  {
-    "rcarriga/nvim-notify",
-    lazy = false
-  },
-
 -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -67,6 +62,8 @@ return {
   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
   'windwp/nvim-ts-autotag',
   'tpope/vim-surround',
+  'tpope/vim-sleuth',
+  'tpope/vim-repeat',
 
 -- Completion
   'hrsh7th/cmp-buffer',
