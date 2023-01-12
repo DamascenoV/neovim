@@ -12,7 +12,7 @@ vim.keymap.set({'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 vim.keymap.set({'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
-
+vim.keymap.set('n', '<leader>Nc', '<cmd>edit ~/.config/nvim/init.lua<CR>') -- Go to Neovim config
 
 -- Buffer keymaps
 vim.keymap.set('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
