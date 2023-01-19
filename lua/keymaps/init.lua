@@ -7,11 +7,12 @@ vim.keymap.set('', '<C-Up>', '<cmd>resize -2<CR>') -- Resize window
 vim.keymap.set('', '<C-Down>', '<cmd>resize +2<CR>') -- Resize window
 vim.keymap.set('', '<C-Left>', '<cmd>vertical resize -2<CR>') -- Resize window
 vim.keymap.set('', '<C-Right>', '<cmd>vertical resize +2<CR>') -- Resize window
-vim.keymap.set('', '<C-e>', '<cmd>Lexplore<CR>') -- File Tree
+vim.keymap.set('', '<C-e>', '<cmd>NeoTreeShowToggle<CR>') -- File Tree
 vim.keymap.set('n', '+', '<C-a>') -- Incremente
 vim.keymap.set('n', '-', '<C-x>') -- Decrement
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G') -- Select all
 vim.keymap.set('n', 'dw', 'vb"_d') -- Delete word backwards
+vim.keymap.set('n', 'x', '_x')
 vim.keymap.set({'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 vim.keymap.set({'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 vim.keymap.set('v', '<', '<gv')
@@ -33,7 +34,6 @@ vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Close current buf
 vim.keymap.set('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
 vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
 vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search references
-vim.keymap.set('n', '<leader>lg', '<cmd>Lspsaga open_floaterm lazygit<CR>', { silent = true }) -- Float lazygit
 
 
 -- Git DiffView

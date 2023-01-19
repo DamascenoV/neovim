@@ -28,7 +28,7 @@ require('keymaps')
 -- See `:help lualine.txt`
 require('lualine').setup {
   options = {
-    icons_enabled = false,
+    icons_enabled = true,
     theme = 'NeoSolarized',
     component_separators = '|',
     section_separators = '',
@@ -38,11 +38,16 @@ require('lualine').setup {
 -- Enable Comment.nvim
 require('Comment').setup()
 
+-- Nvim Colorizer 
+require'colorizer'.setup()
+
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
   char = '┊',
   show_trailing_blankline_indent = false,
+  show_current_context = true,
+  show_current_context_start = true,
 }
 
 -- Gitsigns
@@ -92,7 +97,7 @@ pcall(require('telescope').load_extension, 'project')
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'go', 'lua', 'typescript', 'help', 'vim', 'php', 'vue' },
+  ensure_installed = { 'go', 'lua', 'typescript', 'help', 'vim', 'php', 'vue', 'svelte', 'astro' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -207,8 +212,10 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
-  intelephense = {},
+  astro = {},
+  svelte = {},
   volar = {},
+  intelephense = {},
 
   sumneko_lua = {
     Lua = {
@@ -220,7 +227,7 @@ local servers = {
 
 -- Setup neovim lua configuration
 require('neodev').setup()
---
+
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -248,9 +255,62 @@ mason_lspconfig.setup_handlers {
 -- Turn on lsp status information
 require('fidget').setup()
 
+-- lspkind init 
+local lspkind = require 'lspkind'
+
+lspkind.init({
+  mode = 'symbol',
+  preset = 'codicons',
+  symbol_map = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "ﰠ",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "ﰠ",
+    Unit = "塞",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "פּ",
+    Event = "",
+    Operator = "",
+    TypeParameter = ""
+  },
+})
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+
+local function formatLspKind(entry, vim_item)
+  if vim_item.kind == 'Color' and entry.completion_item.documentation then
+    local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+    if r then
+      local color = string.format('%02x', r) .. string.format('%02x', g) .. string.format('%02x', b)
+      local group = 'Tw_' .. color
+      if vim.fn.hlID(group) < 1 then
+        vim.api.nvim_set_hl(0, group, { fg = '#' .. color })
+      end
+      vim_item.kind = "●"
+      vim_item.kind_hl_group = group
+      return vim_item
+    end
+  end
+  vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
+  return vim_item
+end
 
 cmp.setup {
   snippet = {
@@ -258,14 +318,14 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
+    }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -284,10 +344,22 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-  },
-  sources = {
+  }),
+  sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'buffer' },
     { name = 'luasnip' },
+    { name = 'cmp_tabnine' },
+  }),
+  formatting = {
+    format = lspkind.cmp_format({
+      --mode = 'symbol',
+      maxwidth = 50,
+      before = function (entry, vim_item)
+        vim_item = formatLspKind(entry, vim_item)
+        return vim_item
+      end
+    })
   },
 }
 
@@ -310,13 +382,18 @@ cmp.setup.cmdline(':', {
 })
 
 -- tabnine setup
-require('tabnine').setup({
-  disable_auto_comment = true,
-  accept_keymap = "<Tab>",
-  dismiss_keymap = "<C-]>",
-  debounce_ms = 300,
-  suggestion_color = { gui = "#808080", cterm = 244 },
-  execlude_filetypes = { "TelescopePrompt" }
+require('cmp_tabnine.config'):setup({
+  max_lines = 1000,
+	max_num_results = 20,
+	sort = true,
+	run_on_every_keystroke = true,
+	snippet_placeholder = '..',
+	ignored_file_types = {
+		-- default is not to ignore
+		-- uncomment to ignore in lua:
+		-- lua = true
+	},
+	show_prediction_strength = false
 })
 
 -- Git DiffView setup

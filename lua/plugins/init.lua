@@ -17,9 +17,17 @@ return {
   {
     'glepnir/lspsaga.nvim',
     branch = "main",
+    event = 'BufRead',
     config = function()
-        local saga = require("lspsaga")
-        saga.init_lsp_saga()
+      require('lspsaga').setup({
+        ui = {
+          winblend = 10,
+          border = 'rounded',
+          colors = {
+            normal_bg = '#002b36'
+          }
+        }
+      })
     end,
   },
 
@@ -40,12 +48,13 @@ return {
 
   {
     'akinsho/bufferline.nvim',
-    config = function ()
-      require('bufferline').setup{}
-    end
+    config = function()
+      require('bufferline').setup {}
+    end,
+    dependencies = 'nvim-tree/nvim-web-devicons'
   },
 
--- Git related plugins
+  -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'lewis6991/gitsigns.nvim',
@@ -64,13 +73,15 @@ return {
   'tpope/vim-surround',
   'tpope/vim-sleuth',
   'tpope/vim-repeat',
+  'norcalli/nvim-colorizer.lua',
 
--- Completion
+  -- Completion
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-nvim-lua',
   'hrsh7th/cmp-cmdline',
   'onsails/lspkind-nvim',
+  'rafamadriz/friendly-snippets',
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -82,9 +93,11 @@ return {
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
 
   -- Tabnine
-  { 'codota/tabnine-nvim', build = "./dl_binaries.sh" },
+  { 'tzachar/cmp-tabnine', build = "./install.sh", dependencies = 'hrsh7th/nvim-cmp' },
 
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
-}
 
+  { 'nvim-neo-tree/neo-tree.nvim', dependencies = { 'MunifTanjim/nui.nvim', 'nvim-tree/nvim-web-devicons' } },
+
+}

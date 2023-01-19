@@ -19,12 +19,16 @@ vim.o.backup = false
 vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.o.incsearch = true
 vim.o.scrolloff = 8
-vim.o.completeopt = 'menuone,preview,noselect'
+vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.colorcolumn = '120'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme NeoSolarized]]
+vim.cmd [[
+  colorscheme NeoSolarized
+  set completeopt=menuone,noinsert,noselect
+  highlight! default link CmpItemKind CmpItemMenuDefault
+  ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
