@@ -21,6 +21,7 @@ vim.o.incsearch = true
 vim.o.scrolloff = 8
 vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.colorcolumn = '120'
+vim.opt.clipboard = 'unnamedplus'
 
 -- Set colorscheme
 vim.o.termguicolors = true

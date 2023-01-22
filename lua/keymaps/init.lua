@@ -12,7 +12,7 @@ vim.keymap.set('n', '+', '<C-a>') -- Incremente
 vim.keymap.set('n', '-', '<C-x>') -- Decrement
 vim.keymap.set('n', '<C-a>', 'gg<S-v>G') -- Select all
 vim.keymap.set('n', 'dw', 'vb"_d') -- Delete word backwards
-vim.keymap.set('n', 'x', '_x')
+vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set({'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 vim.keymap.set({'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 vim.keymap.set('v', '<', '<gv')
