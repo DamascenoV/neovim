@@ -157,4 +157,3 @@ ins_right {
 }
 
 lualine.setup(config)
-

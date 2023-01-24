@@ -37,9 +37,9 @@ lazy.setup({
       "folke/neodev.nvim",
     }
   },
-  { 
-    "glepnir/lspsaga.nvim", 
-    branch = "main", 
+  {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
     event = "BufRead",
   },
   {

@@ -3,10 +3,10 @@ if not status then return end
 
 lspsaga.setup {
   ui = {
-          winblend = 10,
-          border = 'rounded',
-          colors = {
-            normal_bg = '#002b36'
-          }
-        }
+    winblend = 10,
+    border = 'rounded',
+    colors = {
+      normal_bg = '#002b36'
+    }
+  }
 }
