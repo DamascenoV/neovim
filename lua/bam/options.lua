@@ -23,6 +23,13 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- Go To Normal mode
+vim.keymap.set('i' , 'jj', '<ESC>', { silent = true })
+
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd [[
@@ -30,13 +37,6 @@ vim.cmd [[
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]
-
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Go To Normal mode
-vim.keymap.set('i' , 'jj', '<ESC>', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -52,4 +52,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
