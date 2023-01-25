@@ -113,4 +113,8 @@ lazy.setup({
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
+  { 'jackMort/ChatGPT.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' } 
+  },
+
 })

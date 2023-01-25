@@ -30,34 +30,40 @@ keymap('n', '<leader>x', '<cmd>bdelete<CR>') -- Close current buffer
 
 
 -- Undo Tree
-vim.keymap.set('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Close current buffer
+keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Close current buffer
 
 
 -- Lspsaga keymaps
-vim.keymap.set('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
-vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
-vim.keymap.set('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search references
+keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
+keymap('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
+keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search references
 
 
 -- Git DiffView
-vim.keymap.set('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
-vim.keymap.set('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
+keymap('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
+keymap('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
 
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[/] Fuzzily search in current buffer]' })
-vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
-vim.keymap.set('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
-vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
-vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
-vim.keymap.set('n', '<leader>fp', ":lua require'telescope'.extensions.project.project{}<CR>", { desc = '[F]ind [P]rojects' })
+keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
+keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[ ] Find existing buffers' })
+keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[/] Fuzzily search in current buffer]' })
+keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
+keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
+keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
+keymap('n', '<leader>fp', ":lua require'telescope'.extensions.project.project{}<CR>", { desc = '[F]ind [P]rojects' })
 
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+keymap('n', '[d', vim.diagnostic.goto_prev)
+keymap('n', ']d', vim.diagnostic.goto_next)
+keymap('n', '<leader>e', vim.diagnostic.open_float)
+keymap('n', '<leader>q', vim.diagnostic.setloclist)
+
+
+-- ChatGPT
+keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = true })
+keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
+keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
