@@ -33,7 +33,6 @@ vim.keymap.set('i' , 'jj', '<ESC>', { silent = true })
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd [[
-  colorscheme NeoSolarized
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]

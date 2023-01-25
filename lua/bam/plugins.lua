@@ -100,6 +100,7 @@ lazy.setup({
   'tpope/vim-repeat',
   'norcalli/nvim-colorizer.lua',
   'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
+  'projekt0n/github-nvim-theme', -- Theme Github
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },
@@ -114,7 +115,7 @@ lazy.setup({
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   { 'jackMort/ChatGPT.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' } 
+    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' }
   },
 
 })
