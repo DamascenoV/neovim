@@ -101,6 +101,7 @@ lazy.setup({
   'norcalli/nvim-colorizer.lua',
   'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
   'projekt0n/github-nvim-theme', -- Theme Github
+  'ellisonleao/gruvbox.nvim',
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },

@@ -1,18 +1,18 @@
-local status, NeoSolarized = pcall(require, 'NeoSolarized')
+local status, gruvbox = pcall(require, 'gruvbox')
 if not status then return end
 
-NeoSolarized.setup {
-  style = 'dark',
-  transparent = true,
-  terminal_colors = true,
-  enable_italics = false,
-}
-
-vim.cmd [[
-   try
-        colorscheme NeoSolarized
-    catch /^Vim\%((\a\+)\)\=:E18o
-        colorscheme default
-        set background=dark
-    endtry
-]]
+gruvbox.setup({
+  palette_overrides = {
+    bright_yellow = '#f8fe7a',
+    bright_green = '#698b69',
+    bright_blue = '#8abeb7',
+    bright_orange = '#8e6fbd',
+    bright_red = '#cc6666',
+    bright_purple = '#f8fe7a',
+    light0_hard = '#f2e5bc',
+  },
+  overrides = {
+  },
+  transparent_mode = true,
+})
+vim.cmd("colorscheme gruvbox")
