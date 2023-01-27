@@ -17,7 +17,7 @@ local colors = {
 
 local config = {
   options = {
-    -- theme = 'github_dark',
+     theme = 'github_dark',
     -- Disable sections and component separators
     component_separators = { left = '»', right = '«' },
     section_separators = { left = '', right = '' },
@@ -25,7 +25,7 @@ local config = {
   },
   sections = {
     -- these are to remove the defaults
-    lualine_a = {},
+    --lualine_a = {},
     lualine_b = {},
     lualine_y = {},
     lualine_z = {},

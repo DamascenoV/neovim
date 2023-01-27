@@ -99,9 +99,12 @@ lazy.setup({
   'tpope/vim-sleuth',
   'tpope/vim-repeat',
   'norcalli/nvim-colorizer.lua',
+
+  -- Themes
   'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
   'projekt0n/github-nvim-theme', -- Theme Github
   'ellisonleao/gruvbox.nvim',
+  { 'tjdevries/gruvbuddy.nvim', dependencies = 'tjdevries/colorbuddy.nvim' },
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },

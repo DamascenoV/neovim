@@ -131,14 +131,14 @@ lsp.setup_nvim_cmp({
   }
 })
 
---lsp.set_preferences {
---  sign_icons = {
---    error = 'E',
---    warn = 'W',
---    hint = 'H',
---    info = 'I'
---  }
---}
+lsp.set_preferences {
+  sign_icons = {
+    error = 'E',
+    warn = 'W',
+    hint = 'H',
+    info = 'I'
+  }
+}
 
 lsp.setup()
 
