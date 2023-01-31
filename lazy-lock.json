@@ -15,6 +15,8 @@
   "diffview.nvim": { "branch": "main", "commit": "ab3757c1ea1b84ef59f7dda54f11d10022e0e3b7" },
   "fidget.nvim": { "branch": "main", "commit": "44585a0c0085765195e6961c15529ba6c5a2a13b" },
   "friendly-snippets": { "branch": "main", "commit": "a6f7a1609addb4e57daa6bedc300f77f8d225ab7" },
+  "fzf": { "branch": "master", "commit": "aa2b9ec47652e84f320dad512c179feb46c8364c" },
+  "fzf.vim": { "branch": "master", "commit": "dc71692255b62d1f67dc55c8e51ab1aa467b1d46" },
   "github-nvim-theme": { "branch": "main", "commit": "a93fc4cd3c16b91cf29a1387015e6e925c416efb" },
   "gitsigns.nvim": { "branch": "main", "commit": "0d4fe37ba5285171f3729da955955205f3fa945b" },
   "gruvbox.nvim": { "branch": "main", "commit": "2e93ac50b3e95d650e62729f8810a005861e77ad" },
