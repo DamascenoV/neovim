@@ -18,8 +18,13 @@ keymap('n', 'dw', 'vb"_d') -- Delete word backwards
 keymap('n', 'x', '"_x')
 keymap({'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 keymap({'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
+keymap('n', '<leader>V', '<cmd>vsplit<CR>') -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split<CR>') -- Vertical Split
 keymap('v', '<', '<gv')
 keymap('v', '>', '>gv')
+
+
+-- Shortcut to Config
 keymap('n', '<leader>Nc', '<cmd>edit ~/.config/nvim/init.lua<CR>') -- Go to Neovim config
 
 
