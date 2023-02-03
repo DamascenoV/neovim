@@ -53,7 +53,31 @@ Group.new("LspParameter", nil, nil, s.italic)
 Group.new("LspDeprecated", nil, nil, s.strikethrough)
 Group.new("@function.bracket", g.Normal, g.Normal)
 
+Group.new("CmpItemAbbr", g.Comment)
+Group.new("CmpItemAbbrDeprecated", g.Error)
+Group.new("CmpItemAbbrMatchFuzzy", g.CmpItemAbbr.fg:dark(), nil, s.italic)
+Group.new("CmpItemKind", g.Special)
+Group.new("CmpItemMenu", g.NonText)
+
+Group.new("GitSignsAdd", c.green)
+Group.new("GitSignsChange", c.yellow)
+Group.new("GitSignsDelete", c.red)
+
+local ns_bam = vim.api.nvim_create_namespace "ns_bam"
+
+vim.api.nvim_set_hl(ns_bam, "LuaFunctionCall", {
+  foreground = c.green:to_rgb(),
+  background = nil,
+  reverse = false,
+  underline = false,
+})
+
+vim.api.nvim_set_hl_ns(ns_bam)
+
 vim.cmd [[
 highlight link @function.call.lua LuaFunctionCall
+highlight LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guibg=NONE
+highlight ColorColumn guibg=Grey
+highlight clear SignColumn
 hi! Normal ctermbg=NONE guibg=NONE
 ]]
