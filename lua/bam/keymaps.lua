@@ -72,3 +72,8 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist)
 keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = true })
 keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
 keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
+
+
+-- Treesitter
+keymap('n', '<leader>tp', '<cmd>TSPlaygroundToogle<CR>', { silent = true })
+keymap('n', '<leader>th', '<cmd>TSHighlightCapturesUnderCursor<CR>', { silent = true })

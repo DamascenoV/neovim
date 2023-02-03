@@ -93,6 +93,7 @@ lazy.setup({
     enabled = false
   },
 
+  'jwalton512/vim-blade',
   'tpope/vim-sleuth',
   'mbbill/undotree',
   'tpope/vim-surround',

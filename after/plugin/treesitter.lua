@@ -60,3 +60,5 @@ treesitter.setup {
     },
   },
 }
+
+vim.cmd [[highlight IncludedC guibg=#373b41]]
