@@ -54,7 +54,17 @@ end)
 require('neodev').setup()
 
 -- Turn on lsp status information
-require('fidget').setup()
+require('fidget').setup({
+  text = {
+    spinner = 'moon'
+  },
+  align = {
+    bottom = true
+  },
+  window = {
+    relative = "editor"
+  }
+})
 
 -- lspkind init
 local lspkind = require 'lspkind'

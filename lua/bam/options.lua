@@ -5,7 +5,7 @@ vim.o.hlsearch = false
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.cursorline = true
-vim.o.cursorlineopt='number'
+vim.o.cursorlineopt = 'number'
 vim.o.mouse = 'a'
 vim.o.breakindent = true
 vim.o.undofile = true
@@ -42,7 +42,7 @@ vim.opt.listchars:append "tab:  ,trail:-"
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Go To Normal mode
-vim.keymap.set('i' , 'jj', '<ESC>', { silent = true })
+vim.keymap.set('i', 'jj', '<ESC>', { silent = true })
 
 -- Set colorscheme
 vim.o.termguicolors = true
@@ -66,14 +66,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-local group vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
-local set_cursor_line = function (event, value, pattern)
+local group
+vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+local set_cursor_line = function(event, value, pattern)
   vim.api.nvim_create_autocmd(event, {
-  group = group,
-  pattern = pattern,
-  callback = function()
-    vim.opt_local.cursorline = value
-  end,
+    group = group,
+    pattern = pattern,
+    callback = function()
+      vim.opt_local.cursorline = value
+    end,
   })
 end
 

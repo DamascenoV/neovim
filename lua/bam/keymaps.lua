@@ -16,8 +16,8 @@ keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
 keymap('n', 'dw', 'vb"_d') -- Delete word backwards
 keymap('n', 'x', '"_x')
-keymap({'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
-keymap({'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
+keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
+keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 keymap('n', '<leader>V', '<cmd>vsplit<CR>') -- Vertical Split
 keymap('n', '<leader>H', '<cmd>split<CR>') -- Vertical Split
 keymap('v', '<', '<gv')
@@ -52,7 +52,8 @@ keymap('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- 
 -- See `:help telescope.builtin`
 keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[ ] Find existing buffers' })
-keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[/] Fuzzily search in current buffer]' })
+keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>',
+  { desc = '[/] Fuzzily search in current buffer]' })
 keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
 keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
@@ -73,7 +74,3 @@ keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = tru
 keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
 keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
 
-
--- Treesitter
-keymap('n', '<leader>tp', '<cmd>TSPlaygroundToogle<CR>', { silent = true })
-keymap('n', '<leader>th', '<cmd>TSHighlightCapturesUnderCursor<CR>', { silent = true })
