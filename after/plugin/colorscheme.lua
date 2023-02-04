@@ -29,6 +29,9 @@ local g = require("colorbuddy.group").groups
 local s = require("colorbuddy.style").styles
 
 Group.new("@variable", c.superwhite, nil)
+Group.new("@function.builtin", c.blue, nil)
+Group.new("@property", c.superwhite, nil)
+
 Group.new("GoTestSuccess", c.green, nil, s.bold)
 Group.new("GoTestFail", c.red, nil, s.bold)
 -- Group.new('Keyword', c.purple, nil, nil)
@@ -66,7 +69,7 @@ Group.new("GitSignsDelete", c.red)
 local ns_bam = vim.api.nvim_create_namespace "ns_bam"
 
 vim.api.nvim_set_hl(ns_bam, "LuaFunctionCall", {
-  foreground = c.green:to_rgb(),
+  foreground = c.blue:dark():to_rgb(),
   background = nil,
   reverse = false,
   underline = false,
