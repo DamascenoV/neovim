@@ -12,6 +12,7 @@ lsp.ensure_installed({
   'volar',
   'astro',
   'svelte',
+  'gopls',
 })
 
 lsp.on_attach(function(_, bufnr)

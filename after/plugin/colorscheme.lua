@@ -31,6 +31,8 @@ local s = require("colorbuddy.style").styles
 Group.new("@variable", c.superwhite, nil)
 Group.new("@function.builtin", c.blue, nil)
 Group.new("@property", c.superwhite, nil)
+Group.new("@type", c.blue, nil)
+Group.new("@type.definition", c.blue, nil)
 
 Group.new("GoTestSuccess", c.green, nil, s.bold)
 Group.new("GoTestFail", c.red, nil, s.bold)
