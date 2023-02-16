@@ -1,26 +1,4 @@
--- local status, gruvbox = pcall(require, 'gruvbox')
--- if not status then return end
---
--- gruvbox.setup({
---   palette_overrides = {
---     bright_yellow = '#f8fe7a',
---     bright_green = '#698b69',
---     bright_blue = '#f2e5bc',
---     bright_orange = '#8e6fbd',
---     bright_red = '#cc6666',
---     bright_purple = '#fb4934',
---     neutral_yellow = '#f8fe7a',
---   },
---   overrides = {
---   },
---   transparent_mode = true,
--- })
--- vim.cmd("colorscheme gruvbox")
-
-local status, colorbuddy = pcall(require, 'colorbuddy')
-if not status then return end
-
-colorbuddy.colorscheme('gruvbuddy')
+require("colorbuddy").colorscheme "gruvbuddy"
 require("colorizer").setup()
 
 local c = require("colorbuddy.color").colors
@@ -29,14 +7,16 @@ local g = require("colorbuddy.group").groups
 local s = require("colorbuddy.style").styles
 
 Group.new("@variable", c.superwhite, nil)
-Group.new("@function.builtin", c.blue, nil)
+Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
+Group.new("@function.call", c.blue:light(), nil)
+Group.new("@function", c.blue:light(), nil)
+Group.new("@type", c.red, nil)
+Group.new("@type.qualifier", c.purple:light(), nil)
+Group.new("@method.call", c.blue:light(), nil)
 Group.new("@property", c.superwhite, nil)
-Group.new("@type", c.blue, nil)
-Group.new("@type.definition", c.blue, nil)
-
+Group.new("@field", c.superwhite, nil)
 Group.new("GoTestSuccess", c.green, nil, s.bold)
 Group.new("GoTestFail", c.red, nil, s.bold)
--- Group.new('Keyword', c.purple, nil, nil)
 Group.new("TSPunctBracket", c.orange:light():light())
 Group.new("StatuslineError1", c.red:light():light(), g.Statusline)
 Group.new("StatuslineError2", c.red:light(), g.Statusline)
@@ -48,36 +28,19 @@ Group.new("goTSType", g.Type.fg:dark(), nil, g.Type)
 Group.new("typescriptTSConstructor", g.pythonTSType)
 Group.new("typescriptTSProperty", c.blue)
 Group.new("WinSeparator", nil, nil)
--- Group.new("LspReferenceText", nil, c.gray0:light(), s.bold)
--- Group.new("LspReferenceWrite", nil, c.gray0:light())
--- Group.new("TSKeyword", c.purple, nil, s.underline, c.blue)
--- Group.new("LuaFunctionCall", c.green, nil, s.underline + s.nocombine, g.TSKeyword.guisp)
 Group.new("TSTitle", c.blue)
 Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
 Group.new("LspParameter", nil, nil, s.italic)
 Group.new("LspDeprecated", nil, nil, s.strikethrough)
 Group.new("@function.bracket", g.Normal, g.Normal)
-
 Group.new("CmpItemAbbr", g.Comment)
 Group.new("CmpItemAbbrDeprecated", g.Error)
 Group.new("CmpItemAbbrMatchFuzzy", g.CmpItemAbbr.fg:dark(), nil, s.italic)
 Group.new("CmpItemKind", g.Special)
 Group.new("CmpItemMenu", g.NonText)
-
 Group.new("GitSignsAdd", c.green)
 Group.new("GitSignsChange", c.yellow)
 Group.new("GitSignsDelete", c.red)
-
-local ns_bam = vim.api.nvim_create_namespace "ns_bam"
-
-vim.api.nvim_set_hl(ns_bam, "LuaFunctionCall", {
-  foreground = c.blue:dark():to_rgb(),
-  background = nil,
-  reverse = false,
-  underline = false,
-})
-
-vim.api.nvim_set_hl_ns(ns_bam)
 
 vim.cmd [[
 highlight link @function.call.lua LuaFunctionCall

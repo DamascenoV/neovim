@@ -69,6 +69,7 @@ lazy.setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     }
   },
+  { 'nvim-treesitter/playground' },
   "windwp/nvim-ts-autotag",
 
   { "windwp/nvim-autopairs", config = true, event = "InsertEnter" },
@@ -105,7 +106,7 @@ lazy.setup({
   'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
   'projekt0n/github-nvim-theme', -- Theme Github
   'ellisonleao/gruvbox.nvim',
-  { 'tjdevries/gruvbuddy.nvim', dependencies = 'tjdevries/colorbuddy.nvim' },
+  { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },

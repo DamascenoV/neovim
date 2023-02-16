@@ -8,7 +8,7 @@ lsp.ensure_installed({
   'cssls',
   'tsserver',
   'intelephense',
-  'sumneko_lua',
+  'lua_ls',
   'volar',
   'astro',
   'svelte',
