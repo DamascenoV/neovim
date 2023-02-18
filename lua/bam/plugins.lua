@@ -87,6 +87,8 @@ lazy.setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'lewis6991/gitsigns.nvim',
+  'kdheepak/lazygit.nvim',
+  'akinsho/git-conflict.nvim',
 
   {
     "karb94/neoscroll.nvim",

@@ -10,6 +10,7 @@ Group.new("@variable", c.superwhite, nil)
 Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
 Group.new("@function.call", c.blue:light(), nil)
 Group.new("@function", c.blue:light(), nil)
+Group.new("@function.builtin", c.blue:light(), nil)
 Group.new("@type", c.red, nil)
 Group.new("@type.qualifier", c.purple:light(), nil)
 Group.new("@method.call", c.blue:light(), nil)
@@ -43,7 +44,6 @@ Group.new("GitSignsChange", c.yellow)
 Group.new("GitSignsDelete", c.red)
 
 vim.cmd [[
-highlight link @function.call.lua LuaFunctionCall
 highlight LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guibg=NONE
 highlight ColorColumn guibg=Grey
 highlight clear SignColumn

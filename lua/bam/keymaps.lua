@@ -49,6 +49,7 @@ keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search re
 -- Git DiffView
 keymap('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
 keymap('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
+keymap('n', '<leader>gl', '<cmd>LazyGit<CR>', { silent = true }) -- LazyGit
 
 
 -- See `:help telescope.builtin`
