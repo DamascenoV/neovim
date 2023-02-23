@@ -37,7 +37,7 @@ keymap('n', '<leader>x', '<cmd>bdelete<CR>') -- Close current buffer
 
 
 -- Undo Tree
-keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Close current buffer
+keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Undu Three Toogle
 
 
 -- Lspsaga keymaps
@@ -54,7 +54,7 @@ keymap('n', '<leader>gl', '<cmd>LazyGit<CR>', { silent = true }) -- LazyGit
 
 -- See `:help telescope.builtin`
 keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
-keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[ ] Find existing buffers' })
+keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[F]ind existing buffers' })
 keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>',
   { desc = '[/] Fuzzily search in current buffer]' })
 keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
