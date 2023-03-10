@@ -6,5 +6,8 @@ neotree.setup {
     icon = {
       folder_empty = '-'
     }
+  },
+  window = {
+    position = "right",
   }
 }

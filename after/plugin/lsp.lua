@@ -12,7 +12,8 @@ lsp.ensure_installed({
   'volar',
   'astro',
   'svelte',
-  'gopls',
+  'rust_analyzer',
+ -- 'gopls',
 })
 
 lsp.on_attach(function(_, bufnr)

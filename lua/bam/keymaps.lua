@@ -47,8 +47,8 @@ keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search re
 
 
 -- Git DiffView
-keymap('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
-keymap('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
+keymap('n', '<leader>go', '<cmd>DiffviewOpen<CR>', { silent = true }) -- Diff View Open
+keymap('n', '<leader>gc', '<cmd>DiffviewClose<CR>', { silent = true }) -- Diff View Close
 keymap('n', '<leader>gl', '<cmd>LazyGit<CR>', { silent = true }) -- LazyGit
 
 
