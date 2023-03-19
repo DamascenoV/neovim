@@ -36,6 +36,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.listchars:append "tab:  ,trail:-"
+vim.opt.laststatus = 3
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
