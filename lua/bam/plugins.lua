@@ -4,13 +4,13 @@ if not vim.loop.fs_stat(lazypath) then
     "git",
     "clone",
     "--filter=blob:none",
-    "--single-branch",
     "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
     lazypath,
   })
 end
 
-vim.opt.runtimepath:prepend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 
 local status, lazy = pcall(require, 'lazy')
 if not status then return end
@@ -69,6 +69,7 @@ lazy.setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     }
   },
+  'nvim-treesitter/nvim-treesitter-context',
   { 'nvim-treesitter/playground' },
   "windwp/nvim-ts-autotag",
 
@@ -93,7 +94,7 @@ lazy.setup({
   {
     "karb94/neoscroll.nvim",
     event = "BufEnter",
-    enabled = false
+    enabled = true
   },
 
   'jwalton512/vim-blade',
@@ -107,6 +108,7 @@ lazy.setup({
   -- Themes
   'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
   'projekt0n/github-nvim-theme', -- Theme Github
+  { "catppuccin/nvim", name = "catppuccin" },
   'ellisonleao/gruvbox.nvim',
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
 
@@ -125,8 +127,8 @@ lazy.setup({
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
-  { 'jackMort/ChatGPT.nvim',
-    dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' }
-  },
+  -- { 'jackMort/ChatGPT.nvim',
+  --   dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' }
+  -- },
 
 })

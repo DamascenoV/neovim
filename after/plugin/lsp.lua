@@ -158,3 +158,9 @@ vim.diagnostic.config({
   virtual_text = true,
   signs = true,
 })
+
+require("lspconfig").lua_ls.setup {
+    settings = {
+      Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
+    },
+  }

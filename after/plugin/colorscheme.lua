@@ -1,51 +1,80 @@
-require("colorbuddy").colorscheme "gruvbuddy"
-require("colorizer").setup()
+require("catppuccin").setup({
+    flavour = "frappe", -- latte, frappe, macchiato, mocha
+    background = { -- :h background
+        light = "latte",
+        dark = "mocha",
+    },
+    transparent_background = true,
+    show_end_of_buffer = false, -- show the '~' characters after the end of buffers
+    term_colors = false,
+    dim_inactive = {
+        enabled = false,
+        shade = "dark",
+        percentage = 0.15,
+    },
+    no_italic = false, -- Force no italic
+    no_bold = false, -- Force no bold
+    styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    color_overrides = {},
+    custom_highlights = function(colors)
+        return {
+            ["@variable"] = { fg = "#e0e0e0", style = {} },
+            ["@variable.builtin"] = { fg = "#a3bbcf", style = {} },
+            ["@field"] = { fg = "#e0e0e0", style = {} },
+            ["@property"] = { fg = "#e0e0e0", style = {} },
+            ["@type"] = { fg = "#cc6666", style = {} },
+            ["@type.builtin"] = { fg = "#cc6666", style = {} },
+            ["@parameter"] = { fg = "#cc6666", style = {} },
+            ['@statement'] = { fg = "#bf4040"},
+            ["@namespace"] = { fg = "#a3bbcf", style = {} },
+            ["@include"] = { fg = "#8abeb7", style = {} },
+            ["@comment"] = { fg = colors.surface2, style = { "italic" } },
+            ['@function'] = { fg = "#f8fe7a", style = {} },
+            ['@function.builtin'] = { fg = "#a3bbcf", style = {} },
+            ['@function.call'] = { fg = "#f8fe7a", style = {} },
+            ['@constant.builtin'] = { fg = "#a992cd", style = {} },
+            ['@method'] = { fg = "#f8fe7a", style = {} },
+            ['@method.call'] = { fg = "#f8fe7a", style = {} },
+            ['@exception'] = { fg = "#bf4040", style = {} },
+            ['@keyword.return'] = { fg = "#bf4040", style = {} },
+            ['DiagnosticError'] = { fg = "#cc6666", style = {} },
+            ['DiagnosticWarn'] = { fg = "Orange", style = {} },
+            ['DiagnosticInfo'] = { fg = "LightBlue", style = {} },
+            ['DiagnosticHint'] = { fg = "LightGray", style = {} },
+            ['DiagnosticOk'] = { fg = "LightGreen", style = {} },
+            ['Special'] = { fg = "#a992cd", style = {} },
+            ['Structure'] = { fg = "#b294bb", style = {} },
+            ['Type'] = { fg = "#b294bb", style = {} },
+            ['Conditional'] = { fg = "#cc6666", style = {} },
+            ['Statement'] = { fg = "#bf4040", style = {} },
+            ['Keyword'] = { fg = "#b294bb", style = {} },
+            ['Operator'] = { fg = "#e6b3b3", style = {} },
+            ['Identifier'] = { fg = "#cc6666", style = {} },
+            ['String'] = { fg = "#99cc99", style = {} },
+            ['Error'] = { fg = "#d98c8c", style = {} },
+        }
+    end,
+    integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true,
+        notify = false,
+        mini = false,
+    },
+})
 
-local c = require("colorbuddy.color").colors
-local Group = require("colorbuddy.group").Group
-local g = require("colorbuddy.group").groups
-local s = require("colorbuddy.style").styles
-
-Group.new("@variable", c.superwhite, nil)
-Group.new("@variable.builtin", c.purple:light():light(), g.Normal)
-Group.new("@function.call", c.blue:light(), nil)
-Group.new("@function", c.blue:light(), nil)
-Group.new("@function.builtin", c.blue:light(), nil)
-Group.new("@type", c.red, nil)
-Group.new("@type.qualifier", c.purple:light(), nil)
-Group.new("@method.call", c.blue:light(), nil)
-Group.new("@property", c.superwhite, nil)
-Group.new("@field", c.superwhite, nil)
-Group.new("GoTestSuccess", c.green, nil, s.bold)
-Group.new("GoTestFail", c.red, nil, s.bold)
-Group.new("TSPunctBracket", c.orange:light():light())
-Group.new("StatuslineError1", c.red:light():light(), g.Statusline)
-Group.new("StatuslineError2", c.red:light(), g.Statusline)
-Group.new("StatuslineError3", c.red, g.Statusline)
-Group.new("StatuslineError3", c.red:dark(), g.Statusline)
-Group.new("StatuslineError3", c.red:dark():dark(), g.Statusline)
-Group.new("pythonTSType", c.red)
-Group.new("goTSType", g.Type.fg:dark(), nil, g.Type)
-Group.new("typescriptTSConstructor", g.pythonTSType)
-Group.new("typescriptTSProperty", c.blue)
-Group.new("WinSeparator", nil, nil)
-Group.new("TSTitle", c.blue)
-Group.new("InjectedLanguage", nil, g.Normal.bg:dark())
-Group.new("LspParameter", nil, nil, s.italic)
-Group.new("LspDeprecated", nil, nil, s.strikethrough)
-Group.new("@function.bracket", g.Normal, g.Normal)
-Group.new("CmpItemAbbr", g.Comment)
-Group.new("CmpItemAbbrDeprecated", g.Error)
-Group.new("CmpItemAbbrMatchFuzzy", g.CmpItemAbbr.fg:dark(), nil, s.italic)
-Group.new("CmpItemKind", g.Special)
-Group.new("CmpItemMenu", g.NonText)
-Group.new("GitSignsAdd", c.green)
-Group.new("GitSignsChange", c.yellow)
-Group.new("GitSignsDelete", c.red)
-
-vim.cmd [[
-highlight LineNr term=bold cterm=NONE ctermfg=NONE ctermbg=NONE gui=NONE guibg=NONE
-highlight ColorColumn guibg=Grey
-highlight clear SignColumn
-hi! Normal ctermbg=NONE guibg=NONE
-]]
+vim.cmd.colorscheme "catppuccin"

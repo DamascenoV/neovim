@@ -9,5 +9,9 @@ neotree.setup {
   },
   window = {
     position = "right",
+  },
+  source_selector = {
+    winbar = true,
+    statusline = false
   }
 }
