@@ -17,7 +17,7 @@ local colors = {
 
 local config = {
   options = {
-    theme = 'github_dark',
+    -- theme = 'github_dark',
     -- Disable sections and component separators
     component_separators = { left = '»', right = '«' },
     section_separators = { left = '', right = '' },
@@ -76,12 +76,12 @@ ins_left {
   padding = { right = 1 }, -- We don't need space before this
 }
 
-ins_left {
-  function()
-    return 'BAM'
-  end,
-  color = { fg = colors.red, gui = 'bold' }
-}
+-- ins_left {
+--   function()
+--     return 'BAM'
+--   end,
+--   color = { fg = colors.red, gui = 'bold' }
+-- }
 
 ins_left {
   -- Lsp server name .

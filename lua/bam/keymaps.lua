@@ -47,8 +47,8 @@ keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search re
 
 
 -- Git DiffView
-keymap('n', '<leader>gg', '<cmd>DiffviewFileHistory %<CR>', { silent = true }) -- Diff File
-keymap('n', '<leader>gb', '<cmd>DiffviewFileHistory<CR>', { silent = true }) -- Diff Branch
+keymap('n', '<leader>go', '<cmd>DiffviewOpen<CR>', { silent = true }) -- Diff View Open
+keymap('n', '<leader>gc', '<cmd>DiffviewClose<CR>', { silent = true }) -- Diff View Close
 keymap('n', '<leader>gl', '<cmd>LazyGit<CR>', { silent = true }) -- LazyGit
 
 
@@ -73,7 +73,7 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
 
 -- ChatGPT
-keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = true })
-keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
-keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
+-- keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = true })
+-- keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
+-- keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
 

@@ -12,7 +12,8 @@ lsp.ensure_installed({
   'volar',
   'astro',
   'svelte',
-  'gopls',
+  'rust_analyzer',
+ -- 'gopls',
 })
 
 lsp.on_attach(function(_, bufnr)
@@ -157,3 +158,9 @@ vim.diagnostic.config({
   virtual_text = true,
   signs = true,
 })
+
+require("lspconfig").lua_ls.setup {
+    settings = {
+      Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
+    },
+  }

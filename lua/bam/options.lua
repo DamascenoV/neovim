@@ -36,6 +36,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.listchars:append "tab:  ,trail:-"
+vim.opt.laststatus = 3
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -47,6 +48,7 @@ vim.keymap.set('i', 'jj', '<ESC>', { silent = true })
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd [[
+  tnoremap <Esc> <C-\\><C-n>
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]
@@ -80,6 +82,10 @@ local set_cursor_line = function(event, value, pattern)
     end,
   })
 end
+
+vim.api.nvim_command("autocmd TermOpen * startinsert")             -- starts in insert mode
+vim.api.nvim_command("autocmd TermOpen * setlocal nonumber norelativenumber")       -- no numbers
+vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no") -- no sign column
 
 set_cursor_line('WinLeave', false)
 set_cursor_line("WinEnter", true)

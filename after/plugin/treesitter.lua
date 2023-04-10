@@ -2,7 +2,7 @@ local status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if not status then return end
 
 treesitter.setup {
-  ensure_installed = { 'go', 'lua', 'typescript', 'help', 'vim', 'php', 'vue', 'svelte', 'astro' },
+  ensure_installed = { 'go', 'lua', 'typescript', 'vim', 'php', 'vue', 'svelte', 'astro' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
