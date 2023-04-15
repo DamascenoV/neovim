@@ -1,5 +1,6 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
+vim.o.guifont = 'JetBrainsMono Nerd Font Mono:h8'
 vim.opt.title = true
 vim.o.hlsearch = false
 vim.wo.number = true
