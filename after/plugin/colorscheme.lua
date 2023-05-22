@@ -32,7 +32,7 @@ require("catppuccin").setup({
     custom_highlights = function(colors)
         return {
             ["@variable"] = { fg = "#e0e0e0", style = {} },
-            ["@variable.builtin"] = { fg = "#a3bbcf", style = {} },
+            ["@variable.builtin"] = { fg = "#b294bb", style = {} },
             ["@field"] = { fg = "#e0e0e0", style = {} },
             ["@property"] = { fg = "#e0e0e0", style = {} },
             ["@type"] = { fg = "#cc6666", style = {} },

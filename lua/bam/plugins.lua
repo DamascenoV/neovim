@@ -97,6 +97,7 @@ lazy.setup({
     enabled = true
   },
 
+  'olexsmir/gopher.nvim',
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
   'mbbill/undotree',

@@ -7,13 +7,12 @@ lsp.ensure_installed({
   'html',
   'cssls',
   'tsserver',
-  'intelephense',
+  'phpactor',
   'lua_ls',
   'volar',
-  'astro',
-  'svelte',
   'rust_analyzer',
-  -- 'gopls',
+  'gopls',
+  'golangci_lint_ls',
 })
 
 lsp.on_attach(function(_, bufnr)
@@ -28,8 +27,6 @@ lsp.on_attach(function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -192,7 +189,3 @@ require("lspconfig").lua_ls.setup {
     Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
   },
 }
-
-require("lspconfig").ocamllsp.setup({
-  on_attach = require'virtualtypes'.on_attach
-})
