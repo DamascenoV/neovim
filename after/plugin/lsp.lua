@@ -7,13 +7,12 @@ lsp.ensure_installed({
   'html',
   'cssls',
   'tsserver',
-  'intelephense',
+  'phpactor',
   'lua_ls',
   'volar',
-  'astro',
-  'svelte',
   'rust_analyzer',
- -- 'gopls',
+  'gopls',
+  'golangci_lint_ls',
 })
 
 lsp.on_attach(function(_, bufnr)
@@ -28,8 +27,6 @@ lsp.on_attach(function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
@@ -72,25 +69,27 @@ require('fidget').setup({
 local lspkind = require 'lspkind'
 
 local cmp = require('cmp')
+local types = require("cmp.types")
+local str = require("cmp.utils.str")
 local luasnip = require('luasnip')
 
-local function formatLspKind(entry, vim_item)
-  if vim_item.kind == 'Color' and entry.completion_item.documentation then
-    local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
-    if r then
-      local color = string.format('%02x', r) .. string.format('%02x', g) .. string.format('%02x', b)
-      local group = 'Tw_' .. color
-      if vim.fn.hlID(group) < 1 then
-        vim.api.nvim_set_hl(0, group, { fg = '#' .. color })
-      end
-      vim_item.kind = "●"
-      vim_item.kind_hl_group = group
-      return vim_item
-    end
-  end
-  vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
-  return vim_item
-end
+-- local function formatLspKind(entry, vim_item)
+--   if vim_item.kind == 'Color' and entry.completion_item.documentation then
+--     local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
+--     if r then
+--       local color = string.format('%02x', r) .. string.format('%02x', g) .. string.format('%02x', b)
+--       local group = 'Tw_' .. color
+--       if vim.fn.hlID(group) < 1 then
+--         vim.api.nvim_set_hl(0, group, { fg = '#' .. color })
+--       end
+--       vim_item.kind = "●"
+--       vim_item.kind_hl_group = group
+--       return vim_item
+--     end
+--   end
+--   vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
+--   return vim_item
+-- end
 
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -131,12 +130,38 @@ lsp.setup_nvim_cmp({
   },
   mapping = cmp_mappings,
   formatting = {
-    format = require("lspkind").cmp_format({
+    format = lspkind.cmp_format({
+      fields = { "kind", "abbr", "menu" },
       mode = "symbol_text",
       maxwidth = 50,
       ellipsis_char = "...",
       before = function(entry, vim_item)
-        vim_item = formatLspKind(entry, vim_item)
+        -- vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
+        -- local lsp_icon = "🅻"
+        -- if lsp ~= nil and lsp.ocamllsp ~= nil then
+        --   lsp_icon = "🐫"
+        -- end
+        -- vim_item.menu = ({
+        --   buffer = "🅱",
+        --   nvim_lsp = lsp_icon,
+        --   luasnip = "㊊"
+        -- })[entry.source.name]
+        -- return vim_item
+
+        -- Get the full snippet (and only keep first line)
+        local word = entry:get_insert_text()
+        if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+          word = vim.lsp.util.parse_snippet(word)
+        end
+        word = str.oneline(word)
+        if
+            entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
+            and string.sub(vim_item.abbr, -1, -1) == "~"
+        then
+          word = word .. "~"
+        end
+        vim_item.abbr = word
+
         return vim_item
       end
     })
@@ -160,7 +185,7 @@ vim.diagnostic.config({
 })
 
 require("lspconfig").lua_ls.setup {
-    settings = {
-      Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
-    },
-  }
+  settings = {
+    Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
+  },
+}

@@ -97,6 +97,7 @@ lazy.setup({
     enabled = true
   },
 
+  'olexsmir/gopher.nvim',
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
   'mbbill/undotree',
@@ -131,4 +132,5 @@ lazy.setup({
   --   dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' }
   -- },
 
+  'jubnzv/virtual-types.nvim',
 })
