@@ -34,7 +34,7 @@ require("catppuccin").setup({
             ["@variable"] = { fg = "#e0e0e0", style = {} },
             ["@variable.builtin"] = { fg = "#b294bb", style = {} },
             ["@field"] = { fg = "#e0e0e0", style = {} },
-            ["@property"] = { fg = "#e0e0e0", style = {} },
+            ["@property"] = { fg = "#a3bbcf", style = {} },
             ["@type"] = { fg = "#cc6666", style = {} },
             ["@type.builtin"] = { fg = "#cc6666", style = {} },
             ["@parameter"] = { fg = "#cc6666", style = {} },
@@ -46,6 +46,7 @@ require("catppuccin").setup({
             ['@function.builtin'] = { fg = "#a3bbcf", style = {} },
             ['@function.call'] = { fg = "#f8fe7a", style = {} },
             ['@constant.builtin'] = { fg = "#a992cd", style = {} },
+            ['@constructor'] = { fg = "Orange", style = {} },
             ['@method'] = { fg = "#f8fe7a", style = {} },
             ['@method.call'] = { fg = "#f8fe7a", style = {} },
             ['@exception'] = { fg = "#bf4040", style = {} },
@@ -65,6 +66,7 @@ require("catppuccin").setup({
             ['Identifier'] = { fg = "#cc6666", style = {} },
             ['String'] = { fg = "#99cc99", style = {} },
             ['Error'] = { fg = "#d98c8c", style = {} },
+            ['TreesitterContextLineNumber'] = { fg = "#a3bbcf", style = {} },
         }
     end,
     integrations = {

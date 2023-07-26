@@ -7,7 +7,8 @@ lsp.ensure_installed({
   'html',
   'cssls',
   'tsserver',
-  'phpactor',
+  --'phpactor',
+  'intelephense',
   'lua_ls',
   'volar',
   'rust_analyzer',
@@ -177,15 +178,62 @@ lsp.set_preferences {
   }
 }
 
-lsp.setup()
-
 vim.diagnostic.config({
   virtual_text = true,
   signs = true,
 })
 
-require("lspconfig").lua_ls.setup {
+local lspconfig = require("lspconfig")
+
+lspconfig.lua_ls.setup {
   settings = {
-    Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false } },
+    Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false }, hint = { enable = true } },
   },
 }
+
+lspconfig.gopls.setup {
+  settings = {
+    gopls = {
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      }
+    }
+  }
+}
+
+lspconfig.tsserver.setup({
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      }
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      }
+    }
+  }
+})
+
+lsp.setup()

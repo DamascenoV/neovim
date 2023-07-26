@@ -88,6 +88,8 @@ vim.api.nvim_command("autocmd TermOpen * startinsert")             -- starts in 
 vim.api.nvim_command("autocmd TermOpen * setlocal nonumber norelativenumber")       -- no numbers
 vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no") -- no sign column
 
+vim.lsp.inlay_hint(0, true)
+
 set_cursor_line('WinLeave', false)
 set_cursor_line("WinEnter", true)
 set_cursor_line('FileType', false, 'TelescopePrompt')

@@ -33,7 +33,11 @@ lazy.setup({
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/nvim-cmp",
-      "j-hui/fidget.nvim",
+      {
+        "j-hui/fidget.nvim",
+        tag = "legacy",
+        config = true
+      },
       "folke/neodev.nvim",
     }
   },
@@ -50,6 +54,7 @@ lazy.setup({
   },
 
   "akinsho/bufferline.nvim",
+  "jose-elias-alvarez/null-ls.nvim",
 
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -88,7 +93,6 @@ lazy.setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   'lewis6991/gitsigns.nvim',
-  'kdheepak/lazygit.nvim',
   'akinsho/git-conflict.nvim',
 
   {
@@ -104,13 +108,12 @@ lazy.setup({
   'tpope/vim-surround',
   'tpope/vim-sleuth',
   'tpope/vim-repeat',
+  'tpope/vim-dotenv',
+  { 'phaazon/hop.nvim', branch = 'v2' },
   'norcalli/nvim-colorizer.lua',
 
   -- Themes
-  'Tsuzat/NeoSolarized.nvim', -- Theme NeoSolarized
-  'projekt0n/github-nvim-theme', -- Theme Github
   { "catppuccin/nvim", name = "catppuccin" },
-  'ellisonleao/gruvbox.nvim',
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
 
   -- Search Projects
@@ -119,18 +122,14 @@ lazy.setup({
   -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
 
-  { 'junegunn/fzf', build = './install --all' },
-  { 'junegunn/fzf.vim' },
-
   -- Tabnine
   { 'tzachar/cmp-tabnine', build = "./install.sh", dependencies = 'hrsh7th/nvim-cmp' },
 
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
-  -- { 'jackMort/ChatGPT.nvim',
-  --   dependencies = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' }
-  -- },
+  -- Codeium
+  { 'Exafunction/codeium.vim' },
 
-  'jubnzv/virtual-types.nvim',
+  'rcarriga/nvim-notify',
 })

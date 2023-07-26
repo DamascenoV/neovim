@@ -73,9 +73,6 @@ keymap('n', ']d', vim.diagnostic.goto_next)
 keymap('n', '<leader>e', vim.diagnostic.open_float)
 keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
-
--- ChatGPT
--- keymap('n', '<leader>tt', '<cmd>ChatGPTEditWithInstructions<CR>', { silent = true })
--- keymap('n', '<Leader>tk', '<cmd>:ChatGPT<cr>', { silent = true })
--- keymap('n', '<Leader>tj', '<cmd>:ChatGPTActAs<cr>', { silent = true })
+-- Hop keymaps
+keymap('n', '<C-t>', ':HopWord<CR>')
 
