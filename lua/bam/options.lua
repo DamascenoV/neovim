@@ -32,8 +32,6 @@ vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(" ", 3)
 vim.opt.fillchars = { eob = "~" }
-vim.opt.undofile = true
-vim.opt.signcolumn = 'yes'
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.listchars:append "tab:  ,trail:-"

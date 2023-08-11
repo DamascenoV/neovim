@@ -187,7 +187,7 @@ local lspconfig = require("lspconfig")
 
 lspconfig.lua_ls.setup {
   settings = {
-    Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false }, hint = { enable = true } },
+    Lua = { workspace = { checkThirdParty = false }, semantic = { enable = false }, hint = { enable = false } },
   },
 }
 

@@ -16,8 +16,11 @@ keymap('n', '<Down>', '<C-e>') -- Move Window Down
 keymap('n', '+', '<C-a>') -- Incremente
 keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
-keymap('n', 'dw', 'vb"_d') -- Delete word backwards
+keymap("n", "<C-d>", "<C-d>zz") -- Move to the end of the line
+keymap("n", "<C-u>", "<C-u>zz") -- Move to the start of the line
+-- keymap('n', 'dw', 'vb"_d') -- Delete word backwards
 keymap('n', 'x', '"_x')
+keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 keymap('n', '<leader>V', '<cmd>vsplit<CR>') -- Vertical Split
@@ -43,7 +46,7 @@ keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Undu Three Toogle
 -- Lspsaga keymaps
 keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
 keymap('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
-keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<CR>', { silent = true }) -- Search references
+keymap('n', 'gh', '<cmd>Lspsaga finder<CR>', { silent = true }) -- Search references
 keymap('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', { silent = true }) -- Search references
 
 

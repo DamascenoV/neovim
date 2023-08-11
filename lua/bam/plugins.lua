@@ -35,8 +35,8 @@ lazy.setup({
       "hrsh7th/nvim-cmp",
       {
         "j-hui/fidget.nvim",
+        event = "LspAttach",
         tag = "legacy",
-        config = true
       },
       "folke/neodev.nvim",
     }
@@ -95,12 +95,6 @@ lazy.setup({
   'lewis6991/gitsigns.nvim',
   'akinsho/git-conflict.nvim',
 
-  {
-    "karb94/neoscroll.nvim",
-    event = "BufEnter",
-    enabled = true
-  },
-
   'olexsmir/gopher.nvim',
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
@@ -122,9 +116,6 @@ lazy.setup({
   -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
 
-  -- Tabnine
-  { 'tzachar/cmp-tabnine', build = "./install.sh", dependencies = 'hrsh7th/nvim-cmp' },
-
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
@@ -132,4 +123,10 @@ lazy.setup({
   { 'Exafunction/codeium.vim' },
 
   'rcarriga/nvim-notify',
+
+  {
+   "sourcegraph/sg.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    build = "nvim -l build/init.lua",
+  }
 })
