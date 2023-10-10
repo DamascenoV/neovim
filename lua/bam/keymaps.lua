@@ -16,8 +16,8 @@ keymap('n', '<Down>', '<C-e>') -- Move Window Down
 keymap('n', '+', '<C-a>') -- Incremente
 keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
-keymap("n", "<C-d>", "<C-d>zz") -- Move to the end of the line
-keymap("n", "<C-u>", "<C-u>zz") -- Move to the start of the line
+-- keymap("n", "<C-d>", "<C-d>zz") -- Move to the end of the line
+-- keymap("n", "<C-u>", "<C-u>zz") -- Move to the start of the line
 -- keymap('n', 'dw', 'vb"_d') -- Delete word backwards
 keymap('n', 'x', '"_x')
 keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
@@ -30,7 +30,7 @@ keymap('v', '>', '>gv')
 
 
 -- Shortcut to Config
-keymap('n', '<leader>Nc', '<cmd>edit ~/.config/nvim/init.lua<CR>') -- Go to Neovim config
+keymap('n', '<leader>Nc', '<cmd>edit ~/.config/nvim<CR>') -- Go to Neovim config
 
 
 -- Buffer keymaps
@@ -53,7 +53,6 @@ keymap('n', 'gd', '<cmd>Lspsaga goto_definition<CR>', { silent = true }) -- Sear
 -- Git DiffView
 keymap('n', '<leader>go', '<cmd>DiffviewOpen<CR>', { silent = true }) -- Diff View Open
 keymap('n', '<leader>gc', '<cmd>DiffviewClose<CR>', { silent = true }) -- Diff View Close
-keymap('n', '<leader>gl', '<cmd>LazyGit<CR>', { silent = true }) -- LazyGit
 
 
 -- See `:help telescope.builtin`

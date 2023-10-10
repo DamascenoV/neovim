@@ -54,7 +54,7 @@ lazy.setup({
   },
 
   "akinsho/bufferline.nvim",
-  "jose-elias-alvarez/null-ls.nvim",
+  -- "jose-elias-alvarez/null-ls.nvim",
 
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -95,6 +95,14 @@ lazy.setup({
   'lewis6991/gitsigns.nvim',
   'akinsho/git-conflict.nvim',
 
+  -- FLUTTER
+  'akinsho/flutter-tools.nvim',
+  "RobertBrunhage/flutter-riverpod-snippets",
+  "Neevash/awesome-flutter-snippets",
+
+  -- Language support, mainly for indentation
+  "dart-lang/dart-vim-plugin",
+
   'olexsmir/gopher.nvim',
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
@@ -104,7 +112,7 @@ lazy.setup({
   'tpope/vim-repeat',
   'tpope/vim-dotenv',
   { 'phaazon/hop.nvim', branch = 'v2' },
-  'norcalli/nvim-colorizer.lua',
+  --'norcalli/nvim-colorizer.lua',
 
   -- Themes
   { "catppuccin/nvim", name = "catppuccin" },
@@ -124,9 +132,9 @@ lazy.setup({
 
   'rcarriga/nvim-notify',
 
-  {
-   "sourcegraph/sg.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    build = "nvim -l build/init.lua",
-  }
+  -- {
+  --  "sourcegraph/sg.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   build = "nvim -l build/init.lua",
+  -- }
 })
