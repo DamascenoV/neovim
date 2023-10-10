@@ -43,6 +43,7 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Go To Normal mode
 vim.keymap.set('i', 'jj', '<ESC>', { silent = true })
+vim.keymap.set('i', '<C-c>', '<ESC>', { silent = true })
 
 -- Set colorscheme
 vim.o.termguicolors = true

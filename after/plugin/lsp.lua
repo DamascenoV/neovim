@@ -35,7 +35,7 @@ lsp.on_attach(function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<C-.>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -70,27 +70,17 @@ require('fidget').setup({
 local lspkind = require 'lspkind'
 
 local cmp = require('cmp')
+local cmp_window = require('cmp.config.window')
 local types = require("cmp.types")
 local str = require("cmp.utils.str")
 local luasnip = require('luasnip')
 
--- local function formatLspKind(entry, vim_item)
---   if vim_item.kind == 'Color' and entry.completion_item.documentation then
---     local _, _, r, g, b = string.find(entry.completion_item.documentation, '^rgb%((%d+), (%d+), (%d+)')
---     if r then
---       local color = string.format('%02x', r) .. string.format('%02x', g) .. string.format('%02x', b)
---       local group = 'Tw_' .. color
---       if vim.fn.hlID(group) < 1 then
---         vim.api.nvim_set_hl(0, group, { fg = '#' .. color })
---       end
---       vim_item.kind = "●"
---       vim_item.kind_hl_group = group
---       return vim_item
---     end
---   end
---   vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
---   return vim_item
--- end
+cmp.setup {
+  window = {
+    completion = cmp_window.bordered(),
+    documentation = cmp_window.bordered()
+  }
+}
 
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -233,6 +223,27 @@ lspconfig.tsserver.setup({
         includeInlayEnumMemberValueHints = true,
       }
     }
+  }
+})
+
+lspconfig.dartls.setup({
+  settings = {
+    dart = {
+      analysisExcludedFolders = {},
+      updateImportsOnRename = true,
+      completeFunctionCalls = true,
+      showTodos = true,
+    },
+  },
+})
+
+
+-- For Work with Flex
+lspconfig.intelephense.setup({
+  filetypes = {
+    "php",
+    "pfxml",
+    "blade",
   }
 })
 

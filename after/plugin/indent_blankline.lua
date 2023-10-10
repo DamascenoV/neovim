@@ -1,9 +1,12 @@
-local status, indent_blankline = pcall(require, 'indent_blankline')
+local status, indent_blankline = pcall(require, 'ibl')
 if not status then return end
 
 indent_blankline.setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
-  show_current_context = true,
-  show_current_context_start = true,
+  indent = {
+    char = '┊',
+    smart_indent_cap = true,
+  },
+  scope = {
+    enabled = true
+  }
 }

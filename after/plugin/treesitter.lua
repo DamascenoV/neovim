@@ -61,4 +61,14 @@ treesitter.setup {
   },
 }
 
+-- For Work with Flex
+vim.filetype.add {
+  extension = {
+    pfxml = 'pfxml',
+  },
+}
+
+vim.treesitter.language.register('php', 'pfxml')
+
+
 vim.cmd [[highlight IncludedC guibg=#373b41]]
