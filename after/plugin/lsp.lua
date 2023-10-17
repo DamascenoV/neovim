@@ -237,7 +237,6 @@ lspconfig.dartls.setup({
   },
 })
 
-
 -- For Work with Flex
 lspconfig.intelephense.setup({
   filetypes = {
