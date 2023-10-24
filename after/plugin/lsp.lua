@@ -79,7 +79,10 @@ cmp.setup {
   window = {
     completion = cmp_window.bordered(),
     documentation = cmp_window.bordered()
-  }
+  },
+  sources = {
+    { name = 'nvim_lsp_signature_help'},
+  },
 }
 
 local cmp_mappings = lsp.defaults.cmp_mappings({

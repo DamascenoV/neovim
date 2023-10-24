@@ -138,4 +138,9 @@ lazy.setup({
   --   dependencies = { "nvim-lua/plenary.nvim" },
   --   build = "nvim -l build/init.lua",
   -- }
+
+  -- Database
+  { 'tpope/vim-dadbod' },
+  { 'kristijanhusak/vim-dadbod-ui' },
+  { 'kristijanhusak/vim-dadbod-completion' }
 })
