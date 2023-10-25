@@ -15,6 +15,7 @@ vim.o.smartcase = true
 vim.o.updatetime = 1000
 vim.wo.signcolumn = 'yes'
 vim.o.expandtab = true
+vim.o.tabstop = 4
 vim.o.smartindent = true
 vim.o.wrap = true
 vim.o.swapfile = false
