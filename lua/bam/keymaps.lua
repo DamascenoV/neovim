@@ -83,3 +83,6 @@ keymap('n', '<leader>h', ':lua require("harpoon.ui").toggle_quick_menu()<CR>')
 keymap('n', '<leader>m', ':lua require("harpoon.mark").add_file()<CR>')
 keymap('n', '<leader>k', ':lua require("harpoon.ui").nav_next()<CR>')
 keymap('n', '<leader>j', ':lua require("harpoon.ui").nav_prev()<CR>')
+
+-- DBUI
+keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>')
