@@ -82,8 +82,10 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp_signature_help'},
+    { name = 'cody'},
   },
 }
+
 
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -121,43 +123,24 @@ lsp.setup_nvim_cmp({
     { name = 'luasnip' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'cmp_tabnine' },
+    { name = "cody" },
   },
   mapping = cmp_mappings,
   formatting = {
     format = lspkind.cmp_format({
       fields = { "kind", "abbr", "menu" },
       mode = "symbol_text",
-      maxwidth = 50,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        path = "[path]",
+        nvim_lua = "[Lua]",
+        luasnip = "[LuaSnip]",
+        cmp_tabnine = "[TabNine]",
+        cody = "[Cody]",
+      },
+      maxwidth = 25,
       ellipsis_char = "...",
-      before = function(entry, vim_item)
-        -- vim_item.kind = lspkind.symbolic(vim_item.kind) and lspkind.symbolic(vim_item.kind) or vim_item.kind
-        -- local lsp_icon = "🅻"
-        -- if lsp ~= nil and lsp.ocamllsp ~= nil then
-        --   lsp_icon = "🐫"
-        -- end
-        -- vim_item.menu = ({
-        --   buffer = "🅱",
-        --   nvim_lsp = lsp_icon,
-        --   luasnip = "㊊"
-        -- })[entry.source.name]
-        -- return vim_item
-
-        -- Get the full snippet (and only keep first line)
-        local word = entry:get_insert_text()
-        if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-          word = vim.lsp.util.parse_snippet(word)
-        end
-        word = str.oneline(word)
-        if
-            entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet
-            and string.sub(vim_item.abbr, -1, -1) == "~"
-        then
-          word = word .. "~"
-        end
-        vim_item.abbr = word
-
-        return vim_item
-      end
     })
   }
 })

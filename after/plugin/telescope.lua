@@ -1,13 +1,18 @@
 local status, telescope = pcall(require, 'telescope')
 if not status then return end
 
+local actions = require('telescope.actions')
+
 telescope.setup {
   defaults = {
     mappings = {
       i = {
         ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<C-d>'] = actions.delete_buffer,
       },
+      n = {
+        ['<C-d>'] = actions.delete_buffer,
+      }
     },
   },
   pickers = {

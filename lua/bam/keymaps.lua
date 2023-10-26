@@ -10,7 +10,7 @@ keymap('', '<C-Up>', '<cmd>resize -2<CR>') -- Resize window
 keymap('', '<C-Down>', '<cmd>resize +2<CR>') -- Resize window
 keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>') -- Resize window
 keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>') -- Resize window
-keymap('', '<C-n>', '<cmd>NeoTreeShowToggle<CR>') -- File Tree
+keymap('', '<C-n>', '<cmd>NeoTreeFocusToggle<CR>') -- File Tree
 keymap('n', '<Up>', '<C-y>') -- Move Window Up
 keymap('n', '<Down>', '<C-e>') -- Move Window Down
 keymap('n', '+', '<C-a>') -- Incremente

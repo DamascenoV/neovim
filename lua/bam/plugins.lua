@@ -133,11 +133,11 @@ lazy.setup({
   { 'ThePrimeagen/harpoon' },
   'rcarriga/nvim-notify',
 
-  -- {
-  --  "sourcegraph/sg.nvim",
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  --   build = "nvim -l build/init.lua",
-  -- }
+  {
+   "sourcegraph/sg.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    build = "nvim -l build/init.lua",
+  },
 
   -- Database
   {

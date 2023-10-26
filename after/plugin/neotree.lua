@@ -13,5 +13,15 @@ neotree.setup {
   source_selector = {
     winbar = true,
     statusline = false
+  },
+  buffers = {
+    follow_current_file = {
+      enabled = true
+    }
+  },
+  filesystem = {
+      follow_current_file = {
+          enabled = true
+      }
   }
 }
