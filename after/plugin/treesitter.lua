@@ -2,7 +2,7 @@ local status, treesitter = pcall(require, 'nvim-treesitter.configs')
 if not status then return end
 
 treesitter.setup {
-  ensure_installed = { 'go', 'lua', 'typescript', 'vim', 'php', 'vue', 'svelte', 'astro' },
+  ensure_installed = { 'go', 'lua', 'typescript', 'vim', 'php', 'vue', 'markdown', 'markdown_inline' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -69,6 +69,5 @@ vim.filetype.add {
 }
 
 vim.treesitter.language.register('php', 'pfxml')
-
 
 vim.cmd [[highlight IncludedC guibg=#373b41]]

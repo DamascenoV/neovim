@@ -147,4 +147,5 @@ lazy.setup({
       'kristijanhusak/vim-dadbod-completion'
     }
   },
+  'christoomey/vim-tmux-navigator',
 })
