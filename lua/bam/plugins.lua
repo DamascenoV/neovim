@@ -55,7 +55,6 @@ lazy.setup({
   },
 
   "akinsho/bufferline.nvim",
-  -- "jose-elias-alvarez/null-ls.nvim",
 
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -113,7 +112,6 @@ lazy.setup({
   'tpope/vim-repeat',
   'tpope/vim-dotenv',
   { 'phaazon/hop.nvim', branch = 'v2' },
-  --'norcalli/nvim-colorizer.lua',
 
   -- Themes
   { "catppuccin/nvim", name = "catppuccin" },

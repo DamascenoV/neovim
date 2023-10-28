@@ -76,13 +76,6 @@ ins_left {
   padding = { right = 1 }, -- We don't need space before this
 }
 
--- ins_left {
---   function()
---     return 'BAM'
---   end,
---   color = { fg = colors.red, gui = 'bold' }
--- }
-
 ins_left {
   -- Lsp server name .
   function()

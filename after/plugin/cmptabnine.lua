@@ -7,10 +7,6 @@ tabnine:setup({
 	sort = true,
 	run_on_every_keystroke = true,
 	snippet_placeholder = '..',
-	ignored_file_types = {
-		-- default is not to ignore
-		-- uncomment to ignore in lua:
-		-- lua = true
-	},
+	ignored_file_types = {},
 	show_prediction_strength = false
 })
