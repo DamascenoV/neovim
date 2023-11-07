@@ -71,8 +71,6 @@ local lspkind = require 'lspkind'
 
 local cmp = require('cmp')
 local cmp_window = require('cmp.config.window')
-local types = require("cmp.types")
-local str = require("cmp.utils.str")
 local luasnip = require('luasnip')
 
 cmp.setup {
@@ -122,7 +120,6 @@ lsp.setup_nvim_cmp({
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'nvim_lsp_signature_help' },
-    { name = 'cmp_tabnine' },
     { name = "cody" },
   },
   mapping = cmp_mappings,
@@ -136,7 +133,6 @@ lsp.setup_nvim_cmp({
         path = "[path]",
         nvim_lua = "[Lua]",
         luasnip = "[LuaSnip]",
-        cmp_tabnine = "[TabNine]",
         cody = "[Cody]",
       },
       maxwidth = 25,

@@ -54,8 +54,6 @@ lazy.setup({
     }
   },
 
-  "akinsho/bufferline.nvim",
-
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     dependencies = {
@@ -74,8 +72,6 @@ lazy.setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     }
   },
-  'nvim-treesitter/nvim-treesitter-context',
-  { 'nvim-treesitter/playground' },
   "windwp/nvim-ts-autotag",
 
   { "windwp/nvim-autopairs", config = true, event = "InsertEnter" },
@@ -95,15 +91,6 @@ lazy.setup({
   'lewis6991/gitsigns.nvim',
   'akinsho/git-conflict.nvim',
 
-  -- FLUTTER
-  'akinsho/flutter-tools.nvim',
-  "RobertBrunhage/flutter-riverpod-snippets",
-  "Neevash/awesome-flutter-snippets",
-
-  -- Language support, mainly for indentation
-  "dart-lang/dart-vim-plugin",
-
-  'olexsmir/gopher.nvim',
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
   'mbbill/undotree',

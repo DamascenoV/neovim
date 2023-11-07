@@ -16,9 +16,6 @@ keymap('n', '<Down>', '<C-e>') -- Move Window Down
 keymap('n', '+', '<C-a>') -- Incremente
 keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
--- keymap("n", "<C-d>", "<C-d>zz") -- Move to the end of the line
--- keymap("n", "<C-u>", "<C-u>zz") -- Move to the start of the line
--- keymap('n', 'dw', 'vb"_d') -- Delete word backwards
 keymap('n', 'x', '"_x')
 keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
