@@ -17,6 +17,8 @@ keymap('n', '+', '<C-a>') -- Incremente
 keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
 keymap('n', 'x', '"_x')
+keymap('n', '<leader>t', '<cmd>terminal<CR>') -- Open Terminal
+keymap('t', '<C-c>', '<C-\\><C-n>') -- Go to normal mode in terminal
 keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
