@@ -7,7 +7,6 @@ lsp.ensure_installed({
   'html',
   'cssls',
   'tsserver',
-  --'phpactor',
   'intelephense',
   'lua_ls',
   'volar',
@@ -208,16 +207,11 @@ lspconfig.tsserver.setup({
   }
 })
 
-lspconfig.dartls.setup({
-  settings = {
-    dart = {
-      analysisExcludedFolders = {},
-      updateImportsOnRename = true,
-      completeFunctionCalls = true,
-      showTodos = true,
-    },
-  },
-})
+lspconfig.ocamllsp.setup{
+  get_language_id = function(_, ftype)
+      return ftype
+    end,
+}
 
 -- For Work with Flex
 lspconfig.intelephense.setup({

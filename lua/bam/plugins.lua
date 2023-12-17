@@ -29,7 +29,11 @@ lazy.setup({
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
-      "L3MON4D3/LuaSnip",
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        build = "make install_jsregexp"
+      },
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/nvim-cmp",
@@ -101,8 +105,9 @@ lazy.setup({
   { 'phaazon/hop.nvim', branch = 'v2' },
 
   -- Themes
-  { "catppuccin/nvim", name = "catppuccin" },
+  { "catppuccin/nvim", name = "catppuccin", lazy=true },
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
+  { 'ramojus/mellifluous.nvim' },
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },
@@ -133,5 +138,9 @@ lazy.setup({
     }
   },
   'christoomey/vim-tmux-navigator',
-  'stevearc/dressing.nvim',
+
+  -- Ocaml Stuff
+  {
+    'tjdevries/ocaml.nvim', 
+  }
 })
