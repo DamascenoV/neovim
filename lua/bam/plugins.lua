@@ -57,6 +57,7 @@ lazy.setup({
       "kyazdani42/nvim-web-devicons"
     }
   },
+  'tjdevries/express_line.nvim',
 
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -115,6 +116,8 @@ lazy.setup({
   -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
 
+  { 'nvim-telescope/telescope-ui-select.nvim' },
+
   -- Git DiffView
   { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
@@ -141,6 +144,6 @@ lazy.setup({
 
   -- Ocaml Stuff
   {
-    'tjdevries/ocaml.nvim', 
+    'tjdevries/ocaml.nvim',
   }
 })

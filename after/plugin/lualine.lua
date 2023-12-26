@@ -108,7 +108,7 @@ ins_left {
 ins_left {
   'diagnostics',
   sources = { 'nvim_lsp' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
+  symbols = { error = 'E- ', warn = 'W- ', info = 'I- ' },
   separator = ''
 }
 

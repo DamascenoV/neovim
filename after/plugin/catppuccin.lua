@@ -5,7 +5,7 @@ require("catppuccin").setup({
         dark = "mocha",
     },
     transparent_background = true,
-    show_end_of_buffer = false, -- show the '~' characters after the end of buffers
+    show_end_of_buffer = true, -- show the '~' characters after the end of buffers
     term_colors = false,
     dim_inactive = {
         enabled = false,
@@ -51,6 +51,8 @@ require("catppuccin").setup({
             ['@method.call'] = { fg = "#f8fe7a", style = {} },
             ['@exception'] = { fg = "#bf4040", style = {} },
             ['@keyword.return'] = { fg = "#bf4040", style = {} },
+            ["@operator"] = { fg = "#cc6666", style = {} },
+            ["@symbol"] = { fg = "#8abeb7", style = {} },
             ['DiagnosticError'] = { fg = "#cc6666", style = {} },
             ['DiagnosticWarn'] = { fg = "Orange", style = {} },
             ['DiagnosticInfo'] = { fg = "LightBlue", style = {} },
@@ -67,6 +69,7 @@ require("catppuccin").setup({
             ['String'] = { fg = "#99cc99", style = {} },
             ['Error'] = { fg = "#d98c8c", style = {} },
             ['TreesitterContextLineNumber'] = { fg = "#a3bbcf", style = {} },
+            ['WinSeparator'] = { fg = "#e0e0e0", style = {} },
         }
     end,
     integrations = {
@@ -78,3 +81,5 @@ require("catppuccin").setup({
         mini = false,
     },
 })
+
+vim.cmd("colorscheme catppuccin")

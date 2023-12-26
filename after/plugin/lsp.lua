@@ -213,6 +213,8 @@ lspconfig.ocamllsp.setup{
     end,
 }
 
+lspconfig.ocamllsp.setup{}
+
 -- For Work with Flex
 lspconfig.intelephense.setup({
   filetypes = {

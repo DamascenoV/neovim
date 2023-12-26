@@ -18,6 +18,13 @@ keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
 keymap('n', 'x', '"_x')
 keymap('n', '<leader>T', '<cmd>terminal<CR>') -- Open Terminal
+keymap('n', '<leader>st', function ()
+  vim.cmd('vnew')
+  vim.cmd('wincmd J')
+  vim.api.nvim_win_set_height(0, 12)
+  vim.cmd('term')
+end
+) -- Open Small Terminal
 keymap('t', '<C-c>', '<C-\\><C-n>')
 keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
