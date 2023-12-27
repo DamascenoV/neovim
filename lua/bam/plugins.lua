@@ -57,14 +57,14 @@ lazy.setup({
       "kyazdani42/nvim-web-devicons"
     }
   },
-  'tjdevries/express_line.nvim',
 
   { "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-    }
+    },
+    lazy = true
   },
   { "lukas-reineke/indent-blankline.nvim", event = "BufEnter" },
 
@@ -85,16 +85,17 @@ lazy.setup({
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
-    }
+    },
+    lazy = true
   },
 
   { "numToStr/Comment.nvim", config = true, event = "BufEnter" },
-  { "iamcco/markdown-preview.nvim", ft = "markdown" },
+  { "iamcco/markdown-preview.nvim", ft = "markdown", lazy = true },
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-  'lewis6991/gitsigns.nvim',
-  'akinsho/git-conflict.nvim',
+  { 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb' },
+  { 'lewis6991/gitsigns.nvim' },
+  { 'akinsho/git-conflict.nvim', lazy = true},
 
   'jwalton512/vim-blade',
   'tpope/vim-sleuth',
@@ -108,13 +109,9 @@ lazy.setup({
   -- Themes
   { "catppuccin/nvim", name = "catppuccin", lazy=true },
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
-  { 'ramojus/mellifluous.nvim' },
 
   -- Search Projects
   { 'nvim-telescope/telescope-project.nvim' },
-
-  -- Fuzzy Finder Algorithm which dependencies local dependencies to be built. Only load if `make` is available
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
 
   { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -145,5 +142,7 @@ lazy.setup({
   -- Ocaml Stuff
   {
     'tjdevries/ocaml.nvim',
-  }
+  },
+
+  'goolord/alpha-nvim'
 })
