@@ -140,9 +140,14 @@ lazy.setup({
   'christoomey/vim-tmux-navigator',
 
   -- Ocaml Stuff
-  {
-    'tjdevries/ocaml.nvim',
-  },
-
-  'goolord/alpha-nvim'
+  -- NOTE : Requires Ocaml, If you want to use it you need to install (and discomment the following) 
+  -- -> after/plugin/ocaml.lua
+  -- {
+  --   'tjdevries/ocaml.nvim',
+  --   lazy = true,
+  --   ft = "ocaml",
+  --   config = function()
+  --     require("ocaml").update()
+  --   end
+  -- },
 })

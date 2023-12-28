@@ -34,6 +34,7 @@ vim.opt.fillchars = { eob = "~" }
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.listchars:append "tab:  ,trail:-"
+--vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 
 -- Keymaps for better default experience
