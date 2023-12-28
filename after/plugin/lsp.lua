@@ -4,7 +4,10 @@ if not status then return end
 lsp.preset('recommended')
 
 lsp.on_attach(function(_, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+  lsp.default_keymaps({
+    buffer = bufnr,
+    exclude = { 'F2', 'F3', 'F4', 'gl' }
+  })
 end)
 
 require('mason').setup()

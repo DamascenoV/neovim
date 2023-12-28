@@ -38,6 +38,7 @@ require("catppuccin").setup({
             ["@type"] = { fg = "#cc6666", style = {} },
             ["@type.builtin"] = { fg = "#cc6666", style = {} },
             ["@parameter"] = { fg = "#cc6666", style = {} },
+            ["@parameter.go"] = { fg = "#e0e0e0", style = {} },
             ['@statement'] = { fg = "#bf4040"},
             ["@namespace"] = { fg = "#a3bbcf", style = {} },
             ["@include"] = { fg = "#8abeb7", style = {} },

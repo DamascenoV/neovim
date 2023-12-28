@@ -75,6 +75,11 @@ keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind 
 keymap('n', '<leader>fp', ":lua require'telescope'.extensions.project.project{}<CR>", { desc = '[F]ind [P]rojects' })
 
 
+-- LSP
+keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+keymap('n', '<leader>fm', '<cmd>lua vim.lsp.buf.format()<cr>')
+
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)
 keymap('n', ']d', vim.diagnostic.goto_next)
