@@ -40,7 +40,7 @@ lazy.setup({
       {
         "j-hui/fidget.nvim",
         event = "LspAttach",
-        tag = "legacy",
+        tag = "v1.0.0",
       },
       "folke/neodev.nvim",
     }
@@ -57,16 +57,6 @@ lazy.setup({
       "kyazdani42/nvim-web-devicons"
     }
   },
-
-  { "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-    },
-    lazy = true
-  },
-  { "lukas-reineke/indent-blankline.nvim", event = "BufEnter" },
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -104,14 +94,11 @@ lazy.setup({
   'tpope/vim-sleuth',
   'tpope/vim-repeat',
   'tpope/vim-dotenv',
-  { 'phaazon/hop.nvim', branch = 'v2' },
+  { 'phaazon/hop.nvim', branch = 'v2', event = "VeryLazy" },
 
   -- Themes
   { "catppuccin/nvim", name = "catppuccin", lazy=true },
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
-
-  -- Search Projects
-  { 'nvim-telescope/telescope-project.nvim' },
 
   { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -139,15 +126,17 @@ lazy.setup({
   },
   'christoomey/vim-tmux-navigator',
 
+  'stevearc/oil.nvim',
   -- Ocaml Stuff
   -- NOTE : Requires Ocaml, If you want to use it you need to install (and discomment the following) 
   -- -> after/plugin/ocaml.lua
   -- {
   --   'tjdevries/ocaml.nvim',
+  --   event = "VeryLazy",
   --   lazy = true,
   --   ft = "ocaml",
-  --   config = function()
-  --     require("ocaml").update()
-  --   end
+  --   -- config = function()
+  --   --   require("ocaml").update()
+  --   -- end
   -- },
 })

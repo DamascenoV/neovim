@@ -32,15 +32,11 @@ require('neodev').setup()
 
 -- Turn on lsp status information
 require('fidget').setup({
-  text = {
-    spinner = 'moon'
+  progress = {
+    display = {
+      render_limit = 1
+    }
   },
-  align = {
-    bottom = true
-  },
-  window = {
-    relative = "editor"
-  }
 })
 
 local cmp = require('cmp')

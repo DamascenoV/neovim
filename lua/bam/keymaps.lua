@@ -10,7 +10,7 @@ keymap('', '<C-Up>', '<cmd>resize -2<CR>') -- Resize window
 keymap('', '<C-Down>', '<cmd>resize +2<CR>') -- Resize window
 keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>') -- Resize window
 keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>') -- Resize window
-keymap('', '<C-n>', '<cmd>NeoTreeFocusToggle<CR>') -- File Tree
+keymap('', '<C-n>', '<cmd>Oil --float<CR>') -- Oil File system
 keymap('n', '<Up>', '<C-y>') -- Move Window Up
 keymap('n', '<Down>', '<C-e>') -- Move Window Down
 keymap('n', '+', '<C-a>') -- Incremente
@@ -26,7 +26,7 @@ keymap('n', '<leader>st', function ()
 end
 ) -- Open Small Terminal
 keymap('t', '<C-c>', '<C-\\><C-n>')
-keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
+keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==') -- Move line up
 keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==') -- Move line down
 keymap('n', '<leader>V', '<cmd>vsplit<CR>') -- Vertical Split
@@ -72,7 +72,6 @@ keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] cur
 keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
 keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
 keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind [R]eferences' })
-keymap('n', '<leader>fp', ":lua require'telescope'.extensions.project.project{}<CR>", { desc = '[F]ind [P]rojects' })
 
 
 -- LSP
