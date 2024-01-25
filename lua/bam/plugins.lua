@@ -80,7 +80,15 @@ lazy.setup({
   },
 
   { "numToStr/Comment.nvim", config = true, event = "BufEnter" },
-  { "iamcco/markdown-preview.nvim", ft = "markdown", lazy = true },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && npm install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" }
+  },
   -- Git related plugins
   { 'tpope/vim-fugitive' },
   { 'tpope/vim-rhubarb' },
@@ -99,6 +107,7 @@ lazy.setup({
   -- Themes
   { "catppuccin/nvim", name = "catppuccin", lazy=true },
   { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
+  { 'projekt0n/github-nvim-theme', lazy = true },
 
   { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -125,6 +134,7 @@ lazy.setup({
     }
   },
   'christoomey/vim-tmux-navigator',
+  'gleam-lang/gleam.vim',
 
   'stevearc/oil.nvim',
   -- Ocaml Stuff

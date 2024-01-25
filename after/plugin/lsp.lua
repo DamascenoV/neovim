@@ -167,4 +167,6 @@ lspconfig.intelephense.setup({
   }
 })
 
+lspconfig.elixirls.setup({})
+
 lsp.setup()
