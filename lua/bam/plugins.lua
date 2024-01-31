@@ -47,12 +47,6 @@ lazy.setup({
     event = "BufRead",
   },
   { "mfussenegger/nvim-lint" },
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = {
-      "kyazdani42/nvim-web-devicons"
-    }
-  },
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -63,7 +57,6 @@ lazy.setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     }
   },
-  "windwp/nvim-ts-autotag",
 
   { "windwp/nvim-autopairs", event = "InsertEnter", opts={} },
 
@@ -87,7 +80,6 @@ lazy.setup({
   },
   -- Git related plugins
   { 'tpope/vim-fugitive' },
-  { 'tpope/vim-rhubarb' },
   { 'lewis6991/gitsigns.nvim' },
 
   {
@@ -95,30 +87,23 @@ lazy.setup({
     ft = { 'blade.php' }
   },
   'mbbill/undotree',
-  'tpope/vim-surround',
-  'tpope/vim-sleuth',
   'tpope/vim-repeat',
-  'tpope/vim-dotenv',
+  { 'tpope/vim-sleuth', event = "BufReadPre" },
   { 'phaazon/hop.nvim', branch = 'v2', event = "VeryLazy" },
-
 
   {
     "folke/noice.nvim",
     event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     }
   },
 
   { 'projekt0n/github-nvim-theme', lazy = true },
 
-  { 'nvim-telescope/telescope-ui-select.nvim' },
-
   -- Codeium
   { 'Exafunction/codeium.vim', event = "InsertEnter" },
   { 'ThePrimeagen/harpoon' },
-  'rcarriga/nvim-notify',
 
   -- {
   --  "sourcegraph/sg.nvim",
@@ -136,7 +121,6 @@ lazy.setup({
     }
   },
   'christoomey/vim-tmux-navigator',
-  'gleam-lang/gleam.vim',
 
   'stevearc/oil.nvim',
   -- Ocaml Stuff
