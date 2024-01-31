@@ -30,15 +30,6 @@ require('mason-lspconfig').setup({
 
 require('neodev').setup()
 
--- Turn on lsp status information
-require('fidget').setup({
-  progress = {
-    display = {
-      render_limit = 1
-    }
-  },
-})
-
 local cmp = require('cmp')
 local cmp_window = require('cmp.config.window')
 local cmp_action = require('lsp-zero').cmp_action()

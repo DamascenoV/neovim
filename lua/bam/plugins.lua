@@ -38,11 +38,6 @@ lazy.setup({
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-cmdline",
-      {
-        "j-hui/fidget.nvim",
-        event = "LspAttach",
-        tag = "v1.0.0",
-      },
       "folke/neodev.nvim",
     }
   },
@@ -70,7 +65,7 @@ lazy.setup({
   },
   "windwp/nvim-ts-autotag",
 
-  { "windwp/nvim-autopairs", config = true, event = "InsertEnter" },
+  { "windwp/nvim-autopairs", event = "InsertEnter", opts={} },
 
   {
     "nvim-telescope/telescope.nvim",
@@ -94,7 +89,6 @@ lazy.setup({
   { 'tpope/vim-fugitive' },
   { 'tpope/vim-rhubarb' },
   { 'lewis6991/gitsigns.nvim' },
-  -- { 'akinsho/git-conflict.nvim', lazy = true},
 
   {
     'jwalton512/vim-blade',
@@ -117,16 +111,9 @@ lazy.setup({
     }
   },
 
-  -- Themes
-  { "catppuccin/nvim", name = "catppuccin", lazy=true },
-
-  -- { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
   { 'projekt0n/github-nvim-theme', lazy = true },
 
   { 'nvim-telescope/telescope-ui-select.nvim' },
-
-  -- -- Git DiffView
-  -- { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Codeium
   { 'Exafunction/codeium.vim', event = "InsertEnter" },
