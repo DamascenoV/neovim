@@ -1,4 +1,7 @@
 require('github-theme').setup({
+    options = {
+        transparent = true
+    },
     groups = {
         all = {
             ["@variable"] = { fg = "#e0e0e0", style = {} },
@@ -13,13 +16,13 @@ require('github-theme').setup({
             ["@namespace"] = { fg = "#a3bbcf", style = {} },
             ["@include"] = { fg = "#8abeb7", style = {} },
             ['@function.builtin'] = { fg = "#a3bbcf", style = {} },
+            ['@function.call'] = { fg = "#f8fe7a", style = {} },
             ['@constant.builtin'] = { fg = "#a992cd", style = {} },
             ['@constructor'] = { fg = "Orange", style = {} },
             ['@method'] = { fg = "#f8fe7a", style = {} },
             ['@method.call'] = { fg = "#f8fe7a", style = {} },
             ['@exception'] = { fg = "#bf4040", style = {} },
             ['@keyword.return'] = { fg = "#bf4040", style = {} },
-            -- ["@operator"] = { fg = "#cc6666", style = {} },
             ["@symbol"] = { fg = "#8abeb7", style = {} },
             ['Special'] = { fg = "#a992cd", style = {} },
             ['Structure'] = { fg = "#b294bb", style = {} },
@@ -27,7 +30,6 @@ require('github-theme').setup({
             ['Conditional'] = { fg = "#cc6666", style = {} },
             ['Statement'] = { fg = "#bf4040", style = {} },
             ['Keyword'] = { fg = "#b294bb", style = {} },
-            -- ['Operator'] = { fg = "#e6b3b3", style = {} },
             ['Identifier'] = { fg = "#cc6666", style = {} },
             ['String'] = { fg = "#99cc99", style = {} },
             ['Error'] = { fg = "#d98c8c", style = {} },

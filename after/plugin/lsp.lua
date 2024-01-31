@@ -43,6 +43,22 @@ local cmp = require('cmp')
 local cmp_window = require('cmp.config.window')
 local cmp_action = require('lsp-zero').cmp_action()
 
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } }
+  })
+})
+
 cmp.setup {
   window = {
     completion = cmp_window.bordered(),

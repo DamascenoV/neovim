@@ -2,7 +2,7 @@ local status, lualine = pcall(require, 'lualine')
 if not status then return end
 
 local colors = {
-  bg       = '#202328',
+  bg       = '#000000',
   fg       = '#bbc2cf',
   yellow   = '#ECBE7B',
   cyan     = '#008080',

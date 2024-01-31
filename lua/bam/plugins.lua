@@ -37,6 +37,7 @@ lazy.setup({
       "rafamadriz/friendly-snippets",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/nvim-cmp",
+      "hrsh7th/cmp-cmdline",
       {
         "j-hui/fidget.nvim",
         event = "LspAttach",
@@ -93,10 +94,12 @@ lazy.setup({
   { 'tpope/vim-fugitive' },
   { 'tpope/vim-rhubarb' },
   { 'lewis6991/gitsigns.nvim' },
-  { 'akinsho/git-conflict.nvim', lazy = true},
+  -- { 'akinsho/git-conflict.nvim', lazy = true},
 
-  'jwalton512/vim-blade',
-  'tpope/vim-sleuth',
+  {
+    'jwalton512/vim-blade',
+    ft = { 'blade.php' }
+  },
   'mbbill/undotree',
   'tpope/vim-surround',
   'tpope/vim-sleuth',
@@ -104,26 +107,38 @@ lazy.setup({
   'tpope/vim-dotenv',
   { 'phaazon/hop.nvim', branch = 'v2', event = "VeryLazy" },
 
+
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
+  },
+
   -- Themes
   { "catppuccin/nvim", name = "catppuccin", lazy=true },
-  { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
+
+  -- { 'tjdevries/gruvbuddy.nvim', dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' } },
   { 'projekt0n/github-nvim-theme', lazy = true },
 
   { 'nvim-telescope/telescope-ui-select.nvim' },
 
-  -- Git DiffView
-  { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
+  -- -- Git DiffView
+  -- { 'sindrets/diffview.nvim', dependencies = 'nvim-lua/plenary.nvim' },
 
   -- Codeium
-  { 'Exafunction/codeium.vim' },
+  { 'Exafunction/codeium.vim', event = "InsertEnter" },
   { 'ThePrimeagen/harpoon' },
   'rcarriga/nvim-notify',
 
-  {
-   "sourcegraph/sg.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    build = "nvim -l build/init.lua",
-  },
+  -- {
+  --  "sourcegraph/sg.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   build = "nvim -l build/init.lua",
+  --   enabled = false
+  -- },
 
   -- Database
   {

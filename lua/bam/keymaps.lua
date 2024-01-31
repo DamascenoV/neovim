@@ -99,3 +99,6 @@ keymap('n', '<leader>j', ':lua require("harpoon.ui").nav_prev()<CR>')
 
 -- DBUI
 keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>')
+
+-- Codeium
+keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true})
