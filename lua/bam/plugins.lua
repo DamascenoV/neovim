@@ -91,13 +91,13 @@ lazy.setup({
   { 'tpope/vim-sleuth', event = "BufReadPre" },
   { 'phaazon/hop.nvim', branch = 'v2', event = "VeryLazy" },
 
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    }
-  },
+  -- {
+  --   "folke/noice.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --   }
+  -- },
 
   { 'projekt0n/github-nvim-theme', lazy = true },
 

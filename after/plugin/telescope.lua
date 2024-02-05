@@ -12,6 +12,9 @@ telescope.setup {
       },
       n = {
         ['<C-d>'] = actions.delete_buffer,
+        ['<C-c>'] = actions.close,
+        ['<C-k>'] = actions.preview_scrolling_up,
+        ['<C-j>'] = actions.preview_scrolling_down
       }
     },
   },
