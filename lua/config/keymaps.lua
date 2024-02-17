@@ -1,7 +1,15 @@
 -- General keymaps
 local keymap = vim.keymap.set
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- Get file location "%p
+
+keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap('i', 'jj', '<ESC>', { silent = true })
+keymap('i', '<C-c>', '<ESC>', { silent = true })
+keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 keymap('', '<C-h>', '<C-w>h') -- Move between window
 keymap('', '<C-j>', '<C-w>j') -- Move between window
 keymap('', '<C-k>', '<C-w>k') -- Move between window
@@ -17,6 +25,7 @@ keymap('n', '+', '<C-a>') -- Incremente
 keymap('n', '-', '<C-x>') -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G') -- Select all
 keymap('n', 'x', '"_x')
+keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
 keymap('n', '<leader>T', '<cmd>terminal<CR>') -- Open Terminal
 keymap('n', '<leader>st', function ()
   vim.cmd('vnew')
@@ -33,6 +42,7 @@ keymap('n', '<leader>V', '<cmd>vsplit<CR>') -- Vertical Split
 keymap('n', '<leader>H', '<cmd>split<CR>') -- Horizontal Split
 keymap('v', '<', '<gv')
 keymap('v', '>', '>gv')
+keymap('v', '<C-r>', [[:s/\%V]]) --substitute in visual mode
 
 
 -- Shortcut to Config
@@ -86,13 +96,10 @@ keymap('n', '<leader>e', vim.diagnostic.open_float)
 keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Hop keymaps
-keymap('n', '<C-t>', ':HopWord<CR>')
-
--- Harpoon keymaps
-keymap('n', '<leader>h', ':lua require("harpoon.ui").toggle_quick_menu()<CR>')
-keymap('n', '<leader>m', ':lua require("harpoon.mark").add_file()<CR>')
-keymap('n', '<leader>k', ':lua require("harpoon.ui").nav_next()<CR>')
-keymap('n', '<leader>j', ':lua require("harpoon.ui").nav_prev()<CR>')
+keymap('n', '<C-t>', ':HopWord<CR>', { silent = true })
 
 -- DBUI
 keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>')
+
+-- Codeium
+keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true})

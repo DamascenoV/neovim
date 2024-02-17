@@ -37,14 +37,6 @@ vim.opt.listchars:append "tab:  ,trail:-"
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Go To Normal mode
-vim.keymap.set('i', 'jj', '<ESC>', { silent = true })
-vim.keymap.set('i', '<C-c>', '<ESC>', { silent = true })
-
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.cmd [[
@@ -52,10 +44,6 @@ vim.cmd [[
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
