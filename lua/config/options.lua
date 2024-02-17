@@ -1,0 +1,82 @@
+-- [[ Setting options ]]
+-- See `:help vim.o`
+vim.o.guifont = 'JetBrainsMono Nerd Font Mono:h8'
+vim.opt.title = true
+vim.o.hlsearch = false
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.o.cursorline = true
+vim.o.cursorlineopt = 'number'
+vim.o.mouse = 'a'
+vim.o.breakindent = true
+vim.o.undofile = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.updatetime = 1000
+vim.wo.signcolumn = 'yes'
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.smartindent = true
+vim.o.wrap = true
+vim.o.swapfile = false
+vim.o.backup = false
+vim.o.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.o.incsearch = true
+vim.o.scrolloff = 10
+vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.o.colorcolumn = '120'
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.pumblend = 17
+vim.opt.autoindent = true
+vim.opt.cindent = true
+vim.opt.showbreak = string.rep(" ", 3)
+vim.opt.fillchars = { eob = "~" }
+vim.opt.showmatch = true
+vim.opt.list = true
+vim.opt.listchars:append "tab:  ,trail:-"
+--vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
+vim.opt.laststatus = 3
+
+-- Set colorscheme
+vim.o.termguicolors = true
+vim.cmd [[
+  tnoremap <Esc> <C-\\><C-n>
+  set completeopt=menuone,noinsert,noselect
+  highlight! default link CmpItemKind CmpItemMenuDefault
+  ]]
+
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = 'IncSearch',
+      timeout = 40,
+    })
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+
+local group
+vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+local set_cursor_line = function(event, value, pattern)
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    pattern = pattern,
+    callback = function()
+      vim.opt_local.cursorline = value
+    end,
+  })
+end
+
+vim.api.nvim_command("autocmd TermOpen * startinsert")             -- starts in insert mode
+vim.api.nvim_command("autocmd TermOpen * setlocal nonumber norelativenumber")       -- no numbers
+vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no") -- no sign column
+
+--vim.lsp.inlay_hint.enable(0, true)
+
+set_cursor_line('WinLeave', false)
+set_cursor_line("WinEnter", true)
+set_cursor_line('FileType', false, 'TelescopePrompt')

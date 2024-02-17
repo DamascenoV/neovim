@@ -1,1 +1,1 @@
-# My Neovim Config based with kickstart.nvim
+# My Neovim Config - (WIP)
