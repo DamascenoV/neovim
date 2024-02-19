@@ -91,14 +91,18 @@ keymap('n', '<space>fm', function()
   vim.lsp.buf.format { async = true }
 end)
 
+
+-- LSP SAGA
+keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
+keymap('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
+keymap('n', 'gh', '<cmd>Lspsaga finder<CR>', { silent = true }) -- Search references
+
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)
 keymap('n', ']d', vim.diagnostic.goto_next)
 keymap('n', '<leader>e', vim.diagnostic.open_float)
 keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
--- Hop keymaps
-keymap('n', '<C-t>', ':HopWord<CR>', { silent = true })
 
 -- DBUI
 keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>')

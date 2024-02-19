@@ -10,6 +10,7 @@ return {
           i = {
             ["<C-u>"] = false,
             ["<C-d>"] = actions.delete_buffer,
+            ["<C-c>"] = { "<esc>", type = "command" }
           },
           n = {
             ["<C-d>"] = actions.delete_buffer,
