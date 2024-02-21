@@ -10,44 +10,44 @@ keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap('i', 'jj', '<ESC>', { silent = true })
 keymap('i', '<C-c>', '<ESC>', { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-keymap('', '<C-h>', '<C-w>h')                          -- Move between window
-keymap('', '<C-j>', '<C-w>j')                          -- Move between window
-keymap('', '<C-k>', '<C-w>k')                          -- Move between window
-keymap('', '<C-l>', '<C-w>l')                          -- Move between window
-keymap('', '<C-Up>', '<cmd>resize -2<CR>')             -- Resize window
-keymap('', '<C-Down>', '<cmd>resize +2<CR>')           -- Resize window
-keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>')  -- Resize window
-keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>') -- Resize window
-keymap('', '<C-n>', '<cmd>Oil --float<CR>')            -- Oil File system
-keymap('n', '<Up>', '<C-y>')                           -- Move Window Up
-keymap('n', '<Down>', '<C-e>')                         -- Move Window Down
-keymap('n', '+', '<C-a>')                              -- Incremente
-keymap('n', '-', '<C-x>')                              -- Decrement
-keymap('n', '<C-a>', 'gg<S-v>G')                       -- Select all
-keymap('n', 'x', '"_x')
-keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>")
-keymap('n', '<leader>T', '<cmd>terminal<CR>') -- Open Terminal
+keymap('', '<C-h>', '<C-w>h', { silent = true })                          -- Move between window
+keymap('', '<C-j>', '<C-w>j', { silent = true })                          -- Move between window
+keymap('', '<C-k>', '<C-w>k', { silent = true })                          -- Move between window
+keymap('', '<C-l>', '<C-w>l', { silent = true })                          -- Move between window
+keymap('', '<C-Up>', '<cmd>resize -2<CR>', { silent = true })             -- Resize window
+keymap('', '<C-Down>', '<cmd>resize +2<CR>', { silent = true })           -- Resize window
+keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })  -- Resize window
+keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-n>', '<cmd>Oil<CR>', { silent = true })                    -- Oil File system
+keymap('n', '<Up>', '<C-y>', { silent = true })                           -- Move Window Up
+keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Move Window Down
+keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
+keymap('n', '-', '<C-x>', { silent = true })                              -- Decrement
+keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
+keymap('n', 'x', '"_x', { silent = true })
+keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
+keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
 keymap('n', '<leader>st', function()
   vim.cmd('vnew')
   vim.cmd('wincmd J')
   vim.api.nvim_win_set_height(0, 12)
   vim.cmd('term')
 end
-)                                                                                 -- Open Small Terminal
-keymap('t', '<C-c>', '<C-\\><C-n>')
-keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
-keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==')                                     -- Move line up
-keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==')                                     -- Move line down
-keymap('n', '<leader>V', '<cmd>vsplit<CR>')                                       -- Vertical Split
-keymap('n', '<leader>H', '<cmd>split<CR>')                                        -- Horizontal Split
-keymap('v', '<', '<gv')
-keymap('v', '>', '>gv')
-keymap('v', '<C-r>', [[:s/\%V]]) --substitute in visual mode
+) -- Open Small Terminal
+keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
+keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
+keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { silent = true }) -- Substitute
+keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==', { silent = true })                                     -- Move line up
+keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==', { silent = true })                                     -- Move line down
+keymap('n', '<leader>V', '<cmd>vsplit<CR>', { silent = true })                                       -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split<CR>', { silent = true })                                        -- Horizontal Split
+keymap('v', '<', '<gv', { silent = true })
+keymap('v', '>', '>gv', { silent = true })
+keymap('v', '<C-r>', [[:s/\%V]], { silent = true }) --substitute in visual mode
 
 
 -- Shortcut to Config
-keymap('n', '<leader>Nc', '<cmd>edit ~/.config/nvim<CR>') -- Go to Neovim config
-
+keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>') -- Go to Neovim config
 
 -- Buffer keymaps
 keymap('n', '<tab>', '<cmd>bnext<CR>')        -- Move to next buffer
@@ -93,9 +93,10 @@ end)
 
 
 -- LSP SAGA
-keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true }) -- Outline toogle
+keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true })         -- Outline toogle
 keymap('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
-keymap('n', 'gh', '<cmd>Lspsaga finder<CR>', { silent = true }) -- Search references
+keymap('n', 'gh', '<cmd>Lspsaga finder<CR>', { silent = true })          -- Search references
+
 
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)
@@ -103,9 +104,6 @@ keymap('n', ']d', vim.diagnostic.goto_next)
 keymap('n', '<leader>e', vim.diagnostic.open_float)
 keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
-
--- DBUI
-keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>')
 
 -- Codeium
 keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })

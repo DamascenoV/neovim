@@ -23,6 +23,8 @@ return {
       "folke/neodev.nvim",
     },
     config = function()
+      require('neodev').setup()
+
       local cmp = require('cmp')
       local cmp_lsp = require('cmp_nvim_lsp')
       local cmp_window = require('cmp.config.window')
@@ -34,7 +36,7 @@ return {
         vim.lsp.protocol.make_client_capabilities(),
         cmp_lsp.default_capabilities())
 
-      cmp.setup.cmdline('/', {
+      cmp.setup.cmdline({ '/', '?' }, {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
           { name = 'buffer' }
@@ -50,15 +52,20 @@ return {
         })
       })
 
+      local ls = require('luasnip')
+
       cmp.setup {
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            ls.lsp_expand(args.body)
           end
         },
         window = {
           completion = cmp_window.bordered(),
           documentation = cmp_window.bordered()
+        },
+        completion = {
+          completeopt = 'menu,menuone,noinsert,noselect'
         },
         sources = {
           { name = 'path' },
@@ -70,24 +77,20 @@ return {
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
+          ['<S-Space>'] = cmp.mapping.complete(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
+          ['<C-i>'] = cmp.mapping.scroll_docs(4),
+          ['<C-y'] = cmp.mapping.confirm({
             select = true,
           }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
+          ['<C-l>'] = cmp.mapping(function ()
+            if ls.expand_or_jumpable() then
+              ls.expand_or_jump()
             end
           end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
+          ['<C-h>'] = cmp.mapping(function ()
+            if ls.jumpable(-1) then
+              ls.jump(-1)
             end
           end, { 'i', 's' }),
         })
@@ -96,19 +99,19 @@ return {
       require('mason').setup()
       require('mason-lspconfig').setup({
         ensure_installed = {
-         "cssls",
-         "elixirls",
-         "emmet_language_server",
-         "gleam",
-         "golangci_lint_ls",
-         "gopls",
-         "intelephense",
-         "lua_ls",
-         "ocamllsp",
-         "rust_analyzer",
-         "tsserver",
-         "v_analyzer",
-         "volar",
+          "cssls",
+          "elixirls",
+          "emmet_language_server",
+          "gleam",
+          "golangci_lint_ls",
+          "gopls",
+          "intelephense",
+          "lua_ls",
+          "ocamllsp",
+          "rust_analyzer",
+          "tsserver",
+          "v_analyzer",
+          "volar",
         },
         handlers = {
           function(server_name)

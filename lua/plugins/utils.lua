@@ -35,9 +35,23 @@ return {
     ft = { 'blade.php' }
   },
 
-  { 'tpope/vim-repeat', event = "BufReadPre" },
+  -- { 'tpope/vim-repeat', event = "BufReadPre" },
 
   { 'tpope/vim-sleuth', event = "BufReadPre" },
 
   { 'Exafunction/codeium.vim', event = "InsertEnter" },
+
+  {
+    "stevearc/oil.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
+
+  {
+    'tjdevries/express_line.nvim',
+    event = "VeryLazy",
+    config = function ()
+      require('el').setup({})
+    end
+  },
 }
