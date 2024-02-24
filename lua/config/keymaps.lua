@@ -92,12 +92,6 @@ keymap('n', '<space>fm', function()
 end)
 
 
--- LSP SAGA
-keymap('n', 'mm', '<cmd>Lspsaga outline<CR>', { silent = true })         -- Outline toogle
-keymap('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', { silent = true }) -- Preview Definition
-keymap('n', 'gh', '<cmd>Lspsaga finder<CR>', { silent = true })          -- Search references
-
-
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)
 keymap('n', ']d', vim.diagnostic.goto_next)

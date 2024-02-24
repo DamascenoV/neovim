@@ -5,25 +5,24 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "onsails/lspkind.nvim",
+      "folke/neodev.nvim",
+      "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
+      "saadparwaiz1/cmp_luasnip",
       {
         "L3MON4D3/LuaSnip",
         version = "v2.*",
         build = "make install_jsregexp"
       },
       "rafamadriz/friendly-snippets",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-cmdline",
-      "folke/neodev.nvim",
     },
     config = function()
       require('neodev').setup()
+      require("luasnip.loaders.from_vscode").lazy_load()
 
       local cmp = require('cmp')
       local cmp_lsp = require('cmp_nvim_lsp')

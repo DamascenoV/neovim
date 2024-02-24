@@ -18,7 +18,7 @@ return {
 
   { "windwp/nvim-autopairs", event = "InsertEnter", opts={} },
 
-  { "numToStr/Comment.nvim", config = true, event = "BufEnter" },
+  { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
 
   {
     "iamcco/markdown-preview.nvim",
@@ -34,8 +34,6 @@ return {
     'jwalton512/vim-blade',
     ft = { 'blade.php' }
   },
-
-  -- { 'tpope/vim-repeat', event = "BufReadPre" },
 
   { 'tpope/vim-sleuth', event = "BufReadPre" },
 
