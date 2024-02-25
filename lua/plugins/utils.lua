@@ -16,7 +16,11 @@ return {
     event = "BufRead",
   },
 
-  { "windwp/nvim-autopairs", event = "InsertEnter", opts={} },
+  {
+    "windwp/nvim-autopairs",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts={}
+  },
 
   { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
 
@@ -37,7 +41,10 @@ return {
 
   { 'tpope/vim-sleuth', event = "BufReadPre" },
 
-  { 'Exafunction/codeium.vim', event = "InsertEnter" },
+  {
+    'Exafunction/codeium.vim',
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+  },
 
   {
     "stevearc/oil.nvim",
@@ -48,8 +55,12 @@ return {
   {
     'tjdevries/express_line.nvim',
     event = "VeryLazy",
-    config = function ()
-      require('el').setup({})
-    end
+    opts = {}
   },
+
+  {
+    "vigoux/notifier.nvim",
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  }
 }

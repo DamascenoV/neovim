@@ -1,5 +1,6 @@
 return {
   "projekt0n/github-nvim-theme",
+  priority = 10000,
   config = function()
     require("github-theme").setup({
       options = {
