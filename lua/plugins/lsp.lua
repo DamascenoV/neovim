@@ -101,7 +101,6 @@ return {
           "cssls",
           "elixirls",
           "emmet_language_server",
-          "gleam",
           "golangci_lint_ls",
           "gopls",
           "intelephense",

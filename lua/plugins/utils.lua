@@ -1,5 +1,5 @@
 return {
-  { "christoomey/vim-tmux-navigator", event = "VeryLazy" },
+  { "christoomey/vim-tmux-navigator" },
 
   {
     "mfussenegger/nvim-lint",
@@ -48,14 +48,8 @@ return {
 
   {
     "stevearc/oil.nvim",
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     opts = {},
-  },
-
-  {
-    'tjdevries/express_line.nvim',
-    event = "VeryLazy",
-    opts = {}
   },
 
   {
