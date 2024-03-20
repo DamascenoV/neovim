@@ -82,12 +82,12 @@ return {
           ['<C-y'] = cmp.mapping.confirm({
             select = true,
           }),
-          ['<C-l>'] = cmp.mapping(function ()
+          ['<C-l>'] = cmp.mapping(function()
             if ls.expand_or_jumpable() then
               ls.expand_or_jump()
             end
           end, { 'i', 's' }),
-          ['<C-h>'] = cmp.mapping(function ()
+          ['<C-h>'] = cmp.mapping(function()
             if ls.jumpable(-1) then
               ls.jump(-1)
             end
@@ -95,7 +95,11 @@ return {
         })
       }
 
-      require('mason').setup()
+      require('mason').setup({
+        ui = {
+          border = 'rounded'
+        }
+      })
       require('mason-lspconfig').setup({
         ensure_installed = {
           "cssls",
@@ -105,7 +109,6 @@ return {
           "gopls",
           "intelephense",
           "lua_ls",
-          "ocamllsp",
           "rust_analyzer",
           "tsserver",
           "v_analyzer",
@@ -120,6 +123,12 @@ return {
         }
       })
 
+      lspconfig.gleam.setup({
+        cmd = { "gleam", "lsp" },
+        capabilities = capabilities,
+      })
+
+      -- UI STUFF
       vim.diagnostic.config({
         virtual_text = true,
         signs = true,
@@ -132,6 +141,16 @@ return {
           prefix = "",
         },
       })
+
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+        vim.lsp.handlers.hover,
+        { border = "rounded" }
+      )
+
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+        vim.lsp.handlers.signature_help,
+        { border = "rounded" }
+      )
     end
   }
 }

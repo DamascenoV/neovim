@@ -1,14 +1,12 @@
 return {
-  { "christoomey/vim-tmux-navigator" },
-
   {
     "mfussenegger/nvim-lint",
     event = "BufRead",
     config = function()
       require("lint").linters_by_ft = {
-        php = {"phpcs"}
+        php = { "phpcs" },
       }
-    end
+    end,
   },
 
   {
@@ -19,7 +17,7 @@ return {
   {
     "windwp/nvim-autopairs",
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts={}
+    opts = {},
   },
 
   { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
@@ -35,26 +33,58 @@ return {
   },
 
   {
-    'jwalton512/vim-blade',
-    ft = { 'blade.php' }
+    "jwalton512/vim-blade",
+    ft = { "blade.php" },
   },
 
-  { 'tpope/vim-sleuth', event = "BufReadPre" },
+  { "tpope/vim-sleuth", event = "BufReadPre" },
 
   {
-    'Exafunction/codeium.vim',
+    "Exafunction/codeium.vim",
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   },
 
   {
     "stevearc/oil.nvim",
-    -- event = "VeryLazy",
     opts = {},
   },
 
   {
     "vigoux/notifier.nvim",
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {}
-  }
+    opts = {},
+  },
+
+  {
+    "elixir-tools/elixir-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local elixir = require("elixir")
+      local elixirls = require("elixir.elixirls")
+
+      elixir.setup({
+        nextls = { enable = true },
+        credo = {},
+        elixirls = {
+          enable = true,
+          settings = elixirls.settings({
+            dialyzerEnabled = false,
+            enableTestLenses = false,
+          }),
+        },
+        dependencies = {
+          "nvim-lua/plenary.nvim",
+        },
+      })
+    end,
+  },
+
+  {
+    "akinsho/flutter-tools.nvim",
+    lazy = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = true,
+  },
 }
