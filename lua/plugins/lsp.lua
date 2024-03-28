@@ -103,7 +103,6 @@ return {
       require('mason-lspconfig').setup({
         ensure_installed = {
           "cssls",
-          "elixirls",
           "emmet_language_server",
           "golangci_lint_ls",
           "gopls",
@@ -125,6 +124,11 @@ return {
 
       lspconfig.gleam.setup({
         cmd = { "gleam", "lsp" },
+        capabilities = capabilities,
+      })
+
+      lspconfig.lexical.setup({
+        cmd = { "/home/damascenov/.local/share/nvim/mason/bin/lexical" },
         capabilities = capabilities,
       })
 

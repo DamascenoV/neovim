@@ -42,6 +42,10 @@ return {
   {
     "Exafunction/codeium.vim",
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    config = function ()
+      vim.g.codeium_disable_bindings = 1
+      vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+    end
   },
 
   {
@@ -56,35 +60,23 @@ return {
   },
 
   {
-    "elixir-tools/elixir-tools.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      local elixir = require("elixir")
-      local elixirls = require("elixir.elixirls")
-
-      elixir.setup({
-        nextls = { enable = true },
-        credo = {},
-        elixirls = {
-          enable = true,
-          settings = elixirls.settings({
-            dialyzerEnabled = false,
-            enableTestLenses = false,
-          }),
-        },
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-        },
-      })
-    end,
-  },
-
-  {
     "akinsho/flutter-tools.nvim",
-    lazy = false,
+    -- lazy = false,
+    ft = { "dart" },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = true,
   },
+
+  {
+    'echasnovski/mini.animate',
+    version = '*',
+    opts = {
+      cursor = {
+        enable = false,
+      },
+    }
+  },
+
 }
