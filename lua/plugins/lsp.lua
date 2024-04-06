@@ -132,17 +132,16 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.ocamllsp.setup({
+        capabilities = capabilities,
+      })
+
       -- UI STUFF
       vim.diagnostic.config({
         virtual_text = true,
         signs = true,
         float = {
-          focusable = false,
-          style = "minimal",
           border = "rounded",
-          source = "always",
-          header = "",
-          prefix = "",
         },
       })
 

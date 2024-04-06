@@ -8,7 +8,7 @@ return {
   config = function()
     require('nvim-treesitter.configs').setup {
       ensure_installed = { 'go', 'lua', 'typescript', 'vim', 'php', 'vue', 'markdown', 'markdown_inline' },
-      auto_install = true,
+      auto_install = false,
       highlight = { enable = true },
       indent = { enable = true },
       incremental_selection = {

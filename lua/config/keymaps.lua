@@ -101,3 +101,7 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Codeium
 keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+
+
+-- Database
+keymap('n', '<leader>db', '<cmd>DBUIToggle<CR>', { silent = true })

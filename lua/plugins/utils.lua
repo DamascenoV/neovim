@@ -10,6 +10,10 @@ return {
   },
 
   {
+    'nvim-telescope/telescope-ui-select.nvim'
+  },
+
+  {
     "mbbill/undotree",
     event = "BufRead",
   },
@@ -34,7 +38,6 @@ return {
 
   {
     "jwalton512/vim-blade",
-    ft = { "blade.php" },
   },
 
   { "tpope/vim-sleuth", event = "BufReadPre" },
@@ -68,15 +71,4 @@ return {
     },
     config = true,
   },
-
-  {
-    'echasnovski/mini.animate',
-    version = '*',
-    opts = {
-      cursor = {
-        enable = false,
-      },
-    }
-  },
-
 }
