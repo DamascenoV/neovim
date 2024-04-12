@@ -18,6 +18,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Resize splits if window got resized
+vim.api.nvim_create_autocmd({ "VimResized" }, {
+  callback = function()
+    vim.cmd("tabdo wincmd =")
+  end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+});
+
 local group
 vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursor_line = function(event, value, pattern)

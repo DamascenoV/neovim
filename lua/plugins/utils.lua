@@ -10,24 +10,16 @@ return {
   },
 
   {
-    'nvim-telescope/telescope-ui-select.nvim'
-  },
-
-  {
     "mbbill/undotree",
     event = "BufRead",
-  },
-
-  {
-    "windwp/nvim-autopairs",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {},
+    enabled = false
   },
 
   { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
 
   {
     "iamcco/markdown-preview.nvim",
+    enabled = false,
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = "cd app && npm install",
     init = function()
@@ -38,6 +30,7 @@ return {
 
   {
     "jwalton512/vim-blade",
+    enabled = false,
   },
 
   { "tpope/vim-sleuth", event = "BufReadPre" },
@@ -64,11 +57,33 @@ return {
 
   {
     "akinsho/flutter-tools.nvim",
-    -- lazy = false,
+    enabled = false,
     ft = { "dart" },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = true,
+  },
+
+  {
+    'echasnovski/mini.statusline',
+    version = '*',
+    opts = {
+      set_vim_settings = false,
+    }
+  },
+
+  {
+    'echasnovski/mini.surround',
+    version = '*',
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  },
+
+  {
+    'echasnovski/mini.pairs',
+    version = '*',
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
   },
 }

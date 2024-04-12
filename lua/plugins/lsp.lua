@@ -71,8 +71,6 @@ return {
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'luasnip' },
-          { name = 'nvim_lsp_signature_help' },
-          { name = "cody" },
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
