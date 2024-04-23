@@ -38,9 +38,9 @@ return {
   {
     "Exafunction/codeium.vim",
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    config = function ()
+    config = function()
       vim.g.codeium_disable_bindings = 1
-      vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
     end
   },
 
@@ -66,6 +66,11 @@ return {
   },
 
   {
+    'nvim-tree/nvim-web-devicons',
+    opts = {}
+  },
+
+  {
     'echasnovski/mini.statusline',
     version = '*',
     opts = {
@@ -86,4 +91,11 @@ return {
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}
   },
+
+  {
+    'echasnovski/mini.ai',
+    version = '*',
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  }
 }

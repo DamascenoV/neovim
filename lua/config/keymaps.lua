@@ -33,17 +33,17 @@ keymap('n', '<leader>st', function()
   vim.api.nvim_win_set_height(0, 12)
   vim.cmd('term')
 end
-) -- Open Small Terminal
-keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
-keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
-keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { silent = true }) -- Substitute
-keymap({ 'n', 'v' }, '<A-j>', ':m .+1<CR>==', { silent = true })                                     -- Move line up
-keymap({ 'n', 'v' }, '<A-k>', ':m .-2<CR>==', { silent = true })                                     -- Move line down
-keymap('n', '<leader>V', '<cmd>vsplit<CR>', { silent = true })                                       -- Vertical Split
-keymap('n', '<leader>H', '<cmd>split<CR>', { silent = true })                                        -- Horizontal Split
+)                                                                                 -- Open Small Terminal
+keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true })                            -- Normal Mode Terminal
+keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                            -- Kill Terminal
+keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
+keymap('v', '<C-r>', [[:s/\%V]])                                                  --substitute in visual mode
+keymap('n', '<A-j>', ':m .+1<CR>==', { silent = true })                           -- Move line up
+keymap('n', '<A-k>', ':m .-2<CR>==', { silent = true })                           -- Move line down
+keymap('n', '<leader>V', '<cmd>vsplit<CR>', { silent = true })                    -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split<CR>', { silent = true })                     -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
-keymap('v', '<C-r>', [[:s/\%V]], { silent = true }) --substitute in visual mode
 
 
 -- Shortcut to Config
