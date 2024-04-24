@@ -46,6 +46,8 @@ return {
 
   {
     "stevearc/oil.nvim",
+    event = "BufReadPre",
+    cmd = { "Oil" },
     opts = {},
   },
 
@@ -67,6 +69,7 @@ return {
 
   {
     'nvim-tree/nvim-web-devicons',
+    event = "BufReadPre",
     opts = {}
   },
 
