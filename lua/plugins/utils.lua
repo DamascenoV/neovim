@@ -9,24 +9,7 @@ return {
     end,
   },
 
-  {
-    "mbbill/undotree",
-    event = "BufRead",
-    enabled = false
-  },
-
   { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
-
-  {
-    "iamcco/markdown-preview.nvim",
-    enabled = false,
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
-    ft = { "markdown" },
-  },
 
   {
     "jwalton512/vim-blade",
@@ -100,5 +83,5 @@ return {
     version = '*',
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}
-  }
+  },
 }

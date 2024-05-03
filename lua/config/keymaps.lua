@@ -40,8 +40,8 @@ keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]
 keymap('v', '<C-r>', [[:s/\%V]])                                                  --substitute in visual mode
 keymap('n', '<A-j>', ':m .+1<CR>==', { silent = true })                           -- Move line up
 keymap('n', '<A-k>', ':m .-2<CR>==', { silent = true })                           -- Move line down
-keymap('n', '<leader>V', '<cmd>vsplit<CR>', { silent = true })                    -- Vertical Split
-keymap('n', '<leader>H', '<cmd>split<CR>', { silent = true })                     -- Horizontal Split
+keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })                      -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true })                   -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
 
