@@ -31,6 +31,7 @@ keymap('n', '<leader>st', function()
   vim.cmd('vnew')
   vim.cmd('wincmd J')
   vim.api.nvim_win_set_height(0, 12)
+  vim.wo.winfixheight = true
   vim.cmd('term')
 end
 )                                                                                 -- Open Small Terminal
