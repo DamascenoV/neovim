@@ -11,7 +11,7 @@ return {
         mocha = {
           yellow = "#fbfead",
           red = "#cc6666",
-          blue = "#81a2be",
+          blue = "#7aa0bb",
           mauve = "#b294bb",
           lavender = "#e0e0e0",
           pink = "#e0e0e0",
@@ -19,13 +19,13 @@ return {
           crust = "#e0e0e0",
           mantle = "#e0e0e0",
           rosewater = "#e0e0e0",
-          green = "#99cc99",
-          base = "#1c1d23",
+          green = "#b3f6c0",
+          base = "#14161b",
           maroon = "#e0e0e0",
           none = "#e0e0e0",
           text = "#e0e0e0",
           peach = "#d4aa55",
-          flamingo = "#e1b655"
+          flamingo = "#8f7436"
         }
       },
       integrations = {
