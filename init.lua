@@ -1,1 +1,1 @@
-require('bam')
+require('config.lazy')
