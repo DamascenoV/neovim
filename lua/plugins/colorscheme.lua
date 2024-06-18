@@ -23,7 +23,6 @@ return {
           base = "#14161b",
           maroon = "#e0e0e0",
           none = "#e0e0e0",
-          text = "#e0e0e0",
           peach = "#d4aa55",
           flamingo = "#8f7436"
         }

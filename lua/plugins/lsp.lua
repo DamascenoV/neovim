@@ -9,7 +9,6 @@ return {
       "hrsh7th/nvim-cmp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
       "saadparwaiz1/cmp_luasnip",
       {
@@ -34,22 +33,6 @@ return {
         vim.lsp.protocol.make_client_capabilities(),
         cmp_lsp.default_capabilities())
 
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } }
-        })
-      })
-
       local ls = require('luasnip')
 
       cmp.setup {
@@ -70,6 +53,7 @@ return {
           { name = 'nvim_lsp' },
           { name = 'buffer' },
           { name = 'luasnip' },
+          { name = 'cody' },
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-Space>'] = cmp.mapping.complete(),
@@ -131,6 +115,26 @@ return {
 
       lspconfig.ocamllsp.setup({
         capabilities = capabilities,
+      })
+
+      lspconfig.tsserver.setup({
+        init_options = {
+          plugins = {
+            {
+              name = '@vue/typescript-plugin',
+              languages = { 'vue' },
+            },
+          },
+        }
+      })
+
+      lspconfig.volar.setup({
+        init_options = {
+            vue = {
+              hybridMode = false,
+            },
+          },
+        capabilities = capabilities
       })
 
       -- UI STUFF

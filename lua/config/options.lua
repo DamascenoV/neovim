@@ -44,7 +44,6 @@ vim.cmd [[
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]
 
---vim.lsp.inlay_hint.enable(0, true)
 if vim.fn.has('wsl') == 1 then
   vim.g.clipboard = {
     name = "WslClipboard",

@@ -9,17 +9,11 @@ return {
     end,
   },
 
-  { "numToStr/Comment.nvim", config = true, event = "BufReadPre" },
-
-  {
-    "jwalton512/vim-blade",
-    enabled = false,
-  },
-
   { "tpope/vim-sleuth", event = "BufReadPre" },
 
   {
     "Exafunction/codeium.vim",
+    enabled = false,
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     config = function()
       vim.g.codeium_disable_bindings = 1
@@ -66,13 +60,6 @@ return {
 
   {
     'echasnovski/mini.surround',
-    version = '*',
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {}
-  },
-
-  {
-    'echasnovski/mini.pairs',
     version = '*',
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}

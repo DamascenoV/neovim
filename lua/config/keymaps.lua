@@ -9,6 +9,7 @@ keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap('i', 'jj', '<ESC>', { silent = true })
 keymap('i', '<C-c>', '<ESC>', { silent = true })
+keymap('i', '<C-s>', function () vim.lsp.buf.signature_help() end, { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 keymap('', '<C-h>', '<C-w>h', { silent = true })                          -- Move between window
 keymap('', '<C-j>', '<C-w>j', { silent = true })                          -- Move between window
@@ -26,6 +27,9 @@ keymap('n', '-', '<C-x>', { silent = true })                              -- Dec
 keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
 keymap('n', 'x', '"_x', { silent = true })
 keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
+keymap('n', '<leader>ih', function ()
+ vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
 keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
 keymap('n', '<leader>st', function()
   vim.cmd('vnew')
