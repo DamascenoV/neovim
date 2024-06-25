@@ -23,6 +23,9 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
+  change_detection = {
+    enabled = false
+  },
   performance = {
     rtp = {
       disabled_plugins = {

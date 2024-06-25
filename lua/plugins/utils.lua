@@ -29,12 +29,6 @@ return {
   },
 
   {
-    "vigoux/notifier.nvim",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {},
-  },
-
-  {
     "akinsho/flutter-tools.nvim",
     enabled = false,
     ft = { "dart" },
@@ -67,6 +61,13 @@ return {
 
   {
     'echasnovski/mini.ai',
+    version = '*',
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  },
+
+  {
+    'echasnovski/mini.notify',
     version = '*',
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}

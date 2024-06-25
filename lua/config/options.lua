@@ -35,6 +35,7 @@ vim.opt.list = true
 vim.opt.listchars:append "tab:  ,trail:-"
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
+vim.cmd.colorscheme 'bamoon'
 
 -- Set colorscheme
 vim.opt.termguicolors = true
