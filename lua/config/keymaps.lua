@@ -25,6 +25,10 @@ keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Mov
 keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
 keymap('n', '-', '<C-x>', { silent = true })                              -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
+keymap('n', '<leader>t', '<cmd>tabnew<CR>', { silent = true })            -- New Tab
+keymap('n', '<C-t>', '<cmd>tabclose<CR>', { silent = true })              -- Tab Close
+keymap('n', '<M-->', '<cmd>tabprevious<CR>', { silent = true })           -- Tab Previous
+keymap('n', '<M-+>', '<cmd>tabnext<CR>', { silent = true })           -- Tab Previous
 keymap('n', 'x', '"_x', { silent = true })
 keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
 keymap('n', '<leader>ih', function ()
