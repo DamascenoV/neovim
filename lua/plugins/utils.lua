@@ -39,17 +39,17 @@ return {
   },
 
   {
-    'nvim-tree/nvim-web-devicons',
-    event = "BufReadPre",
-    opts = {}
-  },
-
-  {
     'echasnovski/mini.statusline',
     version = '*',
     opts = {
       set_vim_settings = false,
     }
+  },
+
+  {
+    'echasnovski/mini.icons',
+    event = "BufReadPre",
+    opts = {}
   },
 
   {

@@ -5,6 +5,9 @@ vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.inccommand = "split"
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 vim.opt.cursorline = true
 vim.opt.mouse = 'a'
 vim.opt.breakindent = true
@@ -41,7 +44,6 @@ vim.cmd.colorscheme 'bamoon'
 -- Set colorscheme
 vim.opt.termguicolors = true
 vim.cmd [[
-  tnoremap <Esc> <C-\\><C-n>
   set completeopt=menuone,noinsert,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
   ]]

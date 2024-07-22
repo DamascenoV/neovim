@@ -4,14 +4,7 @@ return {
     event = "BufReadPre",
     config = function()
       require("gitsigns").setup({
-        signs = {
-          add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr" },
-          change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr" },
-          delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr" },
-          topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr" },
-          changedelete = { hl = "GitSignsDelete", text = "~", numhl = "GitSignsChangeNr" },
-          untracked = { text = " " },
-        },
+        signs_staged_enable  = true,
         numhl = true,
         linehl = false,
         current_line_blame = true,

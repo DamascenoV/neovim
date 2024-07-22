@@ -25,14 +25,12 @@ keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Mov
 keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
 keymap('n', '-', '<C-x>', { silent = true })                              -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
-keymap('n', '<leader>t', '<cmd>tabnew<CR>', { silent = true })            -- New Tab
-keymap('n', '<C-t>', '<cmd>tabclose<CR>', { silent = true })              -- Tab Close
 keymap('n', '<M-->', '<cmd>tabprevious<CR>', { silent = true })           -- Tab Previous
 keymap('n', '<M-+>', '<cmd>tabnext<CR>', { silent = true })           -- Tab Previous
 keymap('n', 'x', '"_x', { silent = true })
 keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
 keymap('n', '<leader>ih', function ()
- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+ vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
 end)
 keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
 keymap('n', '<leader>st', function()
@@ -45,8 +43,10 @@ end
 )                                                                                 -- Open Small Terminal
 keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true })                            -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                            -- Kill Terminal
+
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 keymap('v', '<C-r>', [[:s/\%V]])                                                  --substitute in visual mode
+
 keymap('n', '<A-j>', ':m .+1<CR>==', { silent = true })                           -- Move line up
 keymap('n', '<A-k>', ':m .-2<CR>==', { silent = true })                           -- Move line down
 keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })                      -- Vertical Split
@@ -109,7 +109,7 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist)
 
 
 -- Codeium
-keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+-- keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
 
 
 -- Database
