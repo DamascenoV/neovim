@@ -45,7 +45,6 @@ keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true })                          
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                            -- Kill Terminal
 
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
-keymap('v', '<C-r>', [[:s/\%V]])                                                  --substitute in visual mode
 
 keymap('n', '<A-j>', ':m .+1<CR>==', { silent = true })                           -- Move line up
 keymap('n', '<A-k>', ':m .-2<CR>==', { silent = true })                           -- Move line down
@@ -69,16 +68,26 @@ keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Undu Three Toogle
 
 
 -- See `:help telescope.builtin`
-keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
-keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[F]ind existing buffers' })
-keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>',
-  { desc = '[/] Fuzzily search in current buffer]' })
-keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
-keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
-keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
-keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
-keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind [R]eferences' })
+-- keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
+-- keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[F]ind existing buffers' })
+-- keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>',
+--   { desc = '[/] Fuzzily search in current buffer]' })
+-- keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
+-- keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
+-- keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
+-- keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
+-- keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
+-- keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind [R]eferences' })
+
+
+-- Mini Pick
+keymap('n', '<leader>?', '<cmd>Pick oldfiles<CR>', { desc = '[?] Find recently opened files' })
+keymap('n', '<leader><leader>', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
+keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fw', '<cmd>Pick grep<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fg', '<cmd>Pick grep_live<CR>', { desc = '[F]ind by [G]rep' })
+keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
+keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
 
 
 -- LSP

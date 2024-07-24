@@ -22,6 +22,12 @@ return {
   },
 
   {
+    "MagicDuck/grug-far.nvim",
+    event = "BufReadPre",
+    opts = {}
+  },
+
+  {
     "stevearc/oil.nvim",
     event = "BufReadPre",
     cmd = { "Oil" },
@@ -40,7 +46,7 @@ return {
 
   {
     'echasnovski/mini.statusline',
-    version = '*',
+    version = false,
     opts = {
       set_vim_settings = false,
     }
@@ -70,6 +76,34 @@ return {
     'echasnovski/mini.notify',
     version = '*',
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  },
+
+  {
+    'echasnovski/mini.pick',
+    version = false,
+    event = "BufReadPre",
+    cmd = { "Pick" },
+    opts = {
+      window = {
+        config = function()
+          local height = math.floor(0.618 * vim.o.lines)
+          local width = math.floor(0.618 * vim.o.columns)
+          return {
+            anchor = 'NW',
+            height = height,
+            width = width,
+            row = math.floor(0.5 * (vim.o.lines - height)),
+            col = math.floor(0.5 * (vim.o.columns - width)),
+          }
+        end
+      }
+    }
+  },
+
+  {
+    'echasnovski/mini.extra',
+    version = false,
     opts = {}
   },
 }
