@@ -19,14 +19,12 @@ keymap('', '<C-Up>', '<cmd>resize -2<CR>', { silent = true })             -- Res
 keymap('', '<C-Down>', '<cmd>resize +2<CR>', { silent = true })           -- Resize window
 keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })  -- Resize window
 keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-n>', '<cmd>Oil<CR>', { silent = true })                    -- Oil File system
+keymap('', '<C-e>', '<cmd>Oil<CR>', { silent = true })                    -- Oil File system
 keymap('n', '<Up>', '<C-y>', { silent = true })                           -- Move Window Up
 keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Move Window Down
 keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
 keymap('n', '-', '<C-x>', { silent = true })                              -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
-keymap('n', '<M-->', '<cmd>tabprevious<CR>', { silent = true })           -- Tab Previous
-keymap('n', '<M-+>', '<cmd>tabnext<CR>', { silent = true })           -- Tab Previous
 keymap('n', 'x', '"_x', { silent = true })
 keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
 keymap('n', '<leader>ih', function ()
@@ -80,14 +78,14 @@ keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Undu Three Toogle
 -- keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind [R]eferences' })
 
 
--- Mini Pick
-keymap('n', '<leader>?', '<cmd>Pick oldfiles<CR>', { desc = '[?] Find recently opened files' })
-keymap('n', '<leader><leader>', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
-keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fw', '<cmd>Pick grep<CR>', { desc = '[Find] current [W]ord' })
-keymap('n', '<leader>fg', '<cmd>Pick grep_live<CR>', { desc = '[F]ind by [G]rep' })
-keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
-keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
+-- Fzf Lua
+keymap('n', '<leader>?', '<cmd>FzfLua oldfiles<CR>', { desc = '[?] Find recently opened files' })
+keymap('n', '<leader><leader>', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind existing buffers' })
+keymap('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fg', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind by [G]rep' })
+keymap('n', '<leader>fd', '<cmd>FzfLua diagnostics_workspace<CR>', { desc = '[F]ind [D]iagnostics' })
+keymap('n', '<leader>fr', '<cmd>FzfLua lsp_references<CR>', { desc = '[F]ind [R]eferences' })
 
 
 -- LSP
@@ -115,10 +113,6 @@ keymap('n', '[d', vim.diagnostic.goto_prev)
 keymap('n', ']d', vim.diagnostic.goto_next)
 keymap('n', '<leader>e', vim.diagnostic.open_float)
 keymap('n', '<leader>q', vim.diagnostic.setloclist)
-
-
--- Codeium
--- keymap('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
 
 
 -- Database

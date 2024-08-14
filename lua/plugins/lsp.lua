@@ -118,22 +118,14 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.tsserver.setup({
-        init_options = {
-          plugins = {
-            {
-              name = '@vue/typescript-plugin',
-              languages = { 'vue' },
-            },
-          },
-        }
-      })
-
       lspconfig.volar.setup({
         init_options = {
             vue = {
               hybridMode = false,
             },
+            typescript = {
+               tsdk = '/home/damascenov/.local/share/nvim/mason/bin/typescript-language-server/node_modules/typescript/lib'
+            }
           },
         capabilities = capabilities
       })

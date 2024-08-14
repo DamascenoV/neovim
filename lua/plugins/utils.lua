@@ -12,22 +12,6 @@ return {
   { "tpope/vim-sleuth", event = "BufReadPre" },
 
   {
-    "Exafunction/codeium.vim",
-    enabled = false,
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    config = function()
-      vim.g.codeium_disable_bindings = 1
-      vim.keymap.set('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-    end
-  },
-
-  {
-    "MagicDuck/grug-far.nvim",
-    event = "BufReadPre",
-    opts = {}
-  },
-
-  {
     "stevearc/oil.nvim",
     event = "BufReadPre",
     cmd = { "Oil" },
@@ -47,63 +31,43 @@ return {
   {
     'echasnovski/mini.statusline',
     version = false,
-    opts = {
-      set_vim_settings = false,
-    }
+    opts = {}
   },
 
   {
     'echasnovski/mini.icons',
+    version = false,
     event = "BufReadPre",
     opts = {}
   },
 
   {
     'echasnovski/mini.surround',
-    version = '*',
+    version = false,
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}
   },
 
   {
     'echasnovski/mini.ai',
-    version = '*',
+    version = false,
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}
   },
 
   {
     'echasnovski/mini.notify',
-    version = '*',
+    version = false,
     event = { "BufReadPost", "BufNewFile", "BufWritePre" },
     opts = {}
   },
 
   {
-    'echasnovski/mini.pick',
-    version = false,
+    'ibhagwan/fzf-lua',
     event = "BufReadPre",
-    cmd = { "Pick" },
-    opts = {
-      window = {
-        config = function()
-          local height = math.floor(0.618 * vim.o.lines)
-          local width = math.floor(0.618 * vim.o.columns)
-          return {
-            anchor = 'NW',
-            height = height,
-            width = width,
-            row = math.floor(0.5 * (vim.o.lines - height)),
-            col = math.floor(0.5 * (vim.o.columns - width)),
-          }
-        end
-      }
-    }
-  },
-
-  {
-    'echasnovski/mini.extra',
-    version = false,
-    opts = {}
+    dependencies = {
+      'echasnovski/mini.icons',
+    },
+    cmd ={ "FzfLua" },
   },
 }
