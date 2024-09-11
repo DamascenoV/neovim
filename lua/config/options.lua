@@ -41,6 +41,24 @@ vim.opt.listchars:append "tab:  ,trail:-"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme 'bamoon'
 
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  float = {
+    border = "rounded",
+  },
+})
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  { border = "rounded" }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  { border = "rounded" }
+)
+
 -- Set colorscheme
 vim.opt.termguicolors = true
 vim.cmd [[

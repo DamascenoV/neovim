@@ -87,8 +87,7 @@ return {
           "emmet_language_server",
           "golangci_lint_ls",
           "gopls",
-          -- "intelephense",
-          "phpactor",
+          "intelephense",
           "lua_ls",
           "rust_analyzer",
           "tsserver",
@@ -129,25 +128,6 @@ return {
           },
         capabilities = capabilities
       })
-
-      -- UI STUFF
-      vim.diagnostic.config({
-        virtual_text = true,
-        signs = true,
-        float = {
-          border = "rounded",
-        },
-      })
-
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { border = "rounded" }
-      )
-
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        { border = "rounded" }
-      )
     end
   }
 }

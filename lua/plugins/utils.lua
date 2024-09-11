@@ -31,7 +31,9 @@ return {
   {
     'echasnovski/mini.statusline',
     version = false,
-    opts = {}
+    opts = {
+      set_vim_settings = false
+    }
   },
 
   {
