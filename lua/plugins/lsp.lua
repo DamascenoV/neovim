@@ -90,8 +90,7 @@ return {
           "intelephense",
           "lua_ls",
           "rust_analyzer",
-          "tsserver",
-          "v_analyzer",
+          "ts_ls",
           "volar",
         },
         handlers = {
