@@ -7,7 +7,6 @@ vim.g.maplocalleader = ' '
 -- Get file location "%p
 keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-keymap('i', 'jj', '<ESC>', { silent = true })
 keymap('i', '<C-c>', '<ESC>', { silent = true })
 keymap('i', '<C-s>', function () vim.lsp.buf.signature_help() end, { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -44,8 +43,9 @@ keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                          
 
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 
-keymap('n', '<A-j>', ':m .+1<CR>==', { silent = true })                           -- Move line up
-keymap('n', '<A-k>', ':m .-2<CR>==', { silent = true })                           -- Move line down
+-- Move line up
+keymap('n', '<C-l>j', ':m .+1<CR>==', { silent = true })                           -- Move line up
+keymap('n', '<C-l>k', ':m .-2<CR>==', { silent = true })                           -- Move line down
 keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })                      -- Vertical Split
 keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true })                   -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
@@ -65,24 +65,14 @@ keymap('n', '<leader>x', '<cmd>bdelete!<CR>') -- Close current buffer
 keymap('n', '<leader>u', '<cmd>UndotreeToggle<CR>') -- Undu Three Toogle
 
 
--- See `:help telescope.builtin`
--- keymap('n', '<leader>?', '<cmd>Telescope oldfiles<CR>', { desc = '[?] Find recently opened files' })
--- keymap('n', '<leader><leader>', '<cmd>Telescope buffers<CR>', { desc = '[F]ind existing buffers' })
--- keymap('n', '<leader>/', '<cmd>Telescope current_buffer_fuzzy_find<CR>',
---   { desc = '[/] Fuzzily search in current buffer]' })
--- keymap('n', '<leader>ff', '<cmd>Telescope find_files<CR>', { desc = '[F]ind [F]iles' })
--- keymap('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp' })
--- keymap('n', '<leader>fw', '<cmd>Telescope grep_string<CR>', { desc = '[Find] current [W]ord' })
--- keymap('n', '<leader>fg', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind by [G]rep' })
--- keymap('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', { desc = '[F]ind [D]iagnostics' })
--- keymap('n', '<leader>fr', '<cmd>Telescope lsp_references<CR>', { desc = '[F]ind [R]eferences' })
-
-
 -- Fzf Lua
+keymap('n', '<leader>gc', '<cmd>FzfLua git_commits<CR>', { desc = '[G]it [C]ommits' })
+keymap('n', '<leader>gs', '<cmd>FzfLua git_status<CR>', { desc = '[G]it [S]tatus' })
 keymap('n', '<leader>?', '<cmd>FzfLua oldfiles<CR>', { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><leader>', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind existing buffers' })
 keymap('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fW', '<cmd>FzfLua grep_cWORD<CR>', { desc = '[Find] current [W]ord' })
 keymap('n', '<leader>fg', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind by [G]rep' })
 keymap('n', '<leader>fd', '<cmd>FzfLua diagnostics_workspace<CR>', { desc = '[F]ind [D]iagnostics' })
 keymap('n', '<leader>fr', '<cmd>FzfLua lsp_references<CR>', { desc = '[F]ind [R]eferences' })

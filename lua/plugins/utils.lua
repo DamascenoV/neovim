@@ -65,6 +65,13 @@ return {
   },
 
   {
+    'echasnovski/mini.jump2d',
+    version = false,
+    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    opts = {}
+  },
+
+  {
     'ibhagwan/fzf-lua',
     event = "BufReadPre",
     dependencies = {

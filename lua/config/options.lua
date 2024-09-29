@@ -36,7 +36,6 @@ vim.opt.showbreak = string.rep(" ", 3)
 vim.opt.fillchars = { eob = "~" }
 vim.opt.showmatch = true
 vim.opt.list = true
-vim.opt.cmdheight = 0
 vim.opt.listchars:append "tab:  ,trail:-"
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3

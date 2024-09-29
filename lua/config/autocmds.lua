@@ -46,27 +46,9 @@ local set_cursor_line = function(event, value, pattern)
   })
 end
 
-local toogle_size = function()
-  vim.api.nvim_create_autocmd("WinEnter", {
-    callback = function()
-        local win_width = vim.api.nvim_win_get_width(0)
-        if win_width < 120 then
-          win_width = 120
-        end
-
-        vim.api.nvim_win_set_width(0, win_width)
-    end
-  })
-end
-
-vim.keymap.set('n', '<leader>w', function()
-  toogle_size()
-end, { silent = true })
-
 vim.api.nvim_command("autocmd TermOpen * startinsert")                        -- starts in insert mode
 vim.api.nvim_command("autocmd TermOpen * setlocal nonumber norelativenumber") -- no numbers
 vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no")            -- no sign column
 
 set_cursor_line('WinLeave', false)
 set_cursor_line("WinEnter", true)
-set_cursor_line('FileType', false, 'TelescopePrompt')

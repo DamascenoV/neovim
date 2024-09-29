@@ -8,6 +8,8 @@ vim.g.colors_name = "bamoon"
 local hi = vim.api.nvim_set_hl
 
 hi(0, "Keyword", { fg = "#b294bb" })
+hi(0, "Float", { link = "NvimDarkGrey4" })
+hi(0, "NormalFloat", { link = "NvimDarkGrey4" })
 hi(0, "Function", { fg = "#7aa0bb" })
 hi(0, "Statement", { fg = "#b294bb" })
 hi(0, "Type", { fg = "#fbfead" })
