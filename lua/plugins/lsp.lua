@@ -7,7 +7,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "folke/neodev.nvim",
       "hrsh7th/nvim-cmp",
-      "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp",
       "saadparwaiz1/cmp_luasnip",
@@ -51,7 +50,6 @@ return {
         sources = {
           { name = 'path' },
           { name = 'nvim_lsp' },
-          { name = 'buffer' },
           { name = 'luasnip' },
           { name = 'cody' },
         },
@@ -90,7 +88,7 @@ return {
           "intelephense",
           "lua_ls",
           "rust_analyzer",
-          "ts_ls",
+          -- "ts_ls",
           "volar",
         },
         handlers = {

@@ -1,14 +1,4 @@
 return {
-  {
-    "mfussenegger/nvim-lint",
-    event = "BufRead",
-    config = function()
-      require("lint").linters_by_ft = {
-        php = { "phpcs" },
-      }
-    end,
-  },
-
   { "tpope/vim-sleuth", event = "BufReadPre" },
 
   {
@@ -65,18 +55,11 @@ return {
   },
 
   {
-    'echasnovski/mini.jump2d',
-    version = false,
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-    opts = {}
-  },
-
-  {
     'ibhagwan/fzf-lua',
     event = "BufReadPre",
     dependencies = {
       'echasnovski/mini.icons',
     },
-    cmd ={ "FzfLua" },
+    cmd = { "FzfLua" },
   },
 }

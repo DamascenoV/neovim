@@ -7,7 +7,6 @@ vim.g.maplocalleader = ' '
 -- Get file location "%p
 keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-keymap('i', '<C-c>', '<ESC>', { silent = true })
 keymap('i', '<C-s>', function () vim.lsp.buf.signature_help() end, { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 keymap('', '<C-h>', '<C-w>h', { silent = true })                          -- Move between window
@@ -18,7 +17,7 @@ keymap('', '<C-Up>', '<cmd>resize -2<CR>', { silent = true })             -- Res
 keymap('', '<C-Down>', '<cmd>resize +2<CR>', { silent = true })           -- Resize window
 keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })  -- Resize window
 keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-e>', '<cmd>Oil<CR>', { silent = true })                    -- Oil File system
+keymap('', '<C-e>', '<cmd>Oil --float<CR>', { silent = true })                    -- File Explorer
 keymap('n', '<Up>', '<C-y>', { silent = true })                           -- Move Window Up
 keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Move Window Down
 keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
@@ -44,8 +43,6 @@ keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                          
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 
 -- Move line up
-keymap('n', '<C-l>j', ':m .+1<CR>==', { silent = true })                           -- Move line up
-keymap('n', '<C-l>k', ':m .-2<CR>==', { silent = true })                           -- Move line down
 keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })                      -- Vertical Split
 keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true })                   -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })

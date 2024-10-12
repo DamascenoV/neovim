@@ -18,9 +18,4 @@ return {
       })
     end,
   },
-  {
-    "tpope/vim-fugitive",
-    event = "BufReadPre",
-    cmd = { "Git", "G" },
-  }
 }

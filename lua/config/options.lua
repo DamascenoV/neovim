@@ -61,22 +61,18 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 
 -- Set colorscheme
 vim.opt.termguicolors = true
-vim.cmd [[
-  set completeopt=menuone,noinsert,noselect
-  highlight! default link CmpItemKind CmpItemMenuDefault
-  ]]
 
-if vim.fn.has('wsl') == 1 then
-  vim.g.clipboard = {
-    name = "WslClipboard",
-    copy = {
-      ["+"] = "clip.exe",
-      ["*"] = "clip.exe",
-    },
-    paste = {
-      ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-  }
-end
+-- if vim.fn.has('wsl') == 1 then
+  -- vim.g.clipboard = {
+  --   name = "WslClipboard",
+  --   copy = {
+  --     ["+"] = "clip.exe",
+  --     ["*"] = "clip.exe",
+  --   },
+  --   paste = {
+  --     ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  --     ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  --   },
+  --   cache_enabled = 0,
+  -- }
+-- end
