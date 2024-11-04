@@ -1,32 +1,29 @@
 -- General keymaps
 local keymap = vim.keymap.set
 
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 -- Get file location "%p
 keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-keymap('i', '<C-s>', function () vim.lsp.buf.signature_help() end, { silent = true })
+keymap('i', '<C-s>', function() vim.lsp.buf.signature_help() end, { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-keymap('', '<C-h>', '<C-w>h', { silent = true })                          -- Move between window
-keymap('', '<C-j>', '<C-w>j', { silent = true })                          -- Move between window
-keymap('', '<C-k>', '<C-w>k', { silent = true })                          -- Move between window
-keymap('', '<C-l>', '<C-w>l', { silent = true })                          -- Move between window
-keymap('', '<C-Up>', '<cmd>resize -2<CR>', { silent = true })             -- Resize window
-keymap('', '<C-Down>', '<cmd>resize +2<CR>', { silent = true })           -- Resize window
-keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })  -- Resize window
-keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-e>', '<cmd>Oil --float<CR>', { silent = true })                    -- File Explorer
-keymap('n', '<Up>', '<C-y>', { silent = true })                           -- Move Window Up
-keymap('n', '<Down>', '<C-e>', { silent = true })                         -- Move Window Down
-keymap('n', '+', '<C-a>', { silent = true })                              -- Incremente
-keymap('n', '-', '<C-x>', { silent = true })                              -- Decrement
-keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                       -- Select all
+keymap('', '<C-h>', '<C-w>h', { silent = true })                                                                -- Move between window
+keymap('', '<C-j>', '<C-w>j', { silent = true })                                                                -- Move between window
+keymap('', '<C-k>', '<C-w>k', { silent = true })                                                                -- Move between window
+keymap('', '<C-l>', '<C-w>l', { silent = true })                                                                -- Move between window
+keymap('', '<C-Up>', '<cmd>resize -2<CR>', { silent = true })                                                   -- Resize window
+keymap('', '<C-Down>', '<cmd>resize +2<CR>', { silent = true })                                                 -- Resize window
+keymap('', '<C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })                                        -- Resize window
+keymap('', '<C-Right>', '<cmd>vertical resize -2<CR>', { silent = true })                                       -- Resize window
+keymap('', '<C-e>', function() require('mini.files').open(vim.api.nvim_buf_get_name(0)) end, { silent = true }) -- File Explorer
+keymap('n', '<Up>', '<C-y>', { silent = true })                                                                 -- Move Window Up
+keymap('n', '<Down>', '<C-e>', { silent = true })                                                               -- Move Window Down
+keymap('n', '+', '<C-a>', { silent = true })                                                                    -- Incremente
+keymap('n', '-', '<C-x>', { silent = true })                                                                    -- Decrement
+keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                                                             -- Select all
 keymap('n', 'x', '"_x', { silent = true })
 keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
-keymap('n', '<leader>ih', function ()
- vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+keymap('n', '<leader>ih', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
 end)
 keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
 keymap('n', '<leader>st', function()
@@ -43,8 +40,8 @@ keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                          
 keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 
 -- Move line up
-keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })                      -- Vertical Split
-keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true })                   -- Horizontal Split
+keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })    -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true }) -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
 

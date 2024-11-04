@@ -1,6 +1,8 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
-vim.opt.guifont = 'JetBrainsMono Nerd Font Mono:h8'
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
