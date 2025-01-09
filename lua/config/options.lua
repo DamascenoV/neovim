@@ -1,8 +1,10 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
+vim.cmd("let g:netrw_liststyle = 3")
+
+vim.opt.showmode = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
@@ -20,6 +22,7 @@ vim.opt.updatetime = 1000
 vim.opt.signcolumn = 'yes'
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 vim.opt.wrap = true
 vim.opt.linebreak = true
@@ -38,10 +41,12 @@ vim.opt.showbreak = string.rep(" ", 3)
 vim.opt.fillchars = { eob = "~" }
 vim.opt.showmatch = true
 vim.opt.list = true
+vim.opt.formatoptions:remove "o"
 vim.opt.listchars:append "tab:  ,trail:-"
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme 'bamoon'
+-- vim.opt.cmdheight=0
 
 vim.diagnostic.config({
   virtual_text = true,

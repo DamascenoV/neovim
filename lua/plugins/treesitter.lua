@@ -7,6 +7,8 @@ return {
         'go',
         'lua',
         'typescript',
+        'javascript',
+        'css',
         'vim',
         'php',
         'vue',
@@ -24,7 +26,7 @@ return {
           init_selection = '<c-p>',
           node_incremental = '<c-p>',
           scope_incremental = '<c-s>',
-          node_decremental = '<c-backspace>',
+          node_decremental = '<c-y>',
         },
       },
     }

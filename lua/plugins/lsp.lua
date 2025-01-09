@@ -17,8 +17,6 @@ return {
         ensure_installed = {
           "cssls",
           "emmet_language_server",
-          "golangci_lint_ls",
-          "gopls",
           "intelephense",
           "lua_ls",
           "rust_analyzer",
@@ -38,15 +36,15 @@ return {
         cmd = { "gleam", "lsp" },
       })
 
-      lspconfig.ocamllsp.setup({
-      })
+      lspconfig.ocamllsp.setup({})
 
       lspconfig.elixirls.setup({
-        dialyzerEnabled = true,
-        enableTestLenses = true,
-        signatureAfterComplete = true,
-        suggestSpecs = true,
-        inlayHintProvider = true,
+        settings = {
+          elixirLS = {
+            dialyzerEnabled = true,
+            suggestSpecs = true,
+          },
+        },
       })
 
       lspconfig.volar.setup({
@@ -58,16 +56,6 @@ return {
             tsdk = '/home/damascenov/.local/share/nvim/mason/bin/typescript-language-server/node_modules/typescript/lib'
           }
         },
-      })
-
-      lspconfig.eslint.setup({
-        filetype = { 'vue' },
-        on_attach = function(_, bufnr)
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "EslintFixAll",
-          })
-        end,
       })
     end
   }
