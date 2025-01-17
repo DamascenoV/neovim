@@ -1,10 +1,3 @@
--- Lint and format on save
-vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-  callback = function()
-    require('lint').try_lint()
-  end
-})
-
 -- Highlight on yank
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -19,36 +12,30 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
-  callback = function()
-    vim.cmd("tabdo wincmd =")
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  callback = function() vim.cmd('tabdo wincmd =') end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then client.server_capabilities.semanticTokensProvider = nil end
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client then
-      client.server_capabilities.semanticTokensProvider = nil
-    end
-  end,
-});
-
 local group
-vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
 local set_cursor_line = function(event, value, pattern)
   vim.api.nvim_create_autocmd(event, {
     group = group,
     pattern = pattern,
-    callback = function()
-      vim.opt_local.cursorline = value
-    end,
+    callback = function() vim.opt_local.cursorline = value end,
   })
 end
 
-vim.api.nvim_command("autocmd TermOpen * startinsert")                        -- starts in insert mode
-vim.api.nvim_command("autocmd TermOpen * setlocal nonumber norelativenumber") -- no numbers
-vim.api.nvim_command("autocmd TermEnter * setlocal signcolumn=no")            -- no sign column
+vim.api.nvim_command('autocmd TermOpen * startinsert') -- starts in insert mode
+vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
+vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no') -- no sign column
 
 set_cursor_line('WinLeave', false)
-set_cursor_line("WinEnter", true)
+set_cursor_line('WinEnter', true)

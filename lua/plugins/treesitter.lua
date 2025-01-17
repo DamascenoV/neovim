@@ -1,8 +1,8 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-  build = ":TSUpdate",
+  build = ':TSUpdate',
   config = function()
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter.configs').setup({
       ensure_installed = {
         'go',
         'lua',
@@ -15,7 +15,7 @@ return {
         'markdown',
         'markdown_inline',
         'elixir',
-        'heex'
+        'heex',
       },
       auto_install = false,
       highlight = { enable = true },
@@ -29,17 +29,17 @@ return {
           node_decremental = '<c-y>',
         },
       },
-    }
+    })
 
     -- For Work with Flex
-    vim.filetype.add {
+    vim.filetype.add({
       extension = {
         pfxml = 'pfxml',
       },
-    }
+    })
 
     vim.treesitter.language.register('php', { 'pfxml', 'blade', 'blade.php' })
 
-    vim.cmd [[highlight IncludedC guibg=#373b41]]
-  end
+    vim.cmd([[highlight IncludedC guibg=#373b41]])
+  end,
 }

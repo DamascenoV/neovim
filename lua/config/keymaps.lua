@@ -6,25 +6,23 @@ keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap('i', '<C-s>', function() vim.lsp.buf.signature_help() end, { silent = true })
 keymap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-keymap('', '<C-h>', '<C-w>h', { silent = true })                                                                -- Move between window
-keymap('', '<C-j>', '<C-w>j', { silent = true })                                                                -- Move between window
-keymap('', '<C-k>', '<C-w>k', { silent = true })                                                                -- Move between window
-keymap('', '<C-l>', '<C-w>l', { silent = true })                                                                -- Move between window
-keymap('', '<C-w><C-Up>', '<cmd>resize -2<CR>', { silent = true })                                                   -- Resize window
-keymap('', '<C-w><C-Down>', '<cmd>resize +2<CR>', { silent = true })                                                 -- Resize window
-keymap('', '<C-w><C-Left>', '<cmd>vertical resize +2<CR>', { silent = true })                                        -- Resize window
-keymap('', '<C-w><C-Right>', '<cmd>vertical resize -2<CR>', { silent = true })                                       -- Resize window
+keymap('', '<C-h>', '<C-w>h', { silent = true }) -- Move between window
+keymap('', '<C-j>', '<C-w>j', { silent = true }) -- Move between window
+keymap('', '<C-k>', '<C-w>k', { silent = true }) -- Move between window
+keymap('', '<C-l>', '<C-w>l', { silent = true }) -- Move between window
+keymap('', '<C-w><C-Up>', '<cmd>resize -2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><C-Down>', '<cmd>resize +2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><C-Left>', '<cmd>vertical resize +2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
 keymap('', '<C-e>', function() require('mini.files').open(vim.api.nvim_buf_get_name(0)) end, { silent = true }) -- File Explorer
-keymap('n', '<Up>', '<C-y>', { silent = true })                                                                 -- Move Window Up
-keymap('n', '<Down>', '<C-e>', { silent = true })                                                               -- Move Window Down
-keymap('n', '+', '<C-a>', { silent = true })                                                                    -- Incremente
-keymap('n', '-', '<C-x>', { silent = true })                                                                    -- Decrement
-keymap('n', '<C-a>', 'gg<S-v>G', { silent = true })                                                             -- Select all
+keymap('n', '<Up>', '<C-y>', { silent = true }) -- Move Window Up
+keymap('n', '<Down>', '<C-e>', { silent = true }) -- Move Window Down
+keymap('n', '+', '<C-a>', { silent = true }) -- Incremente
+keymap('n', '-', '<C-x>', { silent = true }) -- Decrement
+keymap('n', '<C-a>', 'gg<S-v>G', { silent = true }) -- Select all
 keymap('n', 'x', '"_x', { silent = true })
-keymap('n', '<leader>ee', "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", { silent = true })
-keymap('n', '<leader>ih', function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
-end)
+keymap('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>', { silent = true })
+keymap('n', '<leader>ih', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end)
 keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
 keymap('n', '<leader>st', function()
   vim.cmd('vnew')
@@ -32,47 +30,35 @@ keymap('n', '<leader>st', function()
   vim.api.nvim_win_set_height(0, 12)
   vim.wo.winfixheight = true
   vim.cmd('term')
-end
-)                                                                                 -- Open Small Terminal
-keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true })                            -- Normal Mode Terminal
-keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })                            -- Kill Terminal
+end) -- Open Small Terminal
+keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
+keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
 
-keymap("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
+keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
 
 -- Move line up
-keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true })    -- Vertical Split
+keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true }) -- Vertical Split
 keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true }) -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
-
 
 -- Shortcut to Config
 keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>') -- Go to Neovim config
 
 -- Buffer keymaps
-keymap('n', '<tab>', '<cmd>bnext<CR>')        -- Move to next buffer
-keymap('n', '<S-tab>', '<cmd>bprevious<CR>')  -- Move to previous buffer
+keymap('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
+keymap('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
 keymap('n', '<leader>x', '<cmd>bdelete!<CR>') -- Close current buffer
-
--- Fzf Lua
--- keymap('n', '<leader>gc', '<cmd>FzfLua git_commits<CR>', { desc = '[G]it [C]ommits' })
--- keymap('n', '<leader>gs', '<cmd>FzfLua git_status<CR>', { desc = '[G]it [S]tatus' })
--- keymap('n', '<leader>?', '<cmd>FzfLua oldfiles<CR>', { desc = '[?] Find recently opened files' })
--- keymap('n', '<leader><leader>', '<cmd>FzfLua buffers<CR>', { desc = '[F]ind existing buffers' })
--- keymap('n', '<leader>ff', '<cmd>FzfLua files<CR>', { desc = '[F]ind [F]iles' })
--- keymap('n', '<leader>fw', '<cmd>FzfLua grep_cword<CR>', { desc = '[Find] current [W]ord' })
--- keymap('n', '<leader>fW', '<cmd>FzfLua grep_cWORD<CR>', { desc = '[Find] current [W]ord' })
--- keymap('n', '<leader>fg', '<cmd>FzfLua live_grep<CR>', { desc = '[F]ind by [G]rep' })
--- keymap('n', '<leader>fd', '<cmd>FzfLua diagnostics_workspace<CR>', { desc = '[F]ind [D]iagnostics' })
--- keymap('n', '<leader>fr', '<cmd>FzfLua lsp_references<CR>', { desc = '[F]ind [R]eferences' })
 
 -- Pick
 keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
 keymap('n', '<leader>gs', '<cmd>Pick git_hunks<CR>', { desc = '[G]it [S]tatus' })
 keymap('n', '<leader>?', '<cmd>Pick oldfiles<CR>', { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><leader>', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
+keymap('n', '<leader>fe', '<cmd>Pick explorer<CR>', { desc = '[F]ind [E]xplorer' })
 keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fW', '<cmd>Pick grep<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fw', '<cmd>Pick grep<CR>', { desc = '[Find] current [W]ord' })
+keymap('n', '<leader>fW', '<cmd>Pick grep pattern="<cword>"<CR>', { desc = '[Find] current [W]ord' })
 keymap('n', '<leader>fg', '<cmd>Pick grep_live<CR>', { desc = '[F]ind by [G]rep' })
 keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
 keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
@@ -86,17 +72,12 @@ keymap('n', 'gi', vim.lsp.buf.implementation)
 keymap('n', '<space>K', vim.lsp.buf.signature_help)
 keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
 keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
-keymap('n', '<space>wl', function()
-  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-end)
+keymap('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
 keymap('n', '<space>D', vim.lsp.buf.type_definition)
 keymap('n', '<space>rn', vim.lsp.buf.rename)
 keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action)
 keymap('n', 'gr', vim.lsp.buf.references)
-keymap('n', '<space>fm', function()
-  vim.lsp.buf.format { async = true }
-end)
-
+keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end)
 
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)

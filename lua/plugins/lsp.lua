@@ -1,39 +1,36 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile', 'BufWritePre' },
     dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
     },
     config = function()
-      local lspconfig = require("lspconfig")
+      local lspconfig = require('lspconfig')
       require('mason').setup({
         ui = {
-          border = 'rounded'
-        }
+          border = 'rounded',
+        },
       })
       require('mason-lspconfig').setup({
         ensure_installed = {
-          "cssls",
-          "emmet_language_server",
-          "intelephense",
-          "lua_ls",
-          "rust_analyzer",
-          "elixirls",
+          'cssls',
+          'emmet_language_server',
+          'intelephense',
+          'lua_ls',
+          'rust_analyzer',
+          'elixirls',
           -- "ts_ls",
-          "volar",
+          'volar',
         },
         handlers = {
-          function(server_name)
-            lspconfig[server_name].setup({
-            })
-          end
-        }
+          function(server_name) lspconfig[server_name].setup({}) end,
+        },
       })
 
       lspconfig.gleam.setup({
-        cmd = { "gleam", "lsp" },
+        cmd = { 'gleam', 'lsp' },
       })
 
       lspconfig.ocamllsp.setup({})
@@ -48,15 +45,13 @@ return {
       })
 
       lspconfig.volar.setup({
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         init_options = {
           vue = {
             hybridMode = false,
           },
-          typescript = {
-            tsdk = '/home/damascenov/.local/share/nvim/mason/bin/typescript-language-server/node_modules/typescript/lib'
-          }
         },
       })
-    end
-  }
+    end,
+  },
 }
