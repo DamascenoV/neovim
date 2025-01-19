@@ -62,6 +62,7 @@ return {
         },
       },
     })
+    vim.ui.select = minipick.ui_select
     require('mini.extra').setup()
 
     require('mini.completion').setup({
