@@ -46,7 +46,7 @@ vim.opt.listchars:append('tab:  ,trail:-')
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme('bamoon')
--- vim.opt.cmdheight=0
+vim.opt.cmdheight=0
 
 vim.diagnostic.config({
   virtual_text = true,

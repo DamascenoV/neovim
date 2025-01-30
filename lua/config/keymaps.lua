@@ -53,7 +53,6 @@ keymap('n', '<leader>x', '<cmd>bdelete!<CR>') -- Close current buffer
 -- Pick
 keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
 keymap('n', '<leader>gs', '<cmd>Pick git_hunks<CR>', { desc = '[G]it [S]tatus' })
-keymap('n', '<leader>?', '<cmd>Pick oldfiles<CR>', { desc = '[?] Find recently opened files' })
 keymap('n', '<leader><leader>', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
 keymap('n', '<leader>fe', '<cmd>Pick explorer<CR>', { desc = '[F]ind [E]xplorer' })
 keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
@@ -63,6 +62,9 @@ keymap('n', '<leader>fg', '<cmd>Pick grep_live<CR>', { desc = '[F]ind by [G]rep'
 keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
 keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
 keymap('n', '<leader>/', '<cmd>Pick buf_lines<CR>', { desc = '[/] in Buffer' })
+keymap('n', '<leader>fh', '<cmd>Pick git_files scope="ignored"<CR>', { desc = '[F]ind [H]idden' })
+keymap('n', '<leader>fo', '<cmd>Pick oldfiles<CR>', { desc = '[F]ind recently [O]pened files' })
+
 
 -- LSP
 keymap('n', 'gD', vim.lsp.buf.declaration)

@@ -32,6 +32,14 @@ return {
       },
     })
 
+    require('mini.tabline').setup({
+      set_vim_settings = false,
+      tabpage_section = 'right',
+    })
+
+    local minibufremove = require('mini.bufremove')
+    minibufremove.setup()
+
     local minipick = require('mini.pick')
     minipick.setup({
       options = {
@@ -40,7 +48,7 @@ return {
       window = {
         config = {
           width = vim.api.nvim_win_get_width(0),
-          height = 14,
+          height = 24,
         },
       },
       mappings = {
@@ -51,7 +59,7 @@ return {
             if not matches or not matches.current.bufnr then return end
 
             local buf_id = matches.current.bufnr
-            if require('mini.bufremove').delete(buf_id) then
+            if minibufremove.delete(buf_id) then
               local items = vim.tbl_filter(
                 function(item) return item.bufnr ~= buf_id end,
                 minipick.get_picker_items() or {}
@@ -84,7 +92,8 @@ return {
       },
       windows = {
         max_number = 1,
-        width_focus = 100,
+        width_focus = vim.api.nvim_win_get_width(0),
+        height_focus = vim.api.nvim_win_get_height(0),
       },
     })
   end,
