@@ -80,7 +80,12 @@ return {
       },
     })
 
-    require('mini.snippets').setup()
+    local minisnippets = require('mini.snippets')
+    minisnippets.setup({
+      snippets = {
+        minisnippets.gen_loader.from_lang()
+      }
+    })
 
     require('mini.files').setup({
       mappings = {
@@ -93,7 +98,6 @@ return {
       windows = {
         max_number = 1,
         width_focus = vim.api.nvim_win_get_width(0),
-        height_focus = vim.api.nvim_win_get_height(0),
       },
     })
   end,
