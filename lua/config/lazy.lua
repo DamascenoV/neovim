@@ -16,6 +16,11 @@ end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require('lazy').setup({
+  ui = {
+    size = { width = 0.8, height = 0.5 },
+    border = 'rounded',
+    backdrop = 100,
+  },
   spec = {
     { import = 'plugins' },
   },
