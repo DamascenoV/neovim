@@ -1,8 +1,8 @@
 {
-  "lazy.nvim": { "branch": "main", "commit": "f15a93907ddad3d9139aea465ae18336d87f5ce6" },
-  "mason-lspconfig.nvim": { "branch": "main", "commit": "f75e877f5266e87523eb5a18fcde2081820d087b" },
-  "mason.nvim": { "branch": "main", "commit": "e2f7f9044ec30067bc11800a9e266664b88cda22" },
-  "mini.nvim": { "branch": "main", "commit": "d479cf109eeff8a7e0bf978079ea1dd2171648a0" },
-  "nvim-lspconfig": { "branch": "master", "commit": "75edb91a3d2deabe76a9911cde2c13d411b3b097" },
-  "nvim-treesitter": { "branch": "master", "commit": "62911c78a868bac24c8a86f2c1c412d0b799f885" }
+  "lazy.nvim": { "branch": "main", "commit": "e5e9bf48211a13d9ee6c1077c88327c49c1ab4a0" },
+  "mason-lspconfig.nvim": { "branch": "main", "commit": "1a31f824b9cd5bc6f342fc29e9a53b60d74af245" },
+  "mason.nvim": { "branch": "main", "commit": "fc98833b6da5de5a9c5b1446ac541577059555be" },
+  "mini.nvim": { "branch": "main", "commit": "4dd209e4f03bacd46d6d87408b2529a8823112fb" },
+  "nvim-lspconfig": { "branch": "master", "commit": "7af2c37192deae28d1305ae9e68544f7fb5408e1" },
+  "nvim-treesitter": { "branch": "master", "commit": "b08ae25c473b0c63f5ef99f04b03fe66dfbd8f8d" }
 }

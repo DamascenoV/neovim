@@ -1,6 +1,7 @@
 return {
   'echasnovski/mini.nvim',
   version = false,
+  event = "VeryLazy",
   config = function()
     local icons = require('mini.icons')
     icons.setup()
@@ -49,7 +50,7 @@ return {
         config = {
           border = 'rounded',
           width = vim.api.nvim_win_get_width(0),
-          height = 24,
+          height = 21,
         },
       },
       mappings = {
