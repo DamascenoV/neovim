@@ -4,7 +4,7 @@ vim.cmd('let g:netrw_liststyle = 3')
 
 vim.opt.showmode = false
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ','
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
@@ -46,7 +46,7 @@ vim.opt.listchars:append('tab:  ,trail:-')
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme('bamoon')
-vim.opt.cmdheight=0
+vim.opt.cmdheight = 0
 
 vim.diagnostic.config({
   virtual_text = true,
@@ -56,9 +56,15 @@ vim.diagnostic.config({
   },
 })
 
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  { border = 'rounded' }
+)
 
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  { border = 'rounded' }
+)
 
 -- Set colorscheme
 vim.opt.termguicolors = true

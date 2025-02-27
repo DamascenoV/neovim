@@ -21,34 +21,32 @@ keymap('n', '+', '<C-a>', { silent = true }) -- Incremente
 keymap('n', '-', '<C-x>', { silent = true }) -- Decrement
 keymap('n', '<C-a>', 'gg<S-v>G', { silent = true }) -- Select all
 keymap('n', 'x', '"_x', { silent = true })
-keymap('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>', { silent = true })
-keymap('n', '<leader>ih', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({})) end)
-keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true }) -- Open Terminal
+keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true, desc = '[T]erminal' }) -- Open Terminal
 keymap('n', '<leader>st', function()
   vim.cmd('vnew')
   vim.cmd('wincmd J')
   vim.api.nvim_win_set_height(0, 12)
   vim.wo.winfixheight = true
   vim.cmd('term')
-end) -- Open Small Terminal
+end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
 keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
 
-keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]) -- Substitute
+keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[S]ubstitute [R]ename'}) -- Substitute
 
 -- Move line up
-keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true }) -- Vertical Split
-keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true }) -- Horizontal Split
+keymap('n', '<leader>V', '<cmd>vnew<CR>', { silent = true, desc = 'Vertical Split' }) -- Vertical Split
+keymap('n', '<leader>H', '<cmd>split_f<CR>', { silent = true, desc = 'Horizontal Split' }) -- Horizontal Split
 keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
 
 -- Shortcut to Config
-keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>') -- Go to Neovim config
+keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onfig' } ) -- Go to Neovim config
 
 -- Buffer keymaps
 keymap('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
 keymap('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
-keymap('n', '<leader>x', '<cmd>bdelete!<CR>') -- Close current buffer
+keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' }) -- Close current buffer
 
 -- Pick
 keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
@@ -76,18 +74,18 @@ keymap('n', 'gD', vim.lsp.buf.declaration)
 keymap('n', 'gd', vim.lsp.buf.definition)
 keymap('n', 'K', vim.lsp.buf.hover)
 keymap('n', 'gi', vim.lsp.buf.implementation)
-keymap('n', '<space>K', vim.lsp.buf.signature_help)
+keymap('n', '<space>K', vim.lsp.buf.signature_help, { desc = 'Signature' })
 keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
 keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
 keymap('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end)
-keymap('n', '<space>D', vim.lsp.buf.type_definition)
-keymap('n', '<space>rn', vim.lsp.buf.rename)
-keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action)
+keymap('n', '<space>td', vim.lsp.buf.type_definition, { desc = '[T]ype [D]efinition' })
+keymap('n', '<space>rn', vim.lsp.buf.rename, { desc = '[R]ename' })
+keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
 keymap('n', 'gr', vim.lsp.buf.references)
-keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end)
+keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end, { desc = '[F]ormat' })
 
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev)
 keymap('n', ']d', vim.diagnostic.goto_next)
-keymap('n', '<leader>e', vim.diagnostic.open_float)
-keymap('n', '<leader>q', vim.diagnostic.setloclist)
+keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
+keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
