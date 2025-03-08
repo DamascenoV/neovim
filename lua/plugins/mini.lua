@@ -16,6 +16,7 @@ return {
 
     require('mini.surround').setup()
     require('mini.ai').setup()
+    require('mini.pairs').setup()
     require('mini.git').setup()
     require('mini.diff').setup()
     require('mini.jump').setup()
@@ -50,7 +51,7 @@ return {
         config = {
           border = 'rounded',
           width = vim.api.nvim_win_get_width(0),
-          height = 21,
+          height = 19,
         },
       },
       mappings = {
