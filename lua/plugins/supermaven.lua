@@ -21,5 +21,9 @@ return {
   -- },
   'supermaven-inc/supermaven-nvim',
   event = 'InsertEnter',
-  opts = {}
+  opts = {
+    keymaps = {
+      accept_word = "<C-l>",
+    }
+  }
 }

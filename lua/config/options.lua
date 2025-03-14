@@ -32,7 +32,7 @@ vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.incsearch = true
 vim.opt.scrolloff = 10
 vim.opt.completeopt = 'menuone,noinsert,noselect'
-vim.opt.colorcolumn = '120'
+-- vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
 vim.opt.autoindent = true
@@ -46,7 +46,7 @@ vim.opt.listchars:append('tab:  ,trail:-')
 --vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme('bamoon')
-vim.opt.cmdheight = 0
+-- vim.opt.cmdheight = 0
 
 vim.diagnostic.config({
   virtual_text = true,

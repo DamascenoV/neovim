@@ -33,15 +33,6 @@ return {
       },
     })
 
-    -- For Work with Flex
-    vim.filetype.add({
-      extension = {
-        pfxml = 'pfxml',
-      },
-    })
-
-    vim.treesitter.language.register('php', { 'pfxml', 'blade', 'blade.php' })
-
     vim.cmd([[highlight IncludedC guibg=#373b41]])
   end,
 }

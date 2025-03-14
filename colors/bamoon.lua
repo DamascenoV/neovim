@@ -25,7 +25,8 @@ local colors = {
   dark_blue = '#5f89ad',
   dark_grey = '#4e545d',
   dark_gold = '#8f7436',
-  dark_black = '#111111',
+  dark_black = '#0d1117',
+  dark_black2 = '#04070d',
 
   mate_green0 = '#597b60',
   mate_green1 = '#005523',
@@ -37,10 +38,13 @@ local colors = {
 }
 
 hi(0, 'WinBorder', { link = 'Statusline' })
+hi(0, "Normal", { bg = colors.dark_black, fg = colors.white })
+hi(0, "NormalFloat", { bg = colors.dark_black2, fg = colors.white })
+hi(0, "NormalNC", { link = "Normal" })
+hi(0, "NormalSB", { link = "NormalFloat" })
+hi(0, "FloatBorder", { fg = colors.black })
 hi(0, 'Keyword', { fg = colors.purple })
-hi(0, 'NormalFloat', { link = 'NvimDarkGrey4' })
 hi(0, 'Typedef', { fg = colors.dark_yellow })
-hi(0, 'FloatBorder', { link = 'NormalFloat' })
 hi(0, 'Function', { fg = colors.blue })
 hi(0, 'Character', { fg = colors.red })
 hi(0, 'Statement', { fg = colors.dark_red })
