@@ -35,6 +35,7 @@ vim.opt.completeopt = 'menuone,noinsert,noselect'
 -- vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
+vim.o.pumheight = 10
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(' ', 3)
@@ -43,10 +44,9 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
---vim.opt.listchars:append "tab:  ,trail:-,eol:↲"
 vim.opt.laststatus = 3
 vim.cmd.colorscheme('bamoon')
--- vim.opt.cmdheight = 0
+vim.opt.cmdheight = 0
 
 vim.diagnostic.config({
   virtual_text = true,

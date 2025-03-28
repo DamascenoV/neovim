@@ -44,8 +44,8 @@ keymap('v', '>', '>gv', { silent = true })
 keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onfig' } ) -- Go to Neovim config
 
 -- Buffer keymaps
-keymap('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
-keymap('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
+-- keymap('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
+-- keymap('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
 keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' }) -- Close current buffer
 
 -- Pick
