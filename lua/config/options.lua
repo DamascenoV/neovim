@@ -32,8 +32,9 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.incsearch = true
 vim.opt.scrolloff = 10
-vim.opt.completeopt = 'menuone,noinsert,noselect'
--- vim.opt.colorcolumn = '120'
+vim.opt.showtabline = 1
+vim.opt.completeopt = 'menuone,noselect,fuzzy'
+vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
 vim.o.pumheight = 10
@@ -47,7 +48,6 @@ vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
 vim.opt.laststatus = 3
 vim.cmd.colorscheme('bamoon')
-vim.opt.cmdheight = 0
 vim.o.winborder = 'rounded'
 
 vim.diagnostic.config({ virtual_text = true })

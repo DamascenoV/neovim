@@ -7,9 +7,7 @@ return {
     icons.setup()
     icons.tweak_lsp_kind()
 
-    require('mini.statusline').setup({
-      set_vim_settings = false,
-    })
+    require('mini.statusline').setup()
     local notify = require('mini.notify')
     notify.setup()
     vim.notify = notify.make_notify()
@@ -34,9 +32,13 @@ return {
       },
     })
 
-    require('mini.tabline').setup({
-      set_vim_settings = false,
-      tabpage_section = 'right',
+    local miniindentscope = require('mini.indentscope')
+    miniindentscope.setup({
+      draw = {
+        delay = 0,
+        animation = miniindentscope.gen_animation.none()
+      },
+      symbol = '│',
     })
 
     local minibufremove = require('mini.bufremove')
@@ -49,10 +51,10 @@ return {
       },
       window = {
         config = {
-          border = 'rounded',
           width = vim.api.nvim_win_get_width(0),
-          height = 11,
+          height = 14,
         },
+        prompt_prefix = '|> '
       },
       mappings = {
         delete_buffer = {
@@ -71,6 +73,7 @@ return {
             end
           end,
         },
+        choose_marked = '<C-q>'
       },
     })
     vim.ui.select = minipick.ui_select
@@ -87,6 +90,9 @@ return {
     minisnippets.setup({
       snippets = {
         minisnippets.gen_loader.from_lang()
+      },
+      mappings = {
+        expand = '<C-e>',
       }
     })
 
@@ -135,4 +141,3 @@ return {
     })
   end,
 }
-
