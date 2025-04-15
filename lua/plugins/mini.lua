@@ -46,9 +46,6 @@ return {
 
     local minipick = require('mini.pick')
     minipick.setup({
-      options = {
-        content_from_bottom = true,
-      },
       window = {
         config = {
           width = vim.api.nvim_win_get_width(0),

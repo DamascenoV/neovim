@@ -33,7 +33,9 @@ vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.incsearch = true
 vim.opt.scrolloff = 10
 vim.opt.showtabline = 1
-vim.opt.completeopt = 'menuone,noselect,fuzzy'
+vim.opt.wildoptions = 'fuzzy'
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append "c"
 vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
