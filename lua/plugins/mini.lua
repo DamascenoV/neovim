@@ -8,9 +8,9 @@ return {
     icons.tweak_lsp_kind()
 
     require('mini.statusline').setup()
-    local notify = require('mini.notify')
-    notify.setup()
-    vim.notify = notify.make_notify()
+    local mini_notify = require('mini.notify')
+    mini_notify.setup()
+    vim.notify = mini_notify.make_notify()
 
     require('mini.surround').setup()
     require('mini.ai').setup()
@@ -32,20 +32,20 @@ return {
       },
     })
 
-    local miniindentscope = require('mini.indentscope')
-    miniindentscope.setup({
+    local mini_indentscope = require('mini.indentscope')
+    mini_indentscope.setup({
       draw = {
         delay = 0,
-        animation = miniindentscope.gen_animation.none()
+        animation = mini_indentscope.gen_animation.none()
       },
       symbol = '│',
     })
 
-    local minibufremove = require('mini.bufremove')
-    minibufremove.setup()
+    local mini_bufremove = require('mini.bufremove')
+    mini_bufremove.setup()
 
-    local minipick = require('mini.pick')
-    minipick.setup({
+    local mini_pick = require('mini.pick')
+    mini_pick.setup({
       window = {
         config = {
           width = vim.api.nvim_win_get_width(0),
@@ -57,23 +57,23 @@ return {
         delete_buffer = {
           char = '<C-d>',
           func = function()
-            local matches = minipick.get_picker_matches()
+            local matches = mini_pick.get_picker_matches()
             if not matches or not matches.current.bufnr then return end
 
             local buf_id = matches.current.bufnr
-            if minibufremove.delete(buf_id) then
+            if mini_bufremove.delete(buf_id) then
               local items = vim.tbl_filter(
                 function(item) return item.bufnr ~= buf_id end,
-                minipick.get_picker_items() or {}
+                mini_pick.get_picker_items() or {}
               )
-              minipick.set_picker_items(items)
+              mini_pick.set_picker_items(items)
             end
           end,
         },
         choose_marked = '<C-q>'
       },
     })
-    vim.ui.select = minipick.ui_select
+    vim.ui.select = mini_pick.ui_select
     require('mini.extra').setup()
 
     require('mini.completion').setup({
@@ -83,10 +83,10 @@ return {
       },
     })
 
-    local minisnippets = require('mini.snippets')
-    minisnippets.setup({
+    local mini_snippets = require('mini.snippets')
+    mini_snippets.setup({
       snippets = {
-        minisnippets.gen_loader.from_lang()
+        mini_snippets.gen_loader.from_lang()
       },
       mappings = {
         expand = '<C-e>',
@@ -107,8 +107,8 @@ return {
       },
     })
 
-    local miniclue = require('mini.clue')
-    miniclue.setup({
+    local mini_clue = require('mini.clue')
+    mini_clue.setup({
       triggers = {
         { mode = 'n', keys = '<Leader>' },
         { mode = 'x', keys = '<Leader>' },
@@ -128,12 +128,12 @@ return {
         { mode = 'x', keys = 'z' },
       },
       clues = {
-        miniclue.gen_clues.builtin_completion(),
-        miniclue.gen_clues.g(),
-        miniclue.gen_clues.marks(),
-        miniclue.gen_clues.registers(),
-        miniclue.gen_clues.windows(),
-        miniclue.gen_clues.z(),
+        mini_clue.gen_clues.builtin_completion(),
+        mini_clue.gen_clues.g(),
+        mini_clue.gen_clues.marks(),
+        mini_clue.gen_clues.registers(),
+        mini_clue.gen_clues.windows(),
+        mini_clue.gen_clues.z(),
       },
     })
   end,

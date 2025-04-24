@@ -62,9 +62,15 @@ keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnos
 keymap('n', '<leader>fD', '<cmd>Pick diagnostic scope="all"<CR>', { desc = '[F]ind [D]iagnostics All' })
 keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
 keymap('n', '<leader>fi', '<cmd>Pick lsp scope="implementation"<CR>', { desc = '[F]ind [I]mplementation' })
+keymap('n', '<leader>f/', '<cmd>Pick history scope="/"<CR>', { desc = '[F]ind [/]' })
+keymap('n', '<leader>f:', '<cmd>Pick history scope=":"<CR>', { desc = '[F]ind [:]' })
 keymap('n', '<leader>/', '<cmd>Pick buf_lines<CR>', { desc = '[/] in Buffer' })
 keymap('n', '<leader>fh', '<cmd>Pick git_files scope="ignored"<CR>', { desc = '[F]ind [H]idden' })
 keymap('n', '<leader>fo', '<cmd>Pick oldfiles<CR>', { desc = '[F]ind recently [O]pened files' })
+
+-- Git
+keymap('n', '<leader>sc', '<cmd>lua MiniGit.show_at_cursor()<CR>', { desc = 'Git [S]how at [C]ursor' })
+keymap('n', '<leader>sh', '<cmd>lua MiniGit.show_range_history()<CR>', { desc = 'Git [S]how range [H]istory' })
 
 -- Diff
 keymap('n', '<leader>go', '<cmd>lua MiniDiff.toggle_overlay()<CR>', { desc = '[G]it [O]verlay' })
@@ -86,3 +92,8 @@ keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end, { 
 -- Diagnostic keymaps
 keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
+
+-- Copilot
+keymap({ 'n', 'i' }, '<S-tab>', function ()
+  require("copilot-lsp.nes").apply_pending_nes()
+end)

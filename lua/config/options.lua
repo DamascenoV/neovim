@@ -34,12 +34,11 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 10
 vim.opt.showtabline = 1
 vim.opt.wildoptions = 'fuzzy'
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menuone", "noselect", "fuzzy" }
 vim.opt.shortmess:append "c"
 vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
-vim.o.pumheight = 10
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(' ', 3)
@@ -49,25 +48,15 @@ vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
 vim.opt.laststatus = 3
+vim.opt.termguicolors = true
 vim.cmd.colorscheme('bamoon')
+
 vim.o.winborder = 'rounded'
+vim.o.pumheight = 10
+vim.o.writebackup = false
+vim.o.foldmethod = 'indent' -- Set 'indent' folding method
+vim.o.foldlevel = 1 -- Display all folds except top ones
+vim.o.foldnestmax = 10 -- Create folds only for some number of nested levels
+vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 
 vim.diagnostic.config({ virtual_text = true })
-
--- Set colorscheme
-vim.opt.termguicolors = true
-
--- if vim.fn.has('wsl') == 1 then
--- vim.g.clipboard = {
---   name = "WslClipboard",
---   copy = {
---     ["+"] = "clip.exe",
---     ["*"] = "clip.exe",
---   },
---   paste = {
---     ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
---     ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
---   },
---   cache_enabled = 0,
--- }
--- end

@@ -21,7 +21,7 @@ return {
         'lua_ls',
         'rust_analyzer',
         'elixirls',
-        -- "ts_ls",
+        -- "vtsls",
         'volar',
       },
       handlers = {
