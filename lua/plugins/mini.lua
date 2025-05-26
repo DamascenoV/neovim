@@ -53,6 +53,9 @@ return {
         },
         prompt_prefix = '|> '
       },
+      options = {
+        content_from_bottom = true
+      },
       mappings = {
         delete_buffer = {
           char = '<C-d>',
@@ -92,6 +95,7 @@ return {
         expand = '<C-e>',
       }
     })
+    mini_snippets.start_lsp_server()
 
     require('mini.files').setup({
       mappings = {

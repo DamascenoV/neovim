@@ -32,7 +32,5 @@ return {
         },
       },
     })
-
-    vim.cmd([[highlight IncludedC guibg=#373b41]])
   end,
 }

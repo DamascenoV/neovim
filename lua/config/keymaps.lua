@@ -31,6 +31,13 @@ keymap('n', '<leader>st', function()
 end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
 keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
+keymap('n', '<leader>bt', function ()
+  if vim.o.background == "dark" then
+    vim.cmd('set background=light')
+  else
+    vim.cmd('set background=dark')
+  end
+end, { silent = true, desc = '[b]ackground [t]oggle'} ) -- Toggle background color
 
 keymap('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[S]ubstitute [R]ename'}) -- Substitute
 
@@ -95,5 +102,8 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagn
 
 -- Copilot
 keymap({ 'n', 'i' }, '<S-tab>', function ()
-  require("copilot-lsp.nes").apply_pending_nes()
+  local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
+    or (
+        require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit()
+    )
 end)

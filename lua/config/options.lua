@@ -49,9 +49,9 @@ vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
 vim.opt.laststatus = 3
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('bamoon')
+-- vim.cmd.colorscheme('bamoon')
 
-vim.o.winborder = 'rounded'
+vim.o.winborder = 'bold'
 vim.o.pumheight = 10
 vim.o.writebackup = false
 vim.o.foldmethod = 'indent' -- Set 'indent' folding method
@@ -59,4 +59,7 @@ vim.o.foldlevel = 1 -- Display all folds except top ones
 vim.o.foldnestmax = 10 -- Create folds only for some number of nested levels
 vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 
-vim.diagnostic.config({ virtual_text = true })
+-- vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({ virtual_lines = { current_line = true } })
+
+vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'NvimDarkGrey4'})
