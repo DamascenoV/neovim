@@ -18,6 +18,7 @@ return {
         'markdown_inline',
         'elixir',
         'heex',
+        'zig',
       },
       auto_install = false,
       highlight = { enable = true },

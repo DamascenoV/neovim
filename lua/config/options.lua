@@ -1,10 +1,10 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
-vim.cmd('let g:netrw_liststyle = 3')
 
 vim.opt.showmode = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
+vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 vim.opt.title = true
 vim.opt.hlsearch = false
@@ -47,7 +47,10 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
-vim.opt.laststatus = 3
+
+-- Set colorscheme
+vim.o.cmdheight= 0
+-- vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 -- vim.cmd.colorscheme('bamoon')
 

@@ -15,7 +15,6 @@ return {
     require('mini.surround').setup()
     require('mini.ai').setup()
     require('mini.pairs').setup()
-    require('mini.git').setup()
     require('mini.diff').setup()
     require('mini.jump').setup()
     require('mini.splitjoin').setup()
@@ -31,6 +30,22 @@ return {
         line_up = '<C-up>',
       },
     })
+    require('mini.git').setup({
+      command = {
+        split = 'horizontal'
+      }
+    })
+
+    local mini_hipatterns = require('mini.hipatterns')
+    mini_hipatterns.setup({
+      highlighters = {
+        fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+        hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+        todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+        note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+        hex_color = mini_hipatterns.gen_highlighter.hex_color(),
+      }
+    })
 
     local mini_indentscope = require('mini.indentscope')
     mini_indentscope.setup({
@@ -39,6 +54,7 @@ return {
         animation = mini_indentscope.gen_animation.none()
       },
       symbol = '│',
+      options = { try_as_border = true },
     })
 
     local mini_bufremove = require('mini.bufremove')
@@ -48,8 +64,8 @@ return {
     mini_pick.setup({
       window = {
         config = {
-          width = vim.api.nvim_win_get_width(0),
-          height = 14,
+          width = vim.o.columns,
+          height = math.floor(vim.o.lines / 3),
         },
         prompt_prefix = '|> '
       },
@@ -104,6 +120,9 @@ return {
         go_in_plus = '<CR>',
         go_out = 'H',
         go_out_plus = '-',
+      },
+      options = {
+        use_as_default_explorer = false
       },
       windows = {
         max_number = 1,

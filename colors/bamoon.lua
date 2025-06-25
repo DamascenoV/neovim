@@ -25,7 +25,7 @@ local colors = {
   dark_blue = '#5f89ad',
   dark_grey = '#4e545d',
   dark_gold = '#8f7436',
-  dark_black = '#0d1117',
+  dark_black = '#14161B',
   dark_black2 = '#04070d',
 
   mate_green0 = '#597b60',
@@ -38,8 +38,8 @@ local colors = {
 }
 
 hi(0, 'WinBorder', { link = 'Statusline' })
--- hi(0, "Normal", { bg = colors.dark_black, fg = colors.white })
-hi(0, "NormalFloat", { bg = colors.dark_black2, fg = colors.white })
+hi(0, "Normal", { bg = colors.dark_black, fg = colors.white })
+-- hi(0, "NormalFloat", { bg = colors.dark_black2, fg = colors.white })
 hi(0, "TermCursor", { fg = colors.white, bg = colors.dark_black2 })
 hi(0, "NormalNC", { link = "Normal" })
 hi(0, "NormalSB", { link = "NormalFloat" })

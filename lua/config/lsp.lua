@@ -8,6 +8,8 @@ vim.lsp.enable({
   "laravel_ls",
   "gopls",
   "copilot_ls",
-  -- 'elixirls',
+  "zls",
+  "ols",
+  'elixirls',
 })
 

@@ -1,6 +1,6 @@
 {
-  "copilot-lsp": { "branch": "main", "commit": "a45b3d9c0c00cd4271445224de95650090800182" },
+  "copilot-lsp": { "branch": "main", "commit": "041385ef92d45f0ede6df9bb8bbf3b87c7acfa81" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
-  "mini.nvim": { "branch": "main", "commit": "9688298860d8ac7d334139c5fd599edbedeff3c0" },
+  "mini.nvim": { "branch": "main", "commit": "01dce72f2177de6044bcab60ebb8f8e56ade0936" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" }
 }
