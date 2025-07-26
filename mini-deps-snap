@@ -1,5 +1,4 @@
 return {
-  ["copilot-lsp"] = "4d79a1f56e8e9a53754800545875303c2879ac51",
   ["mini.nvim"] = "c122e852517adaf7257688e435369c050da113b1",
   ["nvim-treesitter"] = "42fc28ba918343ebfd5565147a42a26580579482"
 }

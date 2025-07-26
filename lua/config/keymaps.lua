@@ -100,11 +100,3 @@ keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end, { 
 -- Diagnostic keymaps
 keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
-
--- Copilot
-keymap({ 'n', 'i' }, '<S-tab>', function ()
-  local _ = require("copilot-lsp.nes").walk_cursor_start_edit()
-    or (
-        require("copilot-lsp.nes").apply_pending_nes() and require("copilot-lsp.nes").walk_cursor_end_edit()
-    )
-end)
