@@ -1,0 +1,4 @@
+return {
+  ["mini.nvim"] = "c122e852517adaf7257688e435369c050da113b1",
+  ["nvim-treesitter"] = "42fc28ba918343ebfd5565147a42a26580579482"
+}
