@@ -14,7 +14,20 @@ keymap('', '<C-w><C-Up>', '<cmd>resize -2<CR>', { silent = true }) -- Resize win
 keymap('', '<C-w><C-Down>', '<cmd>resize +2<CR>', { silent = true }) -- Resize window
 keymap('', '<C-w><C-Left>', '<cmd>vertical resize +2<CR>', { silent = true }) -- Resize window
 keymap('', '<C-w><C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-e>', function() require('mini.files').open(vim.api.nvim_buf_get_name(0)) end, { silent = true }) -- File Explorer
+keymap(
+  '',
+  '<C-e>',
+  function()
+    require('mini.files').open() end,
+  { silent = true }
+) -- File Explorer
+keymap(
+  '',
+  '<leader>o',
+  function()
+    require('mini.files').open(vim.api.nvim_buf_get_name(0)) end,
+  { silent = true }
+) -- File Explorer
 keymap('n', '<Up>', '<C-y>', { silent = true }) -- Move Window Up
 keymap('n', '<Down>', '<C-e>', { silent = true }) -- Move Window Down
 keymap('n', '+', '<C-a>', { silent = true }) -- Incremente

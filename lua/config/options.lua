@@ -47,12 +47,13 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
+vim.o.splitkeep = 'topline'
 
 -- Set colorscheme
 vim.o.cmdheight= 0
--- vim.opt.laststatus = 3
+vim.opt.laststatus = 3
 vim.opt.termguicolors = true
--- vim.cmd.colorscheme('bamoon')
+vim.cmd.colorscheme('flying_sea')
 
 vim.o.winborder = 'bold'
 vim.o.pumheight = 10

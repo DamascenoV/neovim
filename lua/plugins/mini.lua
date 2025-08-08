@@ -6,6 +6,7 @@ now(function()
 end)
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
+
 now(function()
   local mini_starter = require('mini.starter')
   mini_starter.setup({
@@ -24,8 +25,16 @@ later(function() require('mini.pairs').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.jump').setup() end)
 later(function() require('mini.splitjoin').setup() end)
-later(function() require('mini.operators').setup() end)
 later(function() require('mini.bufremove').setup() end)
+
+later(function()
+  require('mini.operators').setup({
+    replace = {
+      prefix = 'gR',
+    }
+  })
+end)
+
 later(function()
   local hipatterns = require('mini.hipatterns')
   hipatterns.setup({
@@ -135,7 +144,11 @@ later(function()
 end)
 
 later(function()
+  local ls_prefix = require('helpers.permissions_ls').ls_prefix
   require('mini.files').setup({
+    content = {
+      prefix = ls_prefix
+    },
     mappings = {
       close = '<C-c>',
       go_in = 'L',

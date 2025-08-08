@@ -1,6 +1,9 @@
 return {
   cmd = { "intelephense", "--stdio" },
   filetypes = { "php" },
+  init_options = {
+    licenceKey = os.getenv('HOME') .. '/intelephense/licence.txt',
+  },
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     local cwd = assert(vim.uv.cwd())
