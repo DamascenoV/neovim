@@ -1,5 +1,5 @@
 return {
-  ["mini.nvim"] = "4035ef97407a6661ae9ff913ff980e271a658502",
+  ["mini.nvim"] = "7bbafa4691147bc8b74a51986b957daca14c1876",
   ["nvim-treesitter"] = "42fc28ba918343ebfd5565147a42a26580579482",
   ["supermaven-nvim"] = "07d20fce48a5629686aefb0a7cd4b25e33947d50"
 }

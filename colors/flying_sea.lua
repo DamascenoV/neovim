@@ -453,6 +453,13 @@ local function set_plugin_highlights()
 
   -- Directory highlighting
   hi("Directory", { fg = colors.blue })
+
+  hi("MiniDiffSignAdd", { fg = colors.green })
+  hi("MiniDiffSignChange", { fg = colors.yellow })
+  hi("MiniDiffSignDelete", { fg = colors.red })
+  hi("MiniDiffOverAdded", { bg = colors.green_dark })
+  hi("MiniDiffOverChanged", { bg = colors.cyan_dark })
+  hi("MiniDiffOverDeleted", { bg = colors.red_dark })
 end
 
 -- Terminal colors

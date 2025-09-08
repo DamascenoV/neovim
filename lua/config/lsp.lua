@@ -9,6 +9,7 @@ vim.lsp.enable({
   "gopls",
   "zls",
   "ols",
-  'elixirls',
+  -- 'elixirls',
+  "expert"
 })
 
