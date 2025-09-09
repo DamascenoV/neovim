@@ -1,9 +1,6 @@
 local later, now = MiniDeps.later, MiniDeps.now
 
-now(function()
-  require('mini.notify').setup()
-  vim.notify = require('mini.notify').make_notify()
-end)
+now(function() require('mini.notify').setup() end)
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
 
@@ -51,14 +48,14 @@ end)
 later(function()
   require('mini.move').setup({
     mappings = {
-      left = '<C-left>',
-      right = '<C-right>',
-      down = '<C-down>',
-      up = '<C-up>',
-      line_left = '<C-left>',
-      line_right = '<C-right>',
-      line_down = '<C-down>',
-      line_up = '<C-up>',
+      left = '<left>',
+      right = '<right>',
+      down = '<down>',
+      up = '<up>',
+      line_left = '<left>',
+      line_right = '<right>',
+      line_down = '<down>',
+      line_up = '<up>',
     },
   })
 end)
