@@ -1,5 +1,5 @@
 return {
   ["copilot.lua"] = "f7732213e41995439171f35bdd2bf1c809f8e8e7",
   ["mini.nvim"] = "b1dfd15fbf028b76e2d996618d36ae3850f199a2",
-  ["nvim-treesitter"] = "c41b3b9841588e956663345cf01842a232d5eece"
+  ["nvim-treesitter"] = "42fc28ba918343ebfd5565147a42a26580579482"
 }
