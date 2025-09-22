@@ -1,5 +1,6 @@
 vim.lsp.enable({
   "cssls",
+  "copilot_ls",
   "emmet_language_server",
   'intelephense',
   'lua_ls',
