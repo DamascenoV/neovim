@@ -23,7 +23,7 @@ keymap(
 ) -- File Explorer
 keymap(
   '',
-  '<leader>o',
+  '<leader>p',
   function()
     require('mini.files').open(vim.api.nvim_buf_get_name(0)) end,
   { silent = true }
@@ -114,3 +114,22 @@ keymap('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end, { 
 -- Diagnostic keymaps
 keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
+
+-- Sidekick
+keymap({ "n", "v" }, "<leader>ap", function() require("sidekick.cli").select_prompt() end, { desc = "Sidekick Prompt"})
+keymap(
+  'n',
+  "<tab>",
+  function()
+    if not require("sidekick").nes_jump_or_apply() then
+      return "<Tab>"
+    end
+  end,
+  { desc = "Sidekick Claude Toggle" }
+)
+keymap(
+  { "n", "v" },
+  "<leader>ac",
+  function() require("sidekick.cli").toggle({ name = "opencode", focus = true }) end,
+  { desc = "Sidekick Opencode Toggle" }
+)
