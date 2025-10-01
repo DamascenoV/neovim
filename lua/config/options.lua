@@ -64,8 +64,8 @@ vim.o.foldnestmax = 10 -- Create folds only for some number of nested levels
 vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 
 vim.diagnostic.config({ virtual_text = true })
-vim.diagnostic.config({ virtual_lines = { current_line = true } })
+-- vim.diagnostic.config({ virtual_lines = { current_line = true } })
 
-vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'NvimDarkGrey4'})
-vim.api.nvim_set_hl(0, 'Statusline', { link = 'NvimDarkGrey4'})
-vim.api.nvim_set_hl(0, 'StatuslineNC', { link = 'NvimDarkGrey4'})
+-- vim.api.nvim_set_hl(0, 'NormalFloat', { link = 'NvimDarkGrey4'})
+-- vim.api.nvim_set_hl(0, 'Statusline', { link = 'NvimDarkGrey4'})
+-- vim.api.nvim_set_hl(0, 'StatuslineNC', { link = 'NvimDarkGrey4'})

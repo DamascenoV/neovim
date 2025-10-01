@@ -42,7 +42,7 @@ keymap('n', '<leader>st', function()
   vim.wo.winfixheight = true
   vim.cmd('term')
 end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
-keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
+keymap('t', '<C-a>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
 keymap('n', '<leader>bt', function ()
   if vim.o.background == "dark" then
@@ -129,7 +129,13 @@ keymap(
 )
 keymap(
   { "n", "v" },
-  "<leader>ac",
+  "<leader>oc",
   function() require("sidekick.cli").toggle({ name = "opencode", focus = true }) end,
   { desc = "Sidekick Opencode Toggle" }
+)
+keymap(
+  { "n", "v" },
+  "<leader>oC",
+  function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
+  { desc = "Sidekick Copilot Toggle" }
 )

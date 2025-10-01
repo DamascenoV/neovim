@@ -10,8 +10,13 @@ MiniDeps.later(function()
     cli = {
       watch = true,
       win = {
-        width = 50,
-        height = 20,
+        split = {
+          width = 69,
+          height = 20,
+        },
+      },
+      tools = {
+        copilot = { cmd = { "copilot" }, url = "https://github.com/github/copilot-cli" },
       },
     },
   })
