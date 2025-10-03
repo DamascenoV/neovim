@@ -42,7 +42,7 @@ keymap('n', '<leader>st', function()
   vim.wo.winfixheight = true
   vim.cmd('term')
 end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
-keymap('t', '<C-a>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
+keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
 keymap('n', '<leader>bt', function ()
   if vim.o.background == "dark" then
@@ -116,26 +116,21 @@ keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnos
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
 
 -- Sidekick
-keymap({ "n", "v" }, "<leader>ap", function() require("sidekick.cli").select_prompt() end, { desc = "Sidekick Prompt"})
-keymap(
-  'n',
-  "<tab>",
-  function()
-    if not require("sidekick").nes_jump_or_apply() then
-      return "<Tab>"
-    end
-  end,
-  { desc = "Sidekick Claude Toggle" }
-)
-keymap(
-  { "n", "v" },
-  "<leader>oc",
-  function() require("sidekick.cli").toggle({ name = "opencode", focus = true }) end,
+keymap('n', "<tab>", function()
+  if not require("sidekick").nes_jump_or_apply() then return "<Tab>" end
+end)
+
+keymap({ "n", "v" }, "<leader>ap", function()
+  require("sidekick.cli").prompt() end,
   { desc = "Sidekick Opencode Toggle" }
 )
-keymap(
-  { "n", "v" },
-  "<leader>oC",
-  function() require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
+
+keymap({ "n", "v" }, "<leader>ao", function()
+  require("sidekick.cli").toggle({ name = "opencode", focus = true }) end,
+  { desc = "Sidekick Opencode Toggle" }
+)
+
+keymap("n", "<leader>aa", function()
+  require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
   { desc = "Sidekick Copilot Toggle" }
 )
