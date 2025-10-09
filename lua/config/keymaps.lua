@@ -91,6 +91,7 @@ keymap('n', '<leader>fo', '<cmd>Pick oldfiles<CR>', { desc = '[F]ind recently [O
 
 -- Git
 keymap('n', '<leader>GD', '<cmd>Git diff<CR>', { desc = '[G]it [d]iff' })
+keymap('n', '<leader>GS', '<cmd>Git status<CR>', { desc = '[G]it [S]tatus' })
 keymap('n', '<leader>sc', '<cmd>lua MiniGit.show_at_cursor()<CR>', { desc = 'Git [S]how at [C]ursor' })
 keymap('n', '<leader>sh', '<cmd>lua MiniGit.show_range_history()<CR>', { desc = 'Git [S]how range [H]istory' })
 
@@ -118,19 +119,16 @@ keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagn
 -- Sidekick
 keymap('n', "<tab>", function()
   if not require("sidekick").nes_jump_or_apply() then return "<Tab>" end
-end)
+end, { expr = true, desc = "Sidekick Tab Functionality" })
 
 keymap({ "n", "v" }, "<leader>ap", function()
   require("sidekick.cli").prompt() end,
-  { desc = "Sidekick Opencode Toggle" }
-)
+  { desc = "Sidekick Opencode Toggle" })
 
 keymap({ "n", "v" }, "<leader>ao", function()
   require("sidekick.cli").toggle({ name = "opencode", focus = true }) end,
-  { desc = "Sidekick Opencode Toggle" }
-)
+  { desc = "Sidekick Opencode Toggle" })
 
 keymap("n", "<leader>aa", function()
   require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
-  { desc = "Sidekick Copilot Toggle" }
-)
+  { desc = "Sidekick Copilot Toggle" })

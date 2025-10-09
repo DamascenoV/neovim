@@ -164,10 +164,6 @@ later(function()
 end)
 
 later(function()
-  require('mini.visits').setup()
-end)
-
-later(function()
   local mini_clue = require('mini.clue')
   mini_clue.setup({
     triggers = {

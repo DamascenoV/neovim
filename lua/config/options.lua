@@ -14,6 +14,7 @@ vim.opt.inccommand = 'split'
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.cursorline = true
+vim.opt.cursorlineopt  = 'screenline,number'
 vim.opt.mouse = 'a'
 vim.opt.breakindent = true
 vim.opt.undofile = true
@@ -42,12 +43,14 @@ vim.opt.pumblend = 17
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(' ', 3)
-vim.opt.fillchars = { eob = '~' }
+vim.opt.fillchars = 'eob:~,fold: '
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
 vim.o.splitkeep = 'topline'
+vim.o.spelloptions  = 'camel'
+vim.o.iskeyword = '@,48-57,_,192-255,-'
 
 -- Set colorscheme
 vim.o.cmdheight= 0
