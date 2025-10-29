@@ -4,46 +4,12 @@ now(function() require('mini.notify').setup() end)
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
 
-now(function()
-  local mini_starter = require('mini.starter')
-  mini_starter.setup({
-    evaluate_single = true,
-    items = {
-      mini_starter.sections.pick(),
-      mini_starter.sections.builtin_actions(),
-    },
-    footer = os.date("%B %d, %I:%M %p")
-  })
-end)
-
 later(function() require('mini.surround').setup() end)
 later(function() require('mini.ai').setup() end)
-later(function() require('mini.pairs').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.jump').setup() end)
 later(function() require('mini.splitjoin').setup() end)
 later(function() require('mini.bufremove').setup() end)
-
-later(function()
-  require('mini.operators').setup({
-    replace = {
-      prefix = 'gR',
-    }
-  })
-end)
-
-later(function()
-  local hipatterns = require('mini.hipatterns')
-  hipatterns.setup({
-    highlighters = {
-      fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-      hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
-      todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
-      note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
-      hex_color = hipatterns.gen_highlighter.hex_color(),
-    },
-  })
-end)
 
 later(function()
   require('mini.move').setup({
@@ -159,38 +125,6 @@ later(function()
     windows = {
       max_number = 1,
       width_focus = vim.api.nvim_win_get_width(0),
-    },
-  })
-end)
-
-later(function()
-  local mini_clue = require('mini.clue')
-  mini_clue.setup({
-    triggers = {
-      { mode = 'n', keys = '<Leader>' },
-      { mode = 'x', keys = '<Leader>' },
-      { mode = 'i', keys = '<C-x>' },
-      { mode = 'n', keys = 'g' },
-      { mode = 'x', keys = 'g' },
-      { mode = 'n', keys = "'" },
-      { mode = 'n', keys = '`' },
-      { mode = 'x', keys = "'" },
-      { mode = 'x', keys = '`' },
-      { mode = 'n', keys = '"' },
-      { mode = 'x', keys = '"' },
-      { mode = 'i', keys = '<C-r>' },
-      { mode = 'c', keys = '<C-r>' },
-      { mode = 'n', keys = '<C-w>' },
-      { mode = 'n', keys = 'z' },
-      { mode = 'x', keys = 'z' },
-    },
-    clues = {
-      mini_clue.gen_clues.builtin_completion(),
-      mini_clue.gen_clues.g(),
-      mini_clue.gen_clues.marks(),
-      mini_clue.gen_clues.registers(),
-      mini_clue.gen_clues.windows(),
-      mini_clue.gen_clues.z(),
     },
   })
 end)

@@ -4,9 +4,6 @@ MiniDeps.later(function()
   })
 
   require("sidekick").setup({
-    nes = {
-      debounce = 100
-    },
     cli = {
       watch = true,
       win = {

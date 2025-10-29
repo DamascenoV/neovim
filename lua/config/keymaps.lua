@@ -10,10 +10,10 @@ keymap('', '<C-h>', '<C-w>h', { silent = true }) -- Move between window
 keymap('', '<C-j>', '<C-w>j', { silent = true }) -- Move between window
 keymap('', '<C-k>', '<C-w>k', { silent = true }) -- Move between window
 keymap('', '<C-l>', '<C-w>l', { silent = true }) -- Move between window
-keymap('', '<C-w><C-Up>', '<cmd>resize -2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-w><C-Down>', '<cmd>resize +2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-w><C-Left>', '<cmd>vertical resize +2<CR>', { silent = true }) -- Resize window
-keymap('', '<C-w><C-Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><Up>', '<cmd>resize -2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><Down>', '<cmd>resize +2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><Left>', '<cmd>vertical resize +2<CR>', { silent = true }) -- Resize window
+keymap('', '<C-w><Right>', '<cmd>vertical resize -2<CR>', { silent = true }) -- Resize window
 keymap(
   '',
   '<C-e>',
