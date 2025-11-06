@@ -32,11 +32,6 @@ local set_cursor_line = function(event, value, pattern)
     callback = function() vim.opt_local.cursorline = value end,
   })
 end
-
-vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
-vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
-vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column
-
 set_cursor_line('WinLeave', false)
 set_cursor_line('WinEnter', true)
 
@@ -58,3 +53,7 @@ vim.api.nvim_create_autocmd('User', {
     vim.api.nvim_win_set_config(win_id, opts)
   end,
 })
+
+vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
+vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
+vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column

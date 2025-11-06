@@ -38,7 +38,7 @@ keymap('n', '<leader>T', '<cmd>terminal<CR>', { silent = true, desc = '[T]ermina
 keymap('n', '<leader>st', function()
   vim.cmd('vnew')
   vim.cmd('wincmd J')
-  vim.api.nvim_win_set_height(0, 7)
+  vim.api.nvim_win_set_height(0, math.floor(vim.o.lines / 4))
   vim.wo.winfixheight = true
   vim.cmd('term')
 end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
