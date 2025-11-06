@@ -14,14 +14,14 @@ later(function() require('mini.bufremove').setup() end)
 later(function()
   require('mini.move').setup({
     mappings = {
-      left = '<left>',
-      right = '<right>',
-      down = '<down>',
-      up = '<up>',
-      line_left = '<left>',
-      line_right = '<right>',
-      line_down = '<down>',
-      line_up = '<up>',
+      left = '<C-m>h',
+      right = '<C-m>l',
+      down = '<C-m>j',
+      up = '<C-m>k',
+      line_left = '<C-m>h',
+      line_right = '<C-m>l',
+      line_down = '<C-m>j',
+      line_up = '<C-m>k',
     },
   })
 end)
@@ -50,11 +50,7 @@ later(function()
   local mini_pick = require('mini.pick')
   mini_pick.setup({
     window = {
-      config = {
-        width = vim.o.columns,
-        height = math.floor(vim.o.lines / 3),
-      },
-      prompt_prefix = '|> '
+      config = require('helpers.window').win_config,
     },
     options = {
       content_from_bottom = true

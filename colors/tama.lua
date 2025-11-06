@@ -70,6 +70,7 @@ hi(0, "EndOfBuffer", { fg = c.bg_alt })
 hi(0, "NonText", { fg = c.fg_gutter, bg = c.bg })
 hi(0, "Conceal", { fg = c.red })
 hi(0, 'Directory', { fg = c.yellow })
+hi(0, "FloatBorder", { fg = c.fg_gutter })
 
 -- Pmenu
 hi(0, "Pmenu", { fg = c.fg, bg = c.bg_darker })
@@ -78,8 +79,8 @@ hi(0, "PmenuSbar", { bg = c.bg_darker })
 hi(0, "PmenuThumb", { bg = c.cyan })
 
 -- Status & Tab lines
-hi(0, "StatusLine", { fg = c.fg_gutter, bg = c.status })
-hi(0, "StatusLineNC", { fg = c.fg_gutter, bg = c.status })
+hi(0, "StatusLine", { fg = c.fg_gutter, bg = c.bg_status })
+hi(0, "StatusLineNC", { fg = c.fg_gutter, bg = c.bg_status })
 hi(0, "TabLine", { fg = c.fg, bg = c.bg_darker })
 hi(0, "TabLineFill", { fg = c.fg, bg = c.bg_darker })
 hi(0, "TabLineSel", { fg = c.fg_light, bg = c.bg_status, bold = true })

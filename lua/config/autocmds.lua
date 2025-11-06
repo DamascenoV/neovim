@@ -39,3 +39,22 @@ vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            --
 
 set_cursor_line('WinLeave', false)
 set_cursor_line('WinEnter', true)
+
+local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path) end
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    local b = args.data.buf_id
+    vim.keymap.set('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
+  end,
+})
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesWindowUpdate',
+  callback = function(args)
+    local win_id = args.data.win_id
+    local config = vim.api.nvim_win_get_config(win_id)
+    local opts = vim.tbl_deep_extend('force', config, require('helpers.window').win_config())
+    vim.api.nvim_win_set_config(win_id, opts)
+  end,
+})
