@@ -1,9 +1,10 @@
 local later, now = MiniDeps.later, MiniDeps.now
+local helper = require('helpers.mini_helper')
 
 now(function()
   require('mini.notify').setup({
     window = {
-      config = require('helpers.window').notify_config
+      config = helper.notify_config
     }
   })
 end)
@@ -56,7 +57,7 @@ later(function()
   local mini_pick = require('mini.pick')
   mini_pick.setup({
     window = {
-      config = require('helpers.window').win_config,
+      config = helper.win_config,
     },
     options = {
       content_from_bottom = true
@@ -109,10 +110,9 @@ later(function()
 end)
 
 later(function()
-  local ls_prefix = require('helpers.permissions_ls').ls_prefix
   require('mini.files').setup({
     content = {
-      prefix = ls_prefix
+      prefix = helper.ls_prefix
     },
     mappings = {
       close = '<C-c>',

@@ -1,5 +1,5 @@
 return {
-  ["mini.nvim"] = "ee4a4a4abed25e3d108d985b0553c5271f2f71aa",
+  ["mini.nvim"] = "9101b9e0af5d4781260c7d8c131c170c71d281f2",
   ["nvim-treesitter"] = "42fc28ba918343ebfd5565147a42a26580579482",
-  ["sidekick.nvim"] = "6c53e5fb5430821634062e034e3004a9cbea24e6"
+  ["sidekick.nvim"] = "c2bdf8cfcd87a6be5f8b84322c1b5052e78e302e"
 }

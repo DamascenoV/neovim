@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(args)
     local win_id = args.data.win_id
     local config = vim.api.nvim_win_get_config(win_id)
-    local opts = vim.tbl_deep_extend('force', config, require('helpers.window').win_config())
+    local opts = vim.tbl_deep_extend('force', config, require('helpers.mini_helper').win_config())
     vim.api.nvim_win_set_config(win_id, opts)
   end,
 })

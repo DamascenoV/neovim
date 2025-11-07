@@ -19,13 +19,13 @@ local function get_permissions(path)
   perms = perms .. (math.floor(mode / 128) % 2 == 1 and "w" or "-") -- 0x080
   perms = perms .. (math.floor(mode / 64) % 2 == 1 and "x" or "-")  -- 0x040
 
-  perms = perms .. (math.floor(mode / 32) % 2 == 1 and "r" or "-") -- 0x020
-  perms = perms .. (math.floor(mode / 16) % 2 == 1 and "w" or "-") -- 0x010
-  perms = perms .. (math.floor(mode / 8) % 2 == 1 and "x" or "-")  -- 0x008
+  perms = perms .. (math.floor(mode / 32) % 2 == 1 and "r" or "-")  -- 0x020
+  perms = perms .. (math.floor(mode / 16) % 2 == 1 and "w" or "-")  -- 0x010
+  perms = perms .. (math.floor(mode / 8) % 2 == 1 and "x" or "-")   -- 0x008
 
-  perms = perms .. (math.floor(mode / 4) % 2 == 1 and "r" or "-") -- 0x004
-  perms = perms .. (math.floor(mode / 2) % 2 == 1 and "w" or "-") -- 0x002
-  perms = perms .. (mode % 2 == 1 and "x" or "-")                 -- 0x001
+  perms = perms .. (math.floor(mode / 4) % 2 == 1 and "r" or "-")   -- 0x004
+  perms = perms .. (math.floor(mode / 2) % 2 == 1 and "w" or "-")   -- 0x002
+  perms = perms .. (mode % 2 == 1 and "x" or "-")                   -- 0x001
 
   return perms
 end
@@ -68,6 +68,26 @@ local function ls_prefix(fs_entry)
   local mtime = format_mtime(stat.mtime and stat.mtime.sec)
 
   return string.format("%s %8s %s ", permissions, size, mtime)
+end
+
+M.win_config = function()
+  local height = math.floor(vim.o.lines / 4)
+  local width = math.floor(vim.o.columns)
+  return {
+    anchor = 'NW',
+    height = height,
+    width = width,
+    row = math.floor(vim.o.lines),
+    col = math.floor(0.5 * (vim.o.columns - width)),
+    zindex = 200
+  }
+end
+
+M.notify_config = function()
+  return {
+    anchor = 'NW',
+    row = math.floor(vim.o.lines),
+  }
 end
 
 M.ls_prefix = ls_prefix
