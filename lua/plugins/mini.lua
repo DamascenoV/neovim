@@ -1,5 +1,5 @@
 local later, now = MiniDeps.later, MiniDeps.now
-local helper = require('helpers.mini_helper')
+local helper = require('util.mini_helper')
 
 now(function()
   require('mini.notify').setup({
@@ -21,14 +21,14 @@ later(function() require('mini.bufremove').setup() end)
 later(function()
   require('mini.move').setup({
     mappings = {
-      left = '<C-m>h',
-      right = '<C-m>l',
-      down = '<C-m>j',
-      up = '<C-m>k',
-      line_left = '<C-m>h',
-      line_right = '<C-m>l',
-      line_down = '<C-m>j',
-      line_up = '<C-m>k',
+      left = '<left>',
+      right = '<right>',
+      down = '<down>',
+      up = '<up>',
+      line_left = '<left>',
+      line_right = '<right>',
+      line_down = '<down>',
+      line_up = '<up>',
     },
   })
 end)
@@ -115,7 +115,7 @@ later(function()
       prefix = helper.ls_prefix
     },
     mappings = {
-      close = '<C-c>',
+      close = '<esc>',
       go_in = 'L',
       go_in_plus = '<CR>',
       go_out = 'H',

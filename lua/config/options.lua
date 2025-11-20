@@ -1,7 +1,7 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- vim.opt.showmode = false
+vim.opt.showmode = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
@@ -51,11 +51,11 @@ vim.opt.listchars:append('tab:  ,trail:-')
 vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 
-vim.opt.laststatus = 0
+vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 
-vim.o.winborder = 'bold'
+vim.o.winborder = 'solid'
 vim.o.pumheight = 10
 vim.o.writebackup = false
 vim.o.foldmethod = 'indent' -- Set 'indent' folding method
@@ -64,3 +64,9 @@ vim.o.foldnestmax = 10 -- Create folds only for some number of nested levels
 vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 
 vim.diagnostic.config({ virtual_text = true })
+
+if vim.fn.has('nvim-o.12') == 1 then
+  require('vim._extui').enable({
+    msg = { target = 'cmd' }
+  })
+end

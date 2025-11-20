@@ -18,8 +18,27 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     if client then client.server_capabilities.semanticTokensProvider = nil end
+
+    if vim.fn.has('nvim-0.12') == 0 then return end
+    local bufnr = args.buf
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+      vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
+
+      vim.keymap.set(
+        'i',
+        '<C-f>',
+        vim.lsp.inline_completion.get,
+        { desc = 'LSP: accept inline completion', buffer = bufnr }
+      )
+      vim.keymap.set(
+        'i',
+        '<C-g>',
+        vim.lsp.inline_completion.select,
+        { desc = 'LSP: switch inline completion', buffer = bufnr }
+      )
+    end
   end,
 })
 
@@ -49,7 +68,7 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(args)
     local win_id = args.data.win_id
     local config = vim.api.nvim_win_get_config(win_id)
-    local opts = vim.tbl_deep_extend('force', config, require('helpers.mini_helper').win_config())
+    local opts = vim.tbl_deep_extend('force', config, require('util.mini_helper').win_config())
     vim.api.nvim_win_set_config(win_id, opts)
   end,
 })

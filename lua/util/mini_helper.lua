@@ -71,7 +71,7 @@ local function ls_prefix(fs_entry)
 end
 
 M.win_config = function()
-  local height = math.floor(vim.o.lines / 4)
+  local height = math.floor((vim.o.lines / 2) - 4)
   local width = math.floor(vim.o.columns)
   return {
     anchor = 'NW',
@@ -79,14 +79,14 @@ M.win_config = function()
     width = width,
     row = math.floor(vim.o.lines),
     col = math.floor(0.5 * (vim.o.columns - width)),
-    zindex = 200
+    zindex = 201
   }
 end
 
 M.notify_config = function()
   return {
     anchor = 'NW',
-    row = math.floor(vim.o.lines),
+    row = math.floor(vim.o.lines - 5),
   }
 end
 
