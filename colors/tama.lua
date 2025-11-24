@@ -55,8 +55,8 @@ local c = {
 -- ===========================================================================
 
 hi(0, "Normal", { fg = c.fg, bg = c.bg })
-hi(0, "NormalFloat", { fg = c.fg, bg = c.bg_dark })
-hi(0, "FloatBorder", { fg = c.fg_gutter, bg = c.bg_dark })
+hi(0, "NormalFloat", { fg = c.fg, bg = c.bg_float })
+hi(0, "FloatBorder", { fg = c.fg_gutter, bg = c.bg_float })
 hi(0, "ColorColumn", { bg = c.bg_darker })
 hi(0, "Cursor", { fg = c.bg, bg = c.fg_light, reverse = true })
 hi(0, "lCursor", { fg = c.bg, bg = c.fg_light })
@@ -112,8 +112,8 @@ hi(0, "SpellLocal", { fg = c.orange, sp = c.spell_local, underline = true, bold 
 hi(0, "SpellRare", { fg = c.orange, sp = c.spell_rare, underline = true, bold = true })
 
 -- Mini
-hi(0, "MiniPickMatchCurrent", { bg = c.bg_dark, underline = true, bold = true })
-hi(0, "MiniFilesCursorLine", { bg = c.bg_dark, underline = true, bold = true })
+hi(0, "MiniPickMatchCurrent", { bg = c.bg_float, underline = true, bold = true })
+hi(0, "MiniFilesCursorLine", { bg = c.bg_float, underline = true, bold = true })
 
 -- ===========================================================================
 -- SYNTAX HIGHLIGHTING
@@ -165,10 +165,10 @@ hi(0, "Todo", { fg = c.bg, bg = c.green, bold = true })
 -- DIFF
 -- ===========================================================================
 
-hi(0, "DiffAdd", { fg = c.green })
-hi(0, "DiffChange", { fg = c.yellow })
-hi(0, "DiffDelete", { fg = c.red, bold = true })
-hi(0, "DiffText", { fg = c.cyan })
+hi(0, "DiffAdd", { fg = c.green, bg = c.bg_dark })
+hi(0, "DiffChange", { fg = c.yellow, bg = c.bg_dark })
+hi(0, "DiffDelete", { fg = c.red, bold = true, bg = c.bg_dark })
+hi(0, "DiffText", { fg = c.cyan, bg = c.bg_dark })
 
 -- ===========================================================================
 -- PLUGINS & LSP

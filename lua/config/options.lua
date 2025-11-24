@@ -55,17 +55,13 @@ vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 
-vim.o.winborder = 'solid'
+vim.o.winborder = 'bold'
 vim.o.pumheight = 10
 vim.o.writebackup = false
-vim.o.foldmethod = 'indent' -- Set 'indent' folding method
-vim.o.foldlevel = 1 -- Display all folds except top ones
-vim.o.foldnestmax = 10 -- Create folds only for some number of nested levels
-vim.g.markdown_folding = 1 -- Use folding by heading in markdown files
 
 vim.diagnostic.config({ virtual_text = true })
 
-if vim.fn.has('nvim-o.12') == 1 then
+if vim.fn.has('nvim-0.12') == 1 then
   require('vim._extui').enable({
     msg = { target = 'cmd' }
   })

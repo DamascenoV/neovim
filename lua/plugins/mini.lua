@@ -8,14 +8,13 @@ now(function()
     }
   })
 end)
+
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
 
 later(function() require('mini.surround').setup() end)
-later(function() require('mini.ai').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.jump').setup() end)
-later(function() require('mini.splitjoin').setup() end)
 later(function() require('mini.bufremove').setup() end)
 
 later(function()

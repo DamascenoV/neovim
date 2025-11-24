@@ -132,3 +132,19 @@ keymap({ "n", "v" }, "<leader>ao", function()
 keymap("n", "<leader>aa", function()
   require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
   { desc = "Sidekick Copilot Toggle" })
+
+keymap("n", "<leader>t", function()
+    require("sidekick.nes").toggle()
+    print("Toggled NES")
+  end,
+  { desc = "Sidekick NES Toggle" })
+
+keymap("n", "<leader>f", function()
+    if (vim.fn.has("nvim-0.12") == 1) then
+      vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled())
+      print(tostring(vim.lsp.inline_completion.is_enabled()))
+    else
+      print("Requires Neovim 0.12 or higher")
+    end
+  end,
+  { desc = "Sidekick NES Start" })
