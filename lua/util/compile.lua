@@ -24,6 +24,18 @@ local config = {
   auto_close_on_success = false, -- Close window automatically on successful build
   auto_scroll = true,            -- Auto-scroll to bottom as output appears
   clear_on_compile = true,       -- Clear buffer before each new compilation
+  -- Detectors check for project files to auto-detect build commands.
+  -- First matching detector wins. Order matters for projects with multiple build systems.
+  detectors = { -- Custom project detectors (file, cmd, lang)
+    { file = "Cargo.toml",     cmd = "cargo build",         lang = "rust" },
+    { file = "go.mod",         cmd = "go build ./...",      lang = "go" },
+    { file = "build.zig",      cmd = "zig build",           lang = "zig" },
+    { file = "mix.exs",        cmd = "mix compile",         lang = "elixir" },
+    { file = "composer.json",  cmd = "composer install",    lang = "php" },
+    { file = "package.json",   cmd = "npm run build",       lang = "typescript" },
+    { file = "Makefile",       cmd = "make",                lang = nil },
+    { file = "CMakeLists.txt", cmd = "cmake --build build", lang = "c" },
+  },
 }
 
 --- Configure the compile module with custom options
@@ -55,23 +67,6 @@ local efm_map = {
 }
 
 -------------------------------------------------------------------------------
--- Project Type Detection
--------------------------------------------------------------------------------
--- Detectors check for project files to auto-detect build commands.
--- First matching detector wins. Order matters for projects with multiple build systems.
-
-local detectors = {
-  { file = "Cargo.toml",     cmd = "cargo build",         lang = "rust" },
-  { file = "go.mod",         cmd = "go build ./...",      lang = "go" },
-  { file = "build.zig",      cmd = "zig build",           lang = "zig" },
-  { file = "mix.exs",        cmd = "mix compile",         lang = "elixir" },
-  { file = "composer.json",  cmd = "composer install",    lang = "php" },
-  { file = "package.json",   cmd = "npm run build",       lang = "typescript" },
-  { file = "Makefile",       cmd = "make",                lang = nil },
-  { file = "CMakeLists.txt", cmd = "cmake --build build", lang = "c" },
-}
-
--------------------------------------------------------------------------------
 -- Project Detection
 -------------------------------------------------------------------------------
 
@@ -79,7 +74,7 @@ local detectors = {
 ---@return table|nil detector The matched detector or nil if none found
 local function get_detector()
   local cwd = vim.fn.getcwd()
-  for _, detector in ipairs(detectors) do
+  for _, detector in ipairs(config.detectors) do
     if vim.uv.fs_stat(cwd .. "/" .. detector.file) then
       return detector
     end
