@@ -18,13 +18,6 @@ keymap(
   '',
   '<C-e>',
   function()
-    require('mini.files').open() end,
-  { silent = true }
-) -- File Explorer
-keymap(
-  '',
-  '<leader>p',
-  function()
     require('mini.files').open(vim.api.nvim_buf_get_name(0)) end,
   { silent = true }
 ) -- File Explorer
@@ -42,7 +35,7 @@ keymap('n', '<leader>st', function()
   vim.wo.winfixheight = true
   vim.cmd('term')
 end, { desc = '[S]mall [T]erminal' }) -- Open Small Terminal
-keymap('t', '<C-c>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
+keymap('t', '<esc>', '<C-\\><C-n>', { silent = true }) -- Normal Mode Terminal
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true }) -- Kill Terminal
 keymap('n', '<leader>bt', function ()
   if vim.o.background == "dark" then
@@ -64,8 +57,6 @@ keymap('v', '>', '>gv', { silent = true })
 keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onfig' } ) -- Go to Neovim config
 
 -- Buffer keymaps
--- keymap('n', '<tab>', '<cmd>bnext<CR>') -- Move to next buffer
--- keymap('n', '<S-tab>', '<cmd>bprevious<CR>') -- Move to previous buffer
 keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' }) -- Close current buffer
 
 -- Pick
@@ -148,3 +139,5 @@ keymap("n", "<leader>f", function()
     end
   end,
   { desc = "Sidekick NES Start" })
+
+keymap("n", "<leader>cc", ":Compile ")

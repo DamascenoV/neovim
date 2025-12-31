@@ -11,11 +11,35 @@ end)
 
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
+now(function()
+  local starter = require('mini.starter')
+  starter.setup({
+    items = {
+      starter.sections.pick(),
+      starter.sections.recent_files(10, true),
+    },
+    content_hooks = {
+      starter.gen_hook.adding_bullet(),
+      starter.gen_hook.aligning('center', 'center'),
+    },
+    footer = function () return '' end
+  })
+end)
 
+later(function() require('mini.ai').setup() end)
+later(function() require('mini.align').setup() end)
 later(function() require('mini.surround').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.jump').setup() end)
 later(function() require('mini.bufremove').setup() end)
+later(function() require('mini.operators').setup() end)
+later(function() require('mini.pairs').setup() end)
+later(function() require('mini.splitjoin').setup() end)
+later(function()
+  require('mini.cmdline').setup({
+    autopeek = { enable = false }
+  })
+end)
 
 later(function()
   require('mini.move').setup({
@@ -114,18 +138,15 @@ later(function()
       prefix = helper.ls_prefix
     },
     mappings = {
-      close = '<esc>',
+      close = '<C-c>',
       go_in = 'L',
       go_in_plus = '<CR>',
       go_out = 'H',
       go_out_plus = '-',
+      synchronize = '<C-y>'
     },
     options = {
       use_as_default_explorer = false
-    },
-    windows = {
-      max_number = 1,
-      width_focus = vim.api.nvim_win_get_width(0),
     },
   })
 end)

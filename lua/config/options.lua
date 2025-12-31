@@ -6,6 +6,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
+vim.g.netrw_winsize = 24
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
@@ -50,8 +51,8 @@ vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
 vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
+vim.o.ruler = false
 
-vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 
@@ -61,7 +62,13 @@ vim.o.writebackup = false
 
 vim.diagnostic.config({ virtual_text = true })
 
+vim.cmd('filetype plugin indent on')
+if vim.fn.exists('syntax_on') then
+  vim.cmd('syntax enable')
+end
+
 if vim.fn.has('nvim-0.12') == 1 then
+  vim.o.pumborder = 'bold'
   require('vim._extui').enable({
     msg = { target = 'cmd' }
   })
