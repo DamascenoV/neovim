@@ -94,6 +94,7 @@ keymap('n', 'gD', vim.lsp.buf.declaration)
 keymap('n', 'gd', vim.lsp.buf.definition)
 keymap('n', 'K', vim.lsp.buf.hover)
 keymap('n', 'gi', vim.lsp.buf.implementation)
+keymap('n', '<leader>rn', vim.lsp.buf.rename)
 keymap('n', '<space>K', vim.lsp.buf.signature_help, { desc = 'Signature' })
 keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
 keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
@@ -124,7 +125,7 @@ keymap("n", "<leader>aa", function()
   require("sidekick.cli").toggle({ name = "copilot", focus = true }) end,
   { desc = "Sidekick Copilot Toggle" })
 
-keymap("n", "<leader>t", function()
+keymap("n", "<leader>n", function()
     require("sidekick.nes").toggle()
     print("Toggled NES")
   end,

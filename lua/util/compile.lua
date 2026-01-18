@@ -9,9 +9,10 @@ local M = {}
 -- Module State
 -------------------------------------------------------------------------------
 
-M.last_command = nil -- Stores the last executed command for recompilation
-M.bufnr = nil        -- Buffer number for the compilation output window
-M.job_id = nil       -- Job ID of the currently running compilation process
+M.last_command = nil    -- Stores the last executed command for recompilation
+M.bufnr = nil           -- Buffer number for the compilation output window
+M.job_id = nil          -- Job ID of the currently running compilation process
+M.current_error_idx = 0 -- Current position in the quickfix error list
 
 -------------------------------------------------------------------------------
 -- Configuration
@@ -20,7 +21,7 @@ M.job_id = nil       -- Job ID of the currently running compilation process
 local config = {
   buffer_name = "*COMPILATION*", -- Name displayed in the buffer list
   split_direction = "botright",  -- Where to open the split (botright, topleft, etc.)
-  split_size = 10,               -- Height of the compilation window in lines
+  split_size = 12,               -- Height of the compilation window in lines
   auto_close_on_success = false, -- Close window automatically on successful build
   auto_scroll = true,            -- Auto-scroll to bottom as output appears
   clear_on_compile = true,       -- Clear buffer before each new compilation
@@ -31,7 +32,7 @@ local config = {
     { file = "go.mod",         cmd = "go build ./...",      lang = "go" },
     { file = "build.zig",      cmd = "zig build",           lang = "zig" },
     { file = "mix.exs",        cmd = "mix compile",         lang = "elixir" },
-    { file = "composer.json",  cmd = "composer install",    lang = "php" },
+    { file = "composer.json",  cmd = "php artisan serve",   lang = "php" },
     { file = "package.json",   cmd = "npm run build",       lang = "typescript" },
     { file = "Makefile",       cmd = "make",                lang = nil },
     { file = "CMakeLists.txt", cmd = "cmake --build build", lang = "c" },
@@ -205,6 +206,117 @@ local function jump_to_location()
 end
 
 -------------------------------------------------------------------------------
+-- Error Navigation (Emacs-style next-error / previous-error)
+-------------------------------------------------------------------------------
+
+--- Jump to the first error in the quickfix list
+function M.first_error()
+  local qf = vim.fn.getqflist()
+  if #qf == 0 then
+    vim.notify("No errors", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+    return
+  end
+  M.current_error_idx = 1
+  vim.cmd("cfirst")
+  vim.notify(string.format("Error 1 of %d", #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+end
+
+--- Jump to the last error in the quickfix list
+function M.last_error()
+  local qf = vim.fn.getqflist()
+  if #qf == 0 then
+    vim.notify("No errors", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+    return
+  end
+  M.current_error_idx = #qf
+  vim.cmd("clast")
+  vim.notify(string.format("Error %d of %d", #qf, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+end
+
+--- Jump to the next error in the quickfix list
+--- Wraps around to the first error if at the end
+function M.next_error()
+  local qf = vim.fn.getqflist()
+  if #qf == 0 then
+    vim.notify("No errors", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+    return
+  end
+
+  -- Get current quickfix index if we haven't tracked it
+  if M.current_error_idx == 0 then
+    M.current_error_idx = vim.fn.getqflist({ idx = 0 }).idx or 0
+  end
+
+  if M.current_error_idx >= #qf then
+    -- Wrap around to first error
+    M.current_error_idx = 1
+    vim.cmd("cfirst")
+    vim.notify(string.format("Error 1 of %d (wrapped)", #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+  else
+    M.current_error_idx = M.current_error_idx + 1
+    vim.cmd("cnext")
+    vim.notify(string.format("Error %d of %d", M.current_error_idx, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+  end
+end
+
+--- Jump to the previous error in the quickfix list
+--- Wraps around to the last error if at the beginning
+function M.prev_error()
+  local qf = vim.fn.getqflist()
+  if #qf == 0 then
+    vim.notify("No errors", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+    return
+  end
+
+  -- Get current quickfix index if we haven't tracked it
+  if M.current_error_idx == 0 then
+    M.current_error_idx = vim.fn.getqflist({ idx = 0 }).idx or 0
+  end
+
+  if M.current_error_idx <= 1 then
+    -- Wrap around to last error
+    M.current_error_idx = #qf
+    vim.cmd("clast")
+    vim.notify(string.format("Error %d of %d (wrapped)", #qf, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+  else
+    M.current_error_idx = M.current_error_idx - 1
+    vim.cmd("cprev")
+    vim.notify(string.format("Error %d of %d", M.current_error_idx, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+  end
+end
+
+--- Move cursor to next error line in compilation buffer (without jumping to file)
+--- Similar to Emacs M-n in compilation mode
+local function next_error_line()
+  local line_count = vim.api.nvim_buf_line_count(0)
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+
+  for lnum = current_line + 1, line_count do
+    local line = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1]
+    if parse_location(line) then
+      vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+      return
+    end
+  end
+  vim.notify("No more errors below", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+end
+
+--- Move cursor to previous error line in compilation buffer (without jumping to file)
+--- Similar to Emacs M-p in compilation mode
+local function prev_error_line()
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+
+  for lnum = current_line - 1, 1, -1 do
+    local line = vim.api.nvim_buf_get_lines(0, lnum - 1, lnum, false)[1]
+    if parse_location(line) then
+      vim.api.nvim_win_set_cursor(0, { lnum, 0 })
+      return
+    end
+  end
+  vim.notify("No more errors above", vim.log.levels.INFO, { title = NOTIFY_TITLE })
+end
+
+-------------------------------------------------------------------------------
 -- Buffer Syntax Highlighting
 -------------------------------------------------------------------------------
 
@@ -265,11 +377,17 @@ local function get_buffer()
 
   -- Buffer-local keymaps for navigation and control
   local opts = { buffer = M.bufnr, silent = true }
-  vim.keymap.set('n', 'q', '<cmd>close<CR>', opts)     -- Close window
-  vim.keymap.set('n', 'R', '<cmd>Recompile<CR>', opts) -- Re-run last command
-  vim.keymap.set('n', '<CR>', jump_to_location, opts)  -- Jump to error
-  vim.keymap.set('n', 'gf', jump_to_location, opts)    -- Jump to error (gf style)
-  vim.keymap.set('n', 'Q', '<cmd>copen<CR>', opts)     -- Open quickfix list
+  vim.keymap.set('n', 'q', '<cmd>CompileStop<CR>', opts) -- Stop Compilation
+  vim.keymap.set('n', 'R', '<cmd>Recompile<CR>', opts)   -- Re-run last command
+  vim.keymap.set('n', '<CR>', jump_to_location, opts)    -- Jump to error
+  vim.keymap.set('n', 'gf', jump_to_location, opts)      -- Jump to error (gf style)
+  vim.keymap.set('n', 'Q', '<cmd>copen<CR>', opts)       -- Open quickfix list
+  vim.keymap.set('n', ']e', next_error_line, opts)       -- Next error line (no jump)
+  vim.keymap.set('n', '[e', prev_error_line, opts)       -- Prev error line (no jump)
+  vim.keymap.set("n", "]q", M.next_error, { desc = "Next [Q]uickfix error" })
+  vim.keymap.set("n", "[q", M.prev_error, { desc = "Prev [Q]uickfix error" })
+  vim.keymap.set("n", "]Q", M.last_error, { desc = "Last [Q]uickfix error" })
+  vim.keymap.set("n", "[Q", M.first_error, { desc = "First [Q]uickfix error" })
 
   return M.bufnr
 end

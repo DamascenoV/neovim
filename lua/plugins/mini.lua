@@ -1,30 +1,11 @@
 local later, now = MiniDeps.later, MiniDeps.now
 local helper = require('util.mini_helper')
 
-now(function()
-  require('mini.notify').setup({
-    window = {
-      config = helper.notify_config
-    }
-  })
-end)
+now(function() require('mini.notify').setup() end)
 
 now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
-now(function()
-  local starter = require('mini.starter')
-  starter.setup({
-    items = {
-      starter.sections.pick(),
-      starter.sections.recent_files(10, true),
-    },
-    content_hooks = {
-      starter.gen_hook.adding_bullet(),
-      starter.gen_hook.aligning('center', 'center'),
-    },
-    footer = function () return '' end
-  })
-end)
+now(function() require('mini.starter').setup() end)
 
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.align').setup() end)
@@ -147,6 +128,20 @@ later(function()
     },
     options = {
       use_as_default_explorer = false
+    },
+  })
+end)
+
+later(function()
+  local hipatterns = require('mini.hipatterns')
+  hipatterns.setup({
+    highlighters = {
+      fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+      hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+      todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+      note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+
+      hex_color = hipatterns.gen_highlighter.hex_color(),
     },
   })
 end)

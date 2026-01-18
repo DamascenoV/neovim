@@ -79,13 +79,6 @@ M.win_config = function()
   }
 end
 
-M.notify_config = function()
-  return {
-    anchor = 'NW',
-    row = math.floor(vim.o.lines - 5),
-  }
-end
-
 M.ls_prefix = ls_prefix
 M.get_permissions = get_permissions
 M.format_size = format_size
