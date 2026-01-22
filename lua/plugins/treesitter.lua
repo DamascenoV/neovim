@@ -1,36 +1,34 @@
 MiniDeps.later(function()
   MiniDeps.add({
     source = 'nvim-treesitter/nvim-treesitter',
-    hooks = {post_checkout = function() vim.cmd('TSUpdate') end,},
+    checkout = 'main',
+    hooks = { post_checkout = function() vim.cmd('TSUpdate') end, },
   })
 
-  require('nvim-treesitter.configs').setup({
-    ensure_installed = {
-      'go',
-      'lua',
-      'typescript',
-      'javascript',
-      'css',
-      'vim',
-      'php',
-      'vue',
-      'markdown',
-      'markdown_inline',
-      'elixir',
-      'heex',
-      'zig',
-    },
-    auto_install = false,
-    highlight = { enable = true },
-    indent = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<c-p>',
-        node_incremental = '<c-p>',
-        scope_incremental = '<c-s>',
-        node_decremental = '<c-y>',
-      },
-    },
-  })
+  local languages = {
+    'go',
+    'lua',
+    'typescript',
+    'javascript',
+    'css',
+    'vim',
+    'php',
+    'vue',
+    'markdown',
+    'markdown_inline',
+    'elixir',
+    'heex',
+    'zig',
+  }
+
+  require('nvim-treesitter').install(languages)
+
+  local new_autocmd = function(event, pattern, callback, desc)
+    local opts = { pattern = pattern, callback = callback, desc = desc }
+    vim.api.nvim_create_autocmd(event, opts)
+  end
+
+  local filetypes = vim.iter(languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
+  local ts_start = function(ev) vim.treesitter.start(ev.buf) end
+  new_autocmd('FileType', filetypes, ts_start, 'Ensure enabled tree-sitter')
 end)
