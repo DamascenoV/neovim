@@ -29,7 +29,10 @@ MiniDeps.later(function()
     'FileType',
     {
       pattern = filetypes,
-      callback = function(ev) vim.treesitter.start(ev.buf) end,
+      callback = function(ev)
+        vim.treesitter.start(ev.buf)
+        vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+      end,
       desc = 'Ensure enabled tree-sitter'
     }
   )
