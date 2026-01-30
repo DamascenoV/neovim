@@ -76,3 +76,17 @@ vim.api.nvim_create_autocmd('User', {
 vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
 vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
 vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column
+
+if vim.fn.executable "rg" == 1 then
+  function _G.RgFindFiles(cmdarg, _cmdcomplete)
+    local fnames = vim.fn.systemlist 'rg --files --hidden --color=never --glob="!.git" --glob="!node_modules/"'
+    if #cmdarg == 0 then
+      return fnames
+    else
+      return vim.fn.matchfuzzy(fnames, cmdarg)
+    end
+  end
+
+  vim.o.findfunc = "v:lua.RgFindFiles"
+  vim.o.grepprg = [[rg --vimgrep]]
+end

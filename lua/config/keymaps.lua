@@ -131,7 +131,7 @@ keymap("n", "<leader>n", function()
   end,
   { desc = "Sidekick NES Toggle" })
 
-keymap("n", "<leader>f", function()
+keymap("n", "<leader>t", function()
     if (vim.fn.has("nvim-0.12") == 1) then
       vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled())
       print(tostring(vim.lsp.inline_completion.is_enabled()))

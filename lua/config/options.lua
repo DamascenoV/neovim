@@ -54,8 +54,8 @@ vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
 
 vim.opt.termguicolors = true
--- vim.cmd.colorscheme('tama')
-vim.cmd.colorscheme('orbit')
+vim.cmd.colorscheme('tama')
+-- vim.cmd.colorscheme('orbit')
 
 vim.o.winborder = 'bold'
 vim.o.pumheight = 10

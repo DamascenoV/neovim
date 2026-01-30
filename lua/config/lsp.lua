@@ -8,6 +8,7 @@ vim.lsp.enable({
   "vue_ls",
   "laravel_ls",
   "gopls",
+  "golangci_lint_ls",
   "zls",
   "ols",
   -- 'elixirls',
