@@ -54,25 +54,6 @@ end
 set_cursor_line('WinLeave', false)
 set_cursor_line('WinEnter', true)
 
-local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path) end
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    local b = args.data.buf_id
-    vim.keymap.set('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
-  end,
-})
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesWindowUpdate',
-  callback = function(args)
-    local win_id = args.data.win_id
-    local config = vim.api.nvim_win_get_config(win_id)
-    local opts = vim.tbl_deep_extend('force', config, require('util.mini_helper').win_config())
-    vim.api.nvim_win_set_config(win_id, opts)
-  end,
-})
-
 vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
 vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
 vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column
@@ -89,4 +70,15 @@ if vim.fn.executable "rg" == 1 then
 
   vim.o.findfunc = "v:lua.RgFindFiles"
   vim.o.grepprg = [[rg --vimgrep]]
+
+  vim.api.nvim_create_user_command('Rg', function(opts)
+    local args = opts.args
+    if args == '' then
+      args = vim.fn.input('Rg: ')
+    end
+    if args ~= '' then
+      vim.cmd('silent grep! ' .. args)
+      vim.cmd('copen')
+    end
+  end, { nargs = '*', desc = 'Search for a pattern using rg' })
 end

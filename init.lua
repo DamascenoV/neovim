@@ -13,4 +13,3 @@ local function require_directory(path)
 end
 
 require_directory("plugins")
-require("util.compile")
