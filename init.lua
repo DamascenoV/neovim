@@ -3,6 +3,7 @@ require('config.options')
 require('config.keymaps')
 require('config.autocmds')
 require('config.lsp')
+require('config.snippets')
 
 local function require_directory(path)
   local files = vim.fn.readdir(vim.fn.stdpath("config") .. "/lua/" .. path)
