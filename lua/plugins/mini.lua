@@ -1,4 +1,4 @@
-local later, now = MiniDeps.later, MiniDeps.now
+local later = MiniDeps.later
 
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.surround').setup() end)
