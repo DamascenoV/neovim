@@ -1,7 +1,5 @@
-local later, now = MiniDeps.later, MiniDeps.now
+local later = MiniDeps.later
 local helper = require('util.mini_helper')
-
-now(function() require('mini.statusline').setup() end)
 
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.align').setup() end)
