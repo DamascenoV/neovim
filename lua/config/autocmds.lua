@@ -16,37 +16,11 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
   callback = function() vim.cmd('tabdo wincmd =') end,
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-    if client then client.server_capabilities.semanticTokensProvider = nil end
-
-    if vim.fn.has('nvim-0.12') == 0 then return end
-    local bufnr = args.buf
-    if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
-      vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
-
-      vim.keymap.set(
-        'i',
-        '<C-f>',
-        vim.lsp.inline_completion.get,
-        { desc = 'LSP: accept inline completion', buffer = bufnr }
-      )
-      vim.keymap.set(
-        'i',
-        '<C-g>',
-        vim.lsp.inline_completion.select,
-        { desc = 'LSP: switch inline completion', buffer = bufnr }
-      )
-    end
-  end,
-})
-
-local group
-vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
+-- Cursorline control
+local cursorline_group = vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
 local set_cursor_line = function(event, value, pattern)
   vim.api.nvim_create_autocmd(event, {
-    group = group,
+    group = cursorline_group,
     pattern = pattern,
     callback = function() vim.opt_local.cursorline = value end,
   })
@@ -54,47 +28,24 @@ end
 set_cursor_line('WinLeave', false)
 set_cursor_line('WinEnter', true)
 
-local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path) end
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    local b = args.data.buf_id
-    vim.keymap.set('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
+-- Terminal settings
+local terminal_group = vim.api.nvim_create_augroup('TerminalSettings', { clear = true })
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = terminal_group,
+  callback = function()
+    vim.cmd('startinsert')
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+})
+vim.api.nvim_create_autocmd('TermEnter', {
+  group = terminal_group,
+  callback = function()
+    vim.opt_local.signcolumn = 'no'
   end,
 })
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesWindowUpdate',
-  callback = function(args)
-    local win_id = args.data.win_id
-    local config = vim.api.nvim_win_get_config(win_id)
-    local opts = vim.tbl_deep_extend('force', config, require('util.mini_helper').win_config())
-    vim.api.nvim_win_set_config(win_id, opts)
-  end,
-})
-
--- vim.api.nvim_create_autocmd('User', {
---   pattern = 'MiniPickMatch',
---   callback = function()
---     local pick = require('mini.pick')
---     local matches = pick.get_picker_matches()
---     if not matches then return end
---
---     local opts = require('util.mini_helper').win_config()
---     opts.height = math.min(math.max(#(matches.all or {}), 1), 14)
---
---     pick.set_picker_opts({
---       window = {
---         config = opts,
---       }
---     })
---   end
--- })
-
-vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
-vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
-vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column
-
+-- Ripgrep integration
 if vim.fn.executable "rg" == 1 then
   function _G.RgFindFiles(cmdarg, _cmdcomplete)
     local fnames = vim.fn.systemlist 'rg --files --hidden --color=never --glob="!.git" --glob="!node_modules/"'

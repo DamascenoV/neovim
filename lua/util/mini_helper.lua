@@ -1,7 +1,7 @@
 local M = {}
 
 local function get_permissions(path)
-  local stat = vim.loop.fs_stat(path)
+  local stat = vim.uv.fs_stat(path)
   if not stat then return "----------" end
 
   local mode = stat.mode
@@ -58,7 +58,7 @@ end
 local function ls_prefix(fs_entry)
   local path = fs_entry.path
 
-  local stat = vim.loop.fs_stat(path)
+  local stat = vim.uv.fs_stat(path)
   if not stat then
     return ""
   end
@@ -80,8 +80,5 @@ M.win_config = function()
 end
 
 M.ls_prefix = ls_prefix
-M.get_permissions = get_permissions
-M.format_size = format_size
-M.format_mtime = format_mtime
 
 return M

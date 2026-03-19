@@ -237,6 +237,7 @@ function M.create_hover_split(opts)
   setup_hover_buffer(M.hover_bufnr)
   setup_hover_window(M.hover_winid)
   M.update_hover_content(M.orig_winid)
+  require('util.completion_split').attach()
 end
 
 function M.split()
@@ -245,6 +246,7 @@ end
 
 function M.close_hover_split()
   cancel_hover_request()
+  require('util.completion_split').detach()
 
   if is_valid_buf(M.hover_bufnr) then
     vim.api.nvim_buf_delete(M.hover_bufnr, { force = true })

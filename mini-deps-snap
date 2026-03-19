@@ -1,5 +1,5 @@
 return {
-  ["cursortab.nvim"] = "6d46a79153b4b654fe034d3aa0d16b821d2f5f75",
-  ["mini.nvim"] = "cad365c212fb1e332cb93fa8f72697125799d00a",
-  ["nvim-treesitter"] = "544320a9cf5d6bf539ec1cc54d393064015670c4"
+  ["cursortab.nvim"] = "e890b4692f1fba0b802784c918e8a349752556d9",
+  ["mini.nvim"] = "3b1b65e1e14cd0bf7b4178b38750f4a733e9d4e0",
+  ["nvim-treesitter"] = "2b50ab5ccbcd9e5708deb351308edd738adbf84c"
 }
