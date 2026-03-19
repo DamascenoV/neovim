@@ -71,7 +71,7 @@ local function ls_prefix(fs_entry)
 end
 
 M.win_config = function()
-  local height = math.floor(vim.o.lines / 4)
+  local height = math.floor((vim.o.lines / 5) + 2)
   local width = math.floor(vim.o.columns)
   return {
     height = height,

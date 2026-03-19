@@ -73,6 +73,24 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'MiniPickMatch',
+--   callback = function()
+--     local pick = require('mini.pick')
+--     local matches = pick.get_picker_matches()
+--     if not matches then return end
+--
+--     local opts = require('util.mini_helper').win_config()
+--     opts.height = math.min(math.max(#(matches.all or {}), 1), 14)
+--
+--     pick.set_picker_opts({
+--       window = {
+--         config = opts,
+--       }
+--     })
+--   end
+-- })
+
 vim.api.nvim_command('autocmd TermOpen * startinsert')                        -- starts in insert mode
 vim.api.nvim_command('autocmd TermOpen * setlocal nonumber norelativenumber') -- no numbers
 vim.api.nvim_command('autocmd TermEnter * setlocal signcolumn=no')            -- no sign column

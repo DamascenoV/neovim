@@ -60,6 +60,7 @@ keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onf
 keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' }) -- Close current buffer
 
 -- Pick
+keymap({ 'n', 'v' }, ',', '<cmd>Pick commands<CR>', { desc = '[C]ommands' })
 keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
 keymap('n', '<leader>gs', '<cmd>Pick git_hunks<CR>', { desc = '[G]it [S]tatus' })
 keymap('n', '<leader>fc', '<cmd>Pick list scope="change"<CR>', { desc = '[F]ind [C]hange' })
@@ -92,7 +93,7 @@ keymap('n', '<leader>go', '<cmd>lua MiniDiff.toggle_overlay()<CR>', { desc = '[G
 -- LSP
 keymap('n', 'gD', vim.lsp.buf.declaration)
 keymap('n', 'gd', vim.lsp.buf.definition)
-keymap('n', 'K', vim.lsp.buf.hover)
+keymap('n', 'K', require('util.signature').split)
 keymap('n', 'gi', vim.lsp.buf.implementation)
 keymap('n', '<leader>rn', vim.lsp.buf.rename)
 keymap('n', '<space>K', vim.lsp.buf.signature_help, { desc = 'Signature' })

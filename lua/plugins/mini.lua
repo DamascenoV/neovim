@@ -1,11 +1,7 @@
 local later, now = MiniDeps.later, MiniDeps.now
 local helper = require('util.mini_helper')
 
-now(function() require('mini.notify').setup() end)
-
-now(function() require('mini.icons').setup() end)
 now(function() require('mini.statusline').setup() end)
-now(function() require('mini.starter').setup() end)
 
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.align').setup() end)

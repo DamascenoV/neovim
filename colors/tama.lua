@@ -18,7 +18,7 @@ local c = {
   bg          = "#181a1b",
   bg_dark     = "#131515",
   bg_darker   = "#1d2023",
-  bg_alt      = "#242629",
+  bg_alt      = "#131515",
   bg_float    = "#181a1b",
   bg_status   = "#34373a",
 
@@ -121,12 +121,12 @@ hi(0, "MiniFilesCursorLine", { bg = c.bg_status, underline = true, bold = true }
 
 hi(0, "Comment", { fg = c.fg_gutter, italic = true })
 
-hi(0, "Constant", { fg = c.purple })
+hi(0, "Constant", { fg = c.magenta })
 hi(0, "String", { fg = c.green })
 hi(0, "Character", { fg = c.green })
-hi(0, "Number", { fg = c.purple })
-hi(0, "Boolean", { fg = c.purple })
-hi(0, "Float", { fg = c.purple })
+hi(0, "Number", { fg = c.magenta })
+hi(0, "Boolean", { fg = c.magenta })
+hi(0, "Float", { fg = c.magenta })
 
 hi(0, "Identifier", { fg = c.fg })
 hi(0, "Function", { fg = c.fg })
