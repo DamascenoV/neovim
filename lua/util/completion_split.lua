@@ -2,10 +2,11 @@ local M = {}
 
 local signature = require('util.lsplit')
 
-M.ns_id = nil ---@type integer|nil
+M.ns_id = vim.api.nvim_create_namespace('CompletionSplit') ---@type integer
 M.selected = -1 ---@type integer
 M.items = {} ---@type table[]
 M.attached = false ---@type boolean
+M.complete_augroup = nil ---@type integer|nil
 
 local function is_valid_win(winid)
   return winid ~= nil and vim.api.nvim_win_is_valid(winid)
@@ -83,12 +84,58 @@ local function ui_handler(event, ...)
   end
 end
 
+local function show_item_docs()
+  if not split_is_open() then
+    return
+  end
+
+  local event = vim.v.event
+  if not event then
+    return
+  end
+
+  local item = event.completed_item
+  if not item or vim.tbl_isempty(item) then
+    return
+  end
+
+  local info = item.info or ''
+  if info == '' then
+    return
+  end
+
+  local lines = vim.split(info, '\n', { trimempty = true })
+  if #lines == 0 then
+    return
+  end
+
+  table.insert(lines, 1, '### Info')
+  table.insert(lines, 2, '')
+  set_split_lines(lines)
+end
+
 function M.attach()
   if M.attached then
     return
   end
   M.attached = true
   vim.ui_attach(M.ns_id, { ext_popupmenu = true }, ui_handler)
+
+  M.complete_augroup = vim.api.nvim_create_augroup('CompletionSplitAu', { clear = true })
+
+  vim.api.nvim_create_autocmd('CompleteChanged', {
+    group = M.complete_augroup,
+    callback = show_item_docs,
+  })
+
+  vim.api.nvim_create_autocmd('CompleteDonePre', {
+    group = M.complete_augroup,
+    callback = function()
+      if split_is_open() then
+        set_split_lines({})
+      end
+    end,
+  })
 end
 
 function M.detach()
@@ -99,50 +146,11 @@ function M.detach()
   vim.ui_detach(M.ns_id)
   M.items = {}
   M.selected = -1
-end
 
-local function redirect_completion_window(args)
-  if not split_is_open() then
-    return
+  if M.complete_augroup then
+    vim.api.nvim_del_augroup_by_id(M.complete_augroup)
+    M.complete_augroup = nil
   end
-
-  local data = args.data
-  if not data or not data.win_id then
-    return
-  end
-
-  local float_win = data.win_id
-  if not is_valid_win(float_win) then
-    return
-  end
-
-  local float_buf = vim.api.nvim_win_get_buf(float_win)
-  local lines = vim.api.nvim_buf_get_lines(float_buf, 0, -1, false)
-  if not lines or #lines == 0 then
-    return
-  end
-
-  local kind = data.kind or 'info'
-  local header = kind == 'signature' and '### Signature' or '### Info'
-  table.insert(lines, 1, header)
-  table.insert(lines, 2, '')
-
-  set_split_lines(lines)
-
-  vim.schedule(function()
-    if is_valid_win(float_win) then
-      vim.api.nvim_win_close(float_win, true)
-    end
-  end)
-end
-
-function M.setup()
-  M.ns_id = vim.api.nvim_create_namespace('CompletionSplit')
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = { 'MiniCompletionWindowOpen', 'MiniCompletionWindowUpdate' },
-    callback = redirect_completion_window,
-  })
 end
 
 return M

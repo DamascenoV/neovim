@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "nvim-treesitter": {
+      "rev": "53f6ce29"
+    }
+  }
+}

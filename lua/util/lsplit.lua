@@ -223,16 +223,18 @@ function M.create_hover_split(opts)
   M.orig_pos = vim.api.nvim_win_get_cursor(M.orig_winid)
   M.hover_bufnr = vim.api.nvim_create_buf(false, true)
 
-  local win_opts = {
-    focusable = true,
-    vertical = false,
-    style = 'minimal',
-    split = 'below',
-    height = math.floor(vim.o.lines / 7) + 3,
-  }
+  local split_height = math.floor(vim.o.lines / 7) + 3
 
   create_hover_autocmds()
-  M.hover_winid = vim.api.nvim_open_win(M.hover_bufnr, not M.remain_focused, win_opts)
+
+  local prev_win = vim.api.nvim_get_current_win()
+  vim.cmd('botright ' .. split_height .. 'split')
+  M.hover_winid = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_buf(M.hover_winid, M.hover_bufnr)
+
+  if M.remain_focused then
+    vim.api.nvim_set_current_win(prev_win)
+  end
 
   setup_hover_buffer(M.hover_bufnr)
   setup_hover_window(M.hover_winid)

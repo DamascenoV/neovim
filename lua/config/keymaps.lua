@@ -51,3 +51,7 @@ keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnos
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
 
 keymap("n", "<leader>cc", ":Compile ")
+
+keymap("n", "<leader>ff", ":find ")
+keymap("n", "<leader>fg", ":Compile grep -rn ")
+keymap("n", "<C-e>", "<cmd>Sex<CR>", { silent = true, desc = 'File Explorer' })
