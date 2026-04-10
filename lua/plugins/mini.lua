@@ -92,7 +92,6 @@ later(function()
       signature = { height = 25, width = 80 },
     },
   })
-  require('util.completion_split').setup()
 end)
 
 later(function()

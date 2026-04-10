@@ -14,3 +14,4 @@ end
 
 require_directory("plugins")
 require("util.compile")
+require("util.gitu")

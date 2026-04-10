@@ -29,7 +29,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     map('n', 'gD', vim.lsp.buf.declaration)
     map('n', 'gd', vim.lsp.buf.definition)
-    map('n', 'K', require('util.lsplit').split)
+    map('n', 'K', vim.lsp.buf.hover)
     map('n', 'gi', vim.lsp.buf.implementation)
     map('n', '<leader>rn', vim.lsp.buf.rename)
     map('n', '<space>K', vim.lsp.buf.signature_help, { desc = 'Signature' })
@@ -41,7 +41,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'gr', vim.lsp.buf.references)
     map('n', '<space>fm', function() vim.lsp.buf.format({ async = true }) end, { desc = '[F]ormat' })
 
-    if vim.fn.has('nvim-0.12') == 0 then return end
     if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
       vim.lsp.inline_completion.enable(true, { bufnr = bufnr })
 
