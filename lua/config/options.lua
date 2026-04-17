@@ -53,6 +53,9 @@ vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
 
+vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
+vim.opt.grepformat = '%f:%l:%c:%m'
+
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 -- vim.cmd.colorscheme('orbit')
@@ -68,9 +71,7 @@ if vim.fn.exists('syntax_on') then
   vim.cmd('syntax enable')
 end
 
-if vim.fn.has('nvim-0.12') == 1 then
-  vim.o.pumborder = 'bold'
-  require('vim._extui').enable({
-    msg = { target = 'cmd' }
-  })
-end
+vim.o.pumborder = 'bold'
+require('vim._core.ui2').enable({
+  msg = { target = 'cmd' }
+})

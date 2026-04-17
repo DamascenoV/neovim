@@ -49,5 +49,8 @@ keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' })
 
 keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
 keymap('n', '<leader>q', vim.diagnostic.setloclist, { desc = '[Q]uick List Diagnostic' })
+keymap('n', '<leader>ff', ":find ", { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fg', ":grep ", { desc = '[F]ind [G]rep' })
+keymap('n', '<C-e>', "<cmd>Ex<CR>", { desc = '[E]xplorer' })
 
 keymap("n", "<leader>cc", ":Compile ")
