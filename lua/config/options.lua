@@ -36,6 +36,7 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 10
 vim.opt.showtabline = 1
 vim.opt.wildoptions = 'fuzzy'
+vim.opt.wildmode = 'list:longest'
 vim.opt.completeopt = { "menuone", "noselect", "fuzzy" }
 vim.opt.shortmess:append "c"
 vim.opt.colorcolumn = '120'
