@@ -47,6 +47,7 @@ vim.api.nvim_create_autocmd('TermEnter', {
 
 -- Ripgrep integration
 if vim.fn.executable "rg" == 1 then
+  ---@diagnostic disable-next-line: duplicate-set-field
   function _G.RgFindFiles(cmdarg)
     local fnames = vim.fn.systemlist 'rg --files --hidden --color=never --glob="!.git" --glob="!node_modules/"'
     if #cmdarg == 0 then

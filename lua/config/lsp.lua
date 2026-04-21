@@ -1,24 +1,32 @@
 do
-  local preview_buf, preview_win
+  local preview_buf, preview_win, preview_syntax
 
----@diagnostic disable-next-line: duplicate-set-field
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
     opts = opts or {}
     local prev_win = vim.api.nvim_get_current_win()
 
-    if preview_buf and vim.api.nvim_buf_is_valid(preview_buf) then
+    if preview_buf and vim.api.nvim_buf_is_valid(preview_buf)
+        and preview_win and vim.api.nvim_win_is_valid(preview_win) then
       vim.bo[preview_buf].modifiable = true
       vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, contents)
       if syntax and syntax ~= '' then
         vim.bo[preview_buf].filetype = syntax
       end
-      if syntax == 'markdown' then
+      if syntax == 'markdown' and preview_syntax ~= 'markdown' then
         vim.treesitter.start(preview_buf)
-        vim.wo[preview_win].conceallevel = 2
       end
+      vim.wo[preview_win].conceallevel = syntax == 'markdown' and 2 or 0
+      preview_syntax = syntax
       vim.bo[preview_buf].modifiable = false
-      vim.api.nvim_set_current_win(prev_win)
+      if opts.focus then
+        vim.api.nvim_set_current_win(preview_win)
+      end
       return preview_buf, preview_win
+    end
+
+    if preview_buf and vim.api.nvim_buf_is_valid(preview_buf) then
+      vim.api.nvim_buf_delete(preview_buf, { force = true })
     end
 
     preview_buf = vim.api.nvim_create_buf(false, true)
@@ -26,9 +34,10 @@ do
     if syntax and syntax ~= '' then
       vim.bo[preview_buf].filetype = syntax
     end
+    preview_syntax = syntax
     vim.bo[preview_buf].bufhidden = 'wipe'
     vim.bo[preview_buf].modifiable = false
-    local height = math.max(math.floor(vim.o.lines * 0.25), 3) - 1
+    local height = opts.height or math.max(math.floor(vim.o.lines * 0.25), 3) - 1
     vim.cmd('botright ' .. height .. 'split')
     preview_win = vim.api.nvim_get_current_win()
     vim.api.nvim_win_set_buf(preview_win, preview_buf)
@@ -37,13 +46,16 @@ do
       vim.treesitter.start(preview_buf)
       vim.wo[preview_win].conceallevel = 2
     end
-    vim.api.nvim_set_current_win(prev_win)
+    if not opts.focus then
+      vim.api.nvim_set_current_win(prev_win)
+    end
 
     vim.api.nvim_create_autocmd('BufWipeout', {
       buffer = preview_buf,
       callback = function()
         preview_buf = nil
         preview_win = nil
+        preview_syntax = nil
       end,
     })
 
