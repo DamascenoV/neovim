@@ -37,7 +37,8 @@ vim.opt.scrolloff = 10
 vim.opt.showtabline = 1
 vim.opt.wildoptions = 'fuzzy'
 vim.opt.wildmode = 'list:longest'
-vim.opt.completeopt = { "menuone", "noselect", "fuzzy" }
+vim.opt.wildignore = '.git,.6'
+vim.opt.completeopt = { "menuone", "noselect", "fuzzy", "popup" }
 vim.opt.shortmess:append "c"
 vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'

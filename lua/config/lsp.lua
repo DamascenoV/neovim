@@ -1,3 +1,56 @@
+do
+  local preview_buf, preview_win
+
+---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.util.open_floating_preview = function(contents, syntax, opts)
+    opts = opts or {}
+    local prev_win = vim.api.nvim_get_current_win()
+
+    if preview_buf and vim.api.nvim_buf_is_valid(preview_buf) then
+      vim.bo[preview_buf].modifiable = true
+      vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, contents)
+      if syntax and syntax ~= '' then
+        vim.bo[preview_buf].filetype = syntax
+      end
+      if syntax == 'markdown' then
+        vim.treesitter.start(preview_buf)
+        vim.wo[preview_win].conceallevel = 2
+      end
+      vim.bo[preview_buf].modifiable = false
+      vim.api.nvim_set_current_win(prev_win)
+      return preview_buf, preview_win
+    end
+
+    preview_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, contents)
+    if syntax and syntax ~= '' then
+      vim.bo[preview_buf].filetype = syntax
+    end
+    vim.bo[preview_buf].bufhidden = 'wipe'
+    vim.bo[preview_buf].modifiable = false
+    local height = math.max(math.floor(vim.o.lines * 0.25), 3) - 1
+    vim.cmd('botright ' .. height .. 'split')
+    preview_win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(preview_win, preview_buf)
+    vim.wo[preview_win].winfixheight = true
+    if syntax == 'markdown' then
+      vim.treesitter.start(preview_buf)
+      vim.wo[preview_win].conceallevel = 2
+    end
+    vim.api.nvim_set_current_win(prev_win)
+
+    vim.api.nvim_create_autocmd('BufWipeout', {
+      buffer = preview_buf,
+      callback = function()
+        preview_buf = nil
+        preview_win = nil
+      end,
+    })
+
+    return preview_buf, preview_win
+  end
+end
+
 vim.lsp.enable({
   "cssls",
   "copilot",
