@@ -66,7 +66,7 @@ end
 vim.lsp.enable({
   "cssls",
   "copilot",
-  "emmet_language_server",
+  "emmet_ls",
   'intelephense',
   'lua_ls',
   "vtsls",
