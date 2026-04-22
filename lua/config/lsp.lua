@@ -6,22 +6,20 @@ do
     opts = opts or {}
     local prev_win = vim.api.nvim_get_current_win()
 
-    if preview_buf and vim.api.nvim_buf_is_valid(preview_buf)
-        and preview_win and vim.api.nvim_win_is_valid(preview_win) then
+    if
+      preview_buf
+      and vim.api.nvim_buf_is_valid(preview_buf)
+      and preview_win
+      and vim.api.nvim_win_is_valid(preview_win)
+    then
       vim.bo[preview_buf].modifiable = true
       vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, contents)
-      if syntax and syntax ~= '' then
-        vim.bo[preview_buf].filetype = syntax
-      end
-      if syntax == 'markdown' and preview_syntax ~= 'markdown' then
-        vim.treesitter.start(preview_buf)
-      end
+      if syntax and syntax ~= '' then vim.bo[preview_buf].filetype = syntax end
+      if syntax == 'markdown' and preview_syntax ~= 'markdown' then vim.treesitter.start(preview_buf) end
       vim.wo[preview_win].conceallevel = syntax == 'markdown' and 2 or 0
       preview_syntax = syntax
       vim.bo[preview_buf].modifiable = false
-      if opts.focus then
-        vim.api.nvim_set_current_win(preview_win)
-      end
+      if opts.focus then vim.api.nvim_set_current_win(preview_win) end
       return preview_buf, preview_win
     end
 
@@ -31,9 +29,7 @@ do
 
     preview_buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(preview_buf, 0, -1, false, contents)
-    if syntax and syntax ~= '' then
-      vim.bo[preview_buf].filetype = syntax
-    end
+    if syntax and syntax ~= '' then vim.bo[preview_buf].filetype = syntax end
     preview_syntax = syntax
     vim.bo[preview_buf].bufhidden = 'wipe'
     vim.bo[preview_buf].modifiable = false
@@ -46,9 +42,7 @@ do
       vim.treesitter.start(preview_buf)
       vim.wo[preview_win].conceallevel = 2
     end
-    if not opts.focus then
-      vim.api.nvim_set_current_win(prev_win)
-    end
+    if not opts.focus then vim.api.nvim_set_current_win(prev_win) end
 
     vim.api.nvim_create_autocmd('BufWipeout', {
       buffer = preview_buf,
@@ -64,20 +58,20 @@ do
 end
 
 vim.lsp.enable({
-  "cssls",
-  "copilot",
-  "emmet_ls",
+  'cssls',
+  'copilot',
+  'emmet_ls',
   'intelephense',
   'lua_ls',
-  "vtsls",
-  "vue_ls",
-  "laravel_ls",
-  "gopls",
-  "golangci_lint_ls",
-  "zls",
-  "ols",
+  'vtsls',
+  'vue_ls',
+  'laravel_ls',
+  'gopls',
+  'golangci_lint_ls',
+  'zls',
+  'ols',
   -- 'elixirls',
-  "expert"
+  'expert',
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {

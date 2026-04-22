@@ -1,5 +1,5 @@
 return {
-  cmd = { "vue-language-server", "--stdio" },
+  cmd = { 'vue-language-server', '--stdio' },
   filetypes = { 'vue' },
   on_init = function(client)
     client.handlers['tsserver/request'] = function(_, result, context)
@@ -25,5 +25,5 @@ return {
       end)
     end
   end,
-  root_markers = { "package.json" }
+  root_markers = { 'package.json' },
 }

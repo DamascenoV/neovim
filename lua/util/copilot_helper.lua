@@ -4,7 +4,7 @@ local M = {}
 ---@param client vim.lsp.Client
 M.sign_in = function(bufnr, client)
   client:request(
-  ---@diagnostic disable-next-line: param-type-mismatch
+    ---@diagnostic disable-next-line: param-type-mismatch
     'signIn',
     vim.empty_dict(),
     function(err, result)
@@ -27,9 +27,7 @@ M.sign_in = function(bufnr, client)
               vim.notify(err.message, vim.log.levels.ERROR)
               return
             end
-            if cmd_result.status == 'OK' then
-              vim.notify('Signed in as ' .. cmd_result.user .. '.')
-            end
+            if cmd_result.status == 'OK' then vim.notify('Signed in as ' .. cmd_result.user .. '.') end
           end)
         end
       end
@@ -46,7 +44,7 @@ end
 ---@param client vim.lsp.Client
 M.sign_out = function(_, client)
   client:request(
-  ---@diagnostic disable-next-line: param-type-mismatch
+    ---@diagnostic disable-next-line: param-type-mismatch
     'signOut',
     vim.empty_dict(),
     function(err, result)
@@ -54,9 +52,7 @@ M.sign_out = function(_, client)
         vim.notify(err.message, vim.log.levels.ERROR)
         return
       end
-      if result.status == 'NotSignedIn' then
-        vim.notify('Not signed in.')
-      end
+      if result.status == 'NotSignedIn' then vim.notify('Not signed in.') end
     end
   )
 end

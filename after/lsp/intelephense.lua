@@ -1,6 +1,6 @@
 return {
-  cmd = { "intelephense", "--stdio" },
-  filetypes = { "php" },
+  cmd = { 'intelephense', '--stdio' },
+  filetypes = { 'php' },
   init_options = {
     licenceKey = os.getenv('HOME') .. '/intelephense/licence.txt',
   },

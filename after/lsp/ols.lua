@@ -1,4 +1,4 @@
 return {
-  cmd = { "/Users/victordamasceno/odin/ols/ols" },
-  filetypes = { "odin" }
+  cmd = { '/Users/victordamasceno/odin/ols/ols' },
+  filetypes = { 'odin' },
 }

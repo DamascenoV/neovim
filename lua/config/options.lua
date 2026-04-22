@@ -15,7 +15,7 @@ vim.opt.inccommand = 'split'
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.cursorline = true
-vim.opt.cursorlineopt  = 'screenline,number'
+vim.opt.cursorlineopt = 'screenline,number'
 vim.opt.mouse = 'a'
 vim.opt.breakindent = true
 vim.opt.undofile = true
@@ -38,8 +38,8 @@ vim.opt.showtabline = 1
 vim.opt.wildoptions = 'fuzzy'
 vim.opt.wildmode = 'list:longest'
 vim.opt.wildignore = '.git,.6'
-vim.opt.completeopt = { "menuone", "noselect", "fuzzy", "popup" }
-vim.opt.shortmess:append "c"
+vim.opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup' }
+vim.opt.shortmess:append('c')
 vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.pumblend = 17
@@ -69,11 +69,9 @@ vim.o.writebackup = false
 vim.diagnostic.config({ virtual_text = true })
 
 vim.cmd('filetype plugin indent on')
-if vim.fn.exists('syntax_on') then
-  vim.cmd('syntax enable')
-end
+if vim.fn.exists('syntax_on') then vim.cmd('syntax enable') end
 
 vim.o.pumborder = 'bold'
 require('vim._core.ui2').enable({
-  msg = { target = 'cmd' }
+  msg = { target = 'cmd' },
 })

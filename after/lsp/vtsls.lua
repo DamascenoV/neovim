@@ -7,7 +7,7 @@ local vue_plugin = {
 }
 
 return {
-  cmd = { "vtsls", "--stdio" },
+  cmd = { 'vtsls', '--stdio' },
   settings = {
     vtsls = {
       tsserver = {
@@ -18,5 +18,5 @@ return {
     },
   },
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" }
+  root_markers = { 'tsconfig.json', 'package.json', 'jsconfig.json', '.git' },
 }

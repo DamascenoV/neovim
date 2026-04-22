@@ -29,7 +29,7 @@ end, { desc = '[S]mall [T]erminal' })
 keymap('t', '<esc>', '<C-\\><C-n>', { silent = true })
 keymap('t', '<C-q>', '<C-\\><C-d>', { silent = true })
 keymap('n', '<leader>bt', function()
-  if vim.o.background == "dark" then
+  if vim.o.background == 'dark' then
     vim.cmd('set background=light')
   else
     vim.cmd('set background=dark')
@@ -53,9 +53,9 @@ keymap('n', '<leader>Q', function()
   vim.diagnostic.setqflist({ title = 'Project Diagnostics' })
   vim.cmd('botright copen')
 end, { desc = 'Project [Q]uick Diagnostics' })
-keymap('n', '<leader>s', "<cmd>cwindow<CR>", { desc = '[Q]uick List' })
-keymap('n', '<leader>ff', ":find ", { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fg', ":grep ", { desc = '[F]ind [G]rep' })
-keymap('n', '<C-e>', "<cmd>Ex<CR>", { desc = '[E]xplorer' })
+keymap('n', '<leader>s', '<cmd>cwindow<CR>', { desc = '[Q]uick List' })
+keymap('n', '<leader>ff', ':find ', { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fg', ':grep ', { desc = '[F]ind [G]rep' })
+keymap('n', '<C-e>', '<cmd>Ex<CR>', { desc = '[E]xplorer' })
 
-keymap("n", "<leader>cc", ":Compile ")
+keymap('n', '<leader>cc', ':Compile ')
