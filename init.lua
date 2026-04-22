@@ -9,4 +9,4 @@ require('plugins.treesitter')
 require('plugins.fugitive')
 
 -- custom
-require('util.compile')
+require('util.compile').setup()

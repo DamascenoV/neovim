@@ -1,5 +1,5 @@
 ---@module "compile"
----@description Emacs-style compilation mode for Neovim
+---@description compilation mode for Neovim
 --- Provides async command execution with error parsing, quickfix integration,
 --- and jump-to-error functionality.
 
@@ -10,9 +10,9 @@ local M = {}
 -------------------------------------------------------------------------------
 
 M.last_command = nil -- Stores the last executed command for recompilation
+M.compile_dir = nil -- Directory where the last compilation was started
 M.bufnr = nil -- Buffer number for the compilation output window
 M.job_id = nil -- Job ID of the currently running compilation process
-M.current_error_idx = 0 -- Current position in the quickfix error list
 
 -------------------------------------------------------------------------------
 -- Configuration
@@ -135,16 +135,27 @@ end
 ---@return number|nil lnum The line number
 ---@return number|nil col The column number (defaults to 1)
 local function parse_location(line)
-  -- Match file.ext:line:col or file.ext:line (Unix-style)
-  local file, lnum, col = line:match('([^%s]+%.%w+):(%d+):(%d+)')
-  if file and lnum then return file, tonumber(lnum), tonumber(col) end
+  local candidates = {
+    -- Match file.ext:line:col (Unix-style)
+    function() return line:match('([^%s]+%.%w+):(%d+):(%d+)') end,
+    -- Match file.ext:line (Unix-style, no column)
+    function()
+      local f, l = line:match('([^%s]+%.%w+):(%d+)')
+      return f, l, nil
+    end,
+    -- Match file.ext(line,col) format (TypeScript/MSBuild style)
+    function() return line:match('([^%s]+%.%w+)%((%d+),(%d+)%)') end,
+  }
 
-  file, lnum = line:match('([^%s]+%.%w+):(%d+)')
-  if file and lnum then return file, tonumber(lnum), 1 end
-
-  -- Match file.ext(line,col) format (TypeScript/MSBuild style)
-  file, lnum, col = line:match('([^%s]+%.%w+)%((%d+),(%d+)%)')
-  if file and lnum then return file, tonumber(lnum), tonumber(col) end
+  local base_dir = M.compile_dir or vim.fn.getcwd()
+  for _, try in ipairs(candidates) do
+    local file, l, c = try()
+    if file and l then
+      local filepath = file
+      if not vim.startswith(file, '/') then filepath = base_dir .. '/' .. file end
+      if vim.uv.fs_stat(filepath) then return file, tonumber(l), tonumber(c) or 1 end
+    end
+  end
 
   return nil
 end
@@ -160,33 +171,25 @@ local function jump_to_location()
     return
   end
 
-  -- Resolve relative paths to absolute using cwd
-  local filepath = file
-  if not vim.startswith(file, '/') then filepath = vim.fn.getcwd() .. '/' .. file end
-
-  if not vim.uv.fs_stat(filepath) then
-    vim.notify('File not found: ' .. file, vim.log.levels.WARN, { title = NOTIFY_TITLE })
-    return
-  end
+  -- Resolve relative paths to absolute (parse_location already validated the file exists)
+  local base_dir = M.compile_dir or vim.fn.getcwd()
+  local filepath = vim.startswith(file, '/') and file or (base_dir .. '/' .. file)
 
   -- Find a suitable window (prefer non-special buffers, avoid compilation buffer)
   local target_win = nil
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
-    if buf ~= M.bufnr then
-      local buftype = vim.api.nvim_get_option_value('buftype', { buf = buf })
-      if buftype == '' or buftype == nil then
-        target_win = win
-        break
-      end
+    if buf ~= M.bufnr and vim.bo[buf].buftype == '' then
+      target_win = win
+      break
     end
   end
 
   if target_win then
     vim.api.nvim_set_current_win(target_win)
   else
-    -- Fallback: jump to previous window
-    vim.cmd('wincmd p')
+    -- No suitable window found — open a split above the compilation window
+    vim.cmd('aboveleft split')
   end
 
   vim.cmd('edit ' .. vim.fn.fnameescape(filepath))
@@ -194,83 +197,30 @@ local function jump_to_location()
 end
 
 -------------------------------------------------------------------------------
--- Error Navigation (Emacs-style next-error / previous-error)
+-- Error Navigation (next-error / previous-error)
 -------------------------------------------------------------------------------
 
---- Jump to the first error in the quickfix list
-function M.first_error()
-  local qf = vim.fn.getqflist()
-  if #qf == 0 then
+--- Navigate the quickfix list with wrapping support
+---@param cmd string Quickfix command to run (cfirst, clast, cnext, cprev)
+---@param wrap_cmd string Fallback command when wrapping around
+local function qf_navigate(cmd, wrap_cmd)
+  local qf = vim.fn.getqflist({ size = 0, idx = 0 })
+  if qf.size == 0 then
     vim.notify('No errors', vim.log.levels.INFO, { title = NOTIFY_TITLE })
     return
   end
-  M.current_error_idx = 1
-  vim.cmd('cfirst')
-  vim.notify(string.format('Error 1 of %d', #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
+  local ok = pcall(vim.cmd, cmd)
+  if not ok then vim.cmd(wrap_cmd) end
+  local idx = vim.fn.getqflist({ idx = 0 }).idx
+  vim.notify(string.format('Error %d of %d', idx, qf.size), vim.log.levels.INFO, { title = NOTIFY_TITLE })
 end
 
---- Jump to the last error in the quickfix list
-function M.last_error()
-  local qf = vim.fn.getqflist()
-  if #qf == 0 then
-    vim.notify('No errors', vim.log.levels.INFO, { title = NOTIFY_TITLE })
-    return
-  end
-  M.current_error_idx = #qf
-  vim.cmd('clast')
-  vim.notify(string.format('Error %d of %d', #qf, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
-end
-
---- Jump to the next error in the quickfix list
---- Wraps around to the first error if at the end
-function M.next_error()
-  local qf = vim.fn.getqflist()
-  if #qf == 0 then
-    vim.notify('No errors', vim.log.levels.INFO, { title = NOTIFY_TITLE })
-    return
-  end
-
-  -- Get current quickfix index if we haven't tracked it
-  if M.current_error_idx == 0 then M.current_error_idx = vim.fn.getqflist({ idx = 0 }).idx or 0 end
-
-  if M.current_error_idx >= #qf then
-    -- Wrap around to first error
-    M.current_error_idx = 1
-    vim.cmd('cfirst')
-    vim.notify(string.format('Error 1 of %d (wrapped)', #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
-  else
-    M.current_error_idx = M.current_error_idx + 1
-    vim.cmd('cnext')
-    vim.notify(string.format('Error %d of %d', M.current_error_idx, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
-  end
-end
-
---- Jump to the previous error in the quickfix list
---- Wraps around to the last error if at the beginning
-function M.prev_error()
-  local qf = vim.fn.getqflist()
-  if #qf == 0 then
-    vim.notify('No errors', vim.log.levels.INFO, { title = NOTIFY_TITLE })
-    return
-  end
-
-  -- Get current quickfix index if we haven't tracked it
-  if M.current_error_idx == 0 then M.current_error_idx = vim.fn.getqflist({ idx = 0 }).idx or 0 end
-
-  if M.current_error_idx <= 1 then
-    -- Wrap around to last error
-    M.current_error_idx = #qf
-    vim.cmd('clast')
-    vim.notify(string.format('Error %d of %d (wrapped)', #qf, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
-  else
-    M.current_error_idx = M.current_error_idx - 1
-    vim.cmd('cprev')
-    vim.notify(string.format('Error %d of %d', M.current_error_idx, #qf), vim.log.levels.INFO, { title = NOTIFY_TITLE })
-  end
-end
+function M.first_error() qf_navigate('cfirst', 'cfirst') end
+function M.last_error() qf_navigate('clast', 'clast') end
+function M.next_error() qf_navigate('cnext', 'cfirst') end
+function M.prev_error() qf_navigate('cprev', 'clast') end
 
 --- Move cursor to next error line in compilation buffer (without jumping to file)
---- Similar to Emacs M-n in compilation mode
 local function next_error_line()
   local line_count = vim.api.nvim_buf_line_count(0)
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
@@ -286,7 +236,6 @@ local function next_error_line()
 end
 
 --- Move cursor to previous error line in compilation buffer (without jumping to file)
---- Similar to Emacs M-p in compilation mode
 local function prev_error_line()
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
 
@@ -351,26 +300,26 @@ local function get_buffer()
 
   -- Create scratch buffer (unlisted, scratch)
   M.bufnr = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_buf_set_name(M.bufnr, config.buffer_name)
-  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = M.bufnr })
-  vim.api.nvim_set_option_value('modifiable', true, { buf = M.bufnr })
-  vim.api.nvim_set_option_value('filetype', 'compilation', { buf = M.bufnr })
+  pcall(vim.api.nvim_buf_set_name, M.bufnr, config.buffer_name)
+  vim.bo[M.bufnr].buftype = 'nofile'
+  vim.bo[M.bufnr].swapfile = false
+  vim.bo[M.bufnr].modifiable = true
+  vim.bo[M.bufnr].filetype = 'compilation'
 
   apply_buffer_syntax(M.bufnr)
 
   -- Buffer-local keymaps for navigation and control
-  local opts = { buffer = M.bufnr, silent = true }
-  vim.keymap.set('n', 'q', '<cmd>CompileStop<CR>', opts) -- Stop Compilation
-  vim.keymap.set('n', 'R', '<cmd>Recompile<CR>', opts) -- Re-run last command
-  vim.keymap.set('n', '<CR>', jump_to_location, opts) -- Jump to error
-  vim.keymap.set('n', 'gf', jump_to_location, opts) -- Jump to error (gf style)
-  vim.keymap.set('n', 'Q', '<cmd>copen<CR>', opts) -- Open quickfix list
-  vim.keymap.set('n', ']e', next_error_line, opts) -- Next error line (no jump)
-  vim.keymap.set('n', '[e', prev_error_line, opts) -- Prev error line (no jump)
-  vim.keymap.set('n', ']q', M.next_error, { desc = 'Next [Q]uickfix error' })
-  vim.keymap.set('n', '[q', M.prev_error, { desc = 'Prev [Q]uickfix error' })
-  vim.keymap.set('n', ']Q', M.last_error, { desc = 'Last [Q]uickfix error' })
-  vim.keymap.set('n', '[Q', M.first_error, { desc = 'First [Q]uickfix error' })
+  local bopts = function(desc) return { buf = M.bufnr, silent = true, desc = desc } end
+  vim.keymap.set('n', 'q', function()
+    if M.job_id then M.stop() end
+    M.toggle()
+  end, bopts('Close compilation window'))
+  vim.keymap.set('n', 'r', '<cmd>Recompile<CR>', bopts('Recompile'))
+  vim.keymap.set('n', '<CR>', jump_to_location, bopts('Jump to location'))
+  vim.keymap.set('n', 'gf', jump_to_location, bopts('Jump to location'))
+  vim.keymap.set('n', '<C-q>', '<cmd>copen<CR>', bopts('Open quickfix list'))
+  vim.keymap.set('n', ']e', next_error_line, bopts('Next error line'))
+  vim.keymap.set('n', '[e', prev_error_line, bopts('Prev error line'))
 
   return M.bufnr
 end
@@ -390,7 +339,11 @@ local function open_window()
   vim.api.nvim_win_set_buf(0, buf)
   local win = vim.api.nvim_get_current_win()
   vim.cmd('wincmd p') -- Return focus to previous window
-  vim.api.nvim_set_option_value('winfixheight', true, { win = win })
+  vim.wo[win].winfixheight = true
+  vim.wo[win].number = false
+  vim.wo[win].relativenumber = false
+  vim.wo[win].wrap = false
+  vim.wo[win].signcolumn = 'no'
 
   return win
 end
@@ -423,19 +376,24 @@ end
 --- Append command output to the compilation buffer
 --- Strips ANSI codes and auto-scrolls if enabled
 ---@param buf number Buffer number
----@param win number|nil Window handle (for auto-scroll)
 ---@param data string[]|nil Output lines to append
-local function append_output(buf, win, data)
+local function append_output(buf, data)
   if not data then return end
   local clean = strip_ansi(data)
+  if #clean == 0 then return end
   vim.schedule(function()
     if not vim.api.nvim_buf_is_valid(buf) then return end
+    vim.bo[buf].modifiable = true
     vim.api.nvim_buf_set_lines(buf, -1, -1, false, clean)
 
     -- Auto-scroll to bottom (only if user is not in the compilation window)
-    if config.auto_scroll and win and vim.api.nvim_win_is_valid(win) then
-      local current_win = vim.api.nvim_get_current_win()
-      if current_win ~= win then vim.api.nvim_win_set_cursor(win, { vim.api.nvim_buf_line_count(buf), 0 }) end
+    if config.auto_scroll then
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == buf and win ~= vim.api.nvim_get_current_win() then
+          vim.api.nvim_win_set_cursor(win, { vim.api.nvim_buf_line_count(buf), 0 })
+          break
+        end
+      end
     end
   end)
 end
@@ -478,7 +436,7 @@ end
 --- Re-run the last compilation command
 function M.recompile()
   if M.last_command then
-    M.compile('')
+    M.compile(M.last_command)
   else
     vim.notify('No previous compilation', vim.log.levels.WARN, { title = NOTIFY_TITLE })
   end
@@ -488,10 +446,18 @@ end
 --- Command priority: args > detected project command > last command > makeprg
 ---@param args string Command to run (empty string to use auto-detection)
 function M.compile(args)
-  -- Stop any existing compilation
+  -- Confirm kill if a compilation is already running
   if M.job_id then
-    vim.fn.jobstop(M.job_id)
-    M.job_id = nil
+    vim.ui.select({ 'Yes', 'No' }, {
+      prompt = 'A compilation is running. Kill it?',
+    }, function(choice)
+      if choice == 'Yes' then
+        vim.fn.jobstop(M.job_id)
+        M.job_id = nil
+        M.compile(args)
+      end
+    end)
+    return
   end
 
   -- Determine command to run (priority: explicit > detected > last > makeprg)
@@ -501,9 +467,13 @@ function M.compile(args)
   -- Determine language for error format selection
   local lang = detector and detector.lang or vim.bo.filetype
   M.last_command = command
+  M.compile_dir = vim.fn.getcwd()
 
   local buf = get_buffer()
-  local win = open_window()
+  open_window()
+
+  -- Unlock buffer for writing
+  vim.bo[buf].modifiable = true
 
   -- Handle buffer clearing or appending
   local start_line = 0
@@ -527,23 +497,40 @@ function M.compile(args)
   )
 
   -- Start async job with shell execution
+  local start_time = vim.uv.hrtime()
   M.job_id = vim.fn.jobstart({ 'sh', '-c', command }, {
-    on_stdout = function(_, data) append_output(buf, win, data) end,
-    on_stderr = function(_, data) append_output(buf, win, data) end,
+    on_stdout = function(_, data) append_output(buf, data) end,
+    on_stderr = function(_, data) append_output(buf, data) end,
     on_exit = function(_, exit_code)
       vim.schedule(function()
+        if not vim.api.nvim_buf_is_valid(buf) then return end
+        local elapsed = (vim.uv.hrtime() - start_time) / 1e9
+
         -- Parse output with language-specific errorformat into quickfix list
-        local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+        -- Skip header/footer lines to prevent phantom buffers (e.g. "Started: 16:11:10")
+        local raw_lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+        local lines = {}
+        for _, l in ipairs(raw_lines) do
+          if
+            not l:match('^Command: ')
+            and not l:match('^Started: ')
+            and not l:match('^Finished: ')
+            and l ~= '---'
+            and l ~= ''
+          then
+            table.insert(lines, l)
+          end
+        end
         local efm = efm_map[lang] or vim.o.errorformat
         local qf_items = vim.fn.getqflist({
           lines = lines,
           efm = efm,
         }).items or {}
 
-        -- Filter to only valid entries (those with recognized file:line patterns)
+        -- Filter to only valid entries with a real file buffer
         local valid_items = {}
         for _, item in ipairs(qf_items) do
-          if item.valid == 1 then table.insert(valid_items, item) end
+          if item.valid == 1 and item.bufnr ~= 0 then table.insert(valid_items, item) end
         end
 
         -- Populate quickfix list with parsed errors
@@ -552,29 +539,47 @@ function M.compile(args)
           items = valid_items,
         })
 
-        -- Write footer with completion status
+        -- Write footer with completion status and elapsed time
+        vim.bo[buf].modifiable = true
         vim.api.nvim_buf_set_lines(buf, -1, -1, false, {
           '',
-          string.format('Finished: %s (exit code: %d)', os.date('%H:%M:%S'), exit_code),
+          string.format('Finished: %s (exit code: %d, %.1fs)', os.date('%H:%M:%S'), exit_code, elapsed),
         })
+        vim.bo[buf].modifiable = false
 
         M.job_id = nil
 
         -- Notify user and handle window based on success/failure
         if exit_code ~= 0 then
-          vim.notify('Compilation Failed (exit ' .. exit_code .. ')', vim.log.levels.ERROR, { title = NOTIFY_TITLE })
+          vim.notify(
+            string.format('Compilation Failed (exit %d, %.1fs)', exit_code, elapsed),
+            vim.log.levels.ERROR,
+            { title = NOTIFY_TITLE }
+          )
         else
-          vim.notify('Compilation Success', vim.log.levels.INFO, { title = NOTIFY_TITLE })
+          vim.notify(
+            string.format('Compilation Success (%.1fs)', elapsed),
+            vim.log.levels.INFO,
+            { title = NOTIFY_TITLE }
+          )
           vim.cmd('cclose') -- Close quickfix on success (no errors to show)
           if config.auto_close_on_success then
-            if win and vim.api.nvim_win_is_valid(win) then vim.api.nvim_win_close(win, true) end
+            for _, w in ipairs(vim.api.nvim_list_wins()) do
+              if vim.api.nvim_win_get_buf(w) == buf then
+                vim.api.nvim_win_close(w, true)
+                break
+              end
+            end
           end
         end
       end)
     end,
   })
 
-  if not M.job_id then vim.notify('Failed to start compilation', vim.log.levels.ERROR, { title = NOTIFY_TITLE }) end
+  if not M.job_id or M.job_id <= 0 then
+    vim.notify('Failed to start compilation', vim.log.levels.ERROR, { title = NOTIFY_TITLE })
+    M.job_id = nil
+  end
 end
 
 -------------------------------------------------------------------------------
