@@ -38,6 +38,9 @@ do
     preview_win = vim.api.nvim_get_current_win()
     vim.api.nvim_win_set_buf(preview_win, preview_buf)
     vim.wo[preview_win].winfixheight = true
+    vim.wo[preview_win].number = false
+    vim.wo[preview_win].relativenumber = false
+    vim.wo[preview_win].signcolumn = 'no'
     if syntax == 'markdown' then
       vim.treesitter.start(preview_buf)
       vim.wo[preview_win].conceallevel = 2
