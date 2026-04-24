@@ -344,6 +344,7 @@ local function open_window()
   vim.wo[win].relativenumber = false
   vim.wo[win].wrap = false
   vim.wo[win].signcolumn = 'no'
+  vim.wo[win].colorcolumn = ''
 
   return win
 end

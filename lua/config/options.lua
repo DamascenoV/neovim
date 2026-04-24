@@ -62,7 +62,7 @@ vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 -- vim.cmd.colorscheme('orbit')
 
-vim.o.winborder = 'bold'
+-- vim.o.winborder = 'bold'
 vim.o.pumheight = 10
 vim.o.writebackup = false
 
@@ -71,7 +71,7 @@ vim.diagnostic.config({ virtual_text = true })
 vim.cmd('filetype plugin indent on')
 if vim.fn.exists('syntax_on') then vim.cmd('syntax enable') end
 
-vim.o.pumborder = 'bold'
+-- vim.o.pumborder = 'bold'
 require('vim._core.ui2').enable({
   msg = { target = 'cmd' },
 })

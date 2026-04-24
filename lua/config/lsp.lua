@@ -41,6 +41,7 @@ do
     vim.wo[preview_win].number = false
     vim.wo[preview_win].relativenumber = false
     vim.wo[preview_win].signcolumn = 'no'
+    vim.wo[preview_win].colorcolumn = ''
     if syntax == 'markdown' then
       vim.treesitter.start(preview_buf)
       vim.wo[preview_win].conceallevel = 2
