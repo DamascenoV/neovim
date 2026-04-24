@@ -43,6 +43,12 @@ vim.api.nvim_create_autocmd('TermEnter', {
   callback = function() vim.opt_local.signcolumn = 'no' end,
 })
 
+-- Quickfix settings
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'qf',
+  callback = function() vim.opt_local.colorcolumn = '' end,
+})
+
 -- Ripgrep integration
 if vim.fn.executable('rg') == 1 then
   ---@diagnostic disable-next-line: duplicate-set-field
