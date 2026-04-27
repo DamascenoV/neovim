@@ -1,7 +1,7 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
-vim.opt.showmode = false
+-- vim.opt.showmode = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
@@ -59,7 +59,7 @@ vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('tama')
+-- vim.cmd.colorscheme('tama')
 -- vim.cmd.colorscheme('orbit')
 
 -- vim.o.winborder = 'bold'
