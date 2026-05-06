@@ -28,10 +28,7 @@ local function reset_state()
 end
 
 local function ensure_window(height)
-  if
-    preview_buf and api.nvim_buf_is_valid(preview_buf)
-    and preview_win and api.nvim_win_is_valid(preview_win)
-  then
+  if preview_buf and api.nvim_buf_is_valid(preview_buf) and preview_win and api.nvim_win_is_valid(preview_win) then
     if height ~= preview_height then
       api.nvim_win_set_height(preview_win, height)
       preview_height = height
@@ -77,9 +74,7 @@ end
 local function update_syntax(syntax)
   if syntax == preview_syntax then return end
 
-  if syntax and syntax ~= '' then
-    api.nvim_set_option_value('filetype', syntax, { buf = preview_buf })
-  end
+  if syntax and syntax ~= '' then api.nvim_set_option_value('filetype', syntax, { buf = preview_buf }) end
   preview_syntax = syntax
 
   if syntax == 'markdown' then
@@ -105,9 +100,7 @@ local function open_floating_preview(contents, syntax, opts)
 
   ensure_window(height)
 
-  if not (preview_buf and api.nvim_buf_is_valid(preview_buf)) then
-    return nil, nil
-  end
+  if not (preview_buf and api.nvim_buf_is_valid(preview_buf)) then return nil, nil end
 
   update_buffer(contents)
   update_syntax(syntax)
@@ -121,8 +114,6 @@ local function open_floating_preview(contents, syntax, opts)
   return preview_buf, preview_win
 end
 
-function M.setup()
-  vim.lsp.util.open_floating_preview = open_floating_preview
-end
+function M.setup() vim.lsp.util.open_floating_preview = open_floating_preview end
 
 return M
