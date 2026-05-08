@@ -62,5 +62,4 @@ if vim.fn.executable('rg') == 1 then
   end
 
   vim.o.findfunc = 'v:lua.RgFindFiles'
-  vim.o.grepprg = [[rg --vimgrep]]
 end
