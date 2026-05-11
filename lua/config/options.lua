@@ -35,10 +35,12 @@ vim.opt.undodir = os.getenv('HOME') .. '/.vim/undodir'
 vim.opt.incsearch = true
 vim.opt.scrolloff = 10
 vim.opt.showtabline = 1
+vim.opt.tabclose = 'uselast'
 vim.opt.wildoptions = 'fuzzy'
 vim.opt.wildmode = 'list:longest'
 vim.opt.wildignore = '.git,.6'
-vim.opt.completeopt = { 'menuone', 'noselect', 'fuzzy', 'popup' }
+vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert', 'fuzzy', 'popup' }
+vim.opt.complete:append('f,kspell')
 vim.opt.shortmess:append('c')
 vim.opt.colorcolumn = '120'
 vim.opt.clipboard = 'unnamedplus'
@@ -46,11 +48,13 @@ vim.opt.pumblend = 17
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(' ', 3)
-vim.opt.fillchars = 'eob:~'
+vim.opt.fillchars = 'msgsep:‾,eob:~'
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
+vim.opt.jumpoptions:append('view')
+vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
