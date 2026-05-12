@@ -79,3 +79,5 @@ if vim.fn.exists('syntax_on') then vim.cmd('syntax enable') end
 require('vim._core.ui2').enable({
   msg = { target = 'cmd' },
 })
+
+vim.api.nvim_set_hl(0, 'MsgSeparator', { bg = 'bg', fg = 'fg' })
