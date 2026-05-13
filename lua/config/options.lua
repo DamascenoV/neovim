@@ -1,12 +1,16 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- vim.opt.showmode = false
+vim.cmd [[
+  let g:did_install_default_menus = 1
+]]
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 vim.g.netrw_winsize = 24
+vim.opt.showmode = false
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
@@ -48,11 +52,11 @@ vim.opt.pumblend = 17
 vim.opt.autoindent = true
 vim.opt.cindent = true
 vim.opt.showbreak = string.rep(' ', 3)
-vim.opt.fillchars = 'msgsep:‾,eob:~'
 vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
+vim.opt.fillchars = 'msgsep:‾,eob:~'
 vim.opt.jumpoptions:append('view')
 vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
@@ -73,7 +77,6 @@ vim.o.writebackup = false
 vim.diagnostic.config({ virtual_text = true })
 
 vim.cmd('filetype plugin indent on')
-if vim.fn.exists('syntax_on') then vim.cmd('syntax enable') end
 
 -- vim.o.pumborder = 'bold'
 require('vim._core.ui2').enable({
