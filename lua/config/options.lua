@@ -56,7 +56,7 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
-vim.opt.fillchars = 'msgsep:‾,eob:~'
+vim.opt.fillchars = 'msgsep:-,eob:~'
 vim.opt.jumpoptions:append('view')
 vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
@@ -68,7 +68,6 @@ vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.termguicolors = true
 -- vim.cmd.colorscheme('tama')
--- vim.cmd.colorscheme('orbit')
 
 -- vim.o.winborder = 'bold'
 vim.o.pumheight = 10
