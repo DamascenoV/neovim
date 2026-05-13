@@ -5,7 +5,6 @@ vim.lsp.enable({
   'copilot',
   'emmet_ls',
   'intelephense',
-  -- 'lua_ls',
   'emmylua_ls',
   'vtsls',
   'vue_ls',
