@@ -99,6 +99,7 @@ hi(0, 'WarningMsg', { fg = c.yellow })
 hi(0, 'ModeMsg', { fg = c.orange })
 hi(0, 'MoreMsg', { fg = c.cyan })
 hi(0, 'Question', { fg = c.fg })
+hi(0, 'MsgSeparator', { bg = 'bg', fg = 'fg' })
 
 -- MatchParen
 hi(0, 'MatchParen', { fg = c.orange, bold = true })
