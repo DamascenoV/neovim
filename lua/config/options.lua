@@ -1,9 +1,9 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
-vim.cmd [[
+vim.cmd([[
   let g:did_install_default_menus = 1
-]]
+]])
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
@@ -63,13 +63,32 @@ vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
 
+function _G.diagnostic_status()
+  local counts = vim.diagnostic.count(0)
+
+  local errors = counts[vim.diagnostic.severity.ERROR] or 0
+  local warns = counts[vim.diagnostic.severity.WARN] or 0
+
+  return table.concat({
+    '[',
+    '%#DiagnosticError#',
+    tostring(errors),
+    '%*, ',
+    '%#DiagnosticWarn#',
+    tostring(warns),
+    '%*]',
+  })
+end
+
+vim.opt.statusline =
+  '%< [%{toupper(mode())}] ---------- %f ---------- %{%v:lua.diagnostic_status()%} ---------- %h%m%r%{FugitiveStatusline()} %=%-14.(%l,%c%V%) [%P]'
+
 vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.termguicolors = true
--- vim.cmd.colorscheme('tama')
+vim.cmd.colorscheme('tama')
 
--- vim.o.winborder = 'bold'
 vim.o.pumheight = 10
 vim.o.writebackup = false
 
