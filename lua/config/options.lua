@@ -68,6 +68,7 @@ function _G.diagnostic_status()
 
   local errors = counts[vim.diagnostic.severity.ERROR] or 0
   local warns = counts[vim.diagnostic.severity.WARN] or 0
+  local hint = counts[vim.diagnostic.severity.HINT] or 0
 
   return table.concat({
     '[',
@@ -76,12 +77,15 @@ function _G.diagnostic_status()
     '%*, ',
     '%#DiagnosticWarn#',
     tostring(warns),
+    '%*, ',
+    '%#DiagnosticInfo#',
+    tostring(hint),
     '%*]',
   })
 end
 
 vim.opt.statusline =
-  '%< [%{toupper(mode())}] ---------- %f ---------- %{%v:lua.diagnostic_status()%} ---------- %h%m%r%{FugitiveStatusline()} %=%-14.(%l,%c%V%) [%P]'
+  '%< [%{toupper(mode())}**]:------- %f%=%h%m%r%{FugitiveStatusline()} %{%v:lua.diagnostic_status()%} %=%-14.(%l,%c%V%) [%P]'
 
 vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
