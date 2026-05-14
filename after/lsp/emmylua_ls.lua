@@ -12,5 +12,7 @@ return {
     diagnostics = {
       globals = { 'vim' },
     },
+    codeLens = { enable = true },
+    hint = { enable = true },
   },
 }
