@@ -57,6 +57,8 @@ keymap('n', '<leader>s', '<cmd>cwindow<CR>', { desc = '[Q]uick List' })
 keymap('n', '<leader>ff', ':find ', { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fg', ':grep ', { desc = '[F]ind [G]rep' })
 keymap('n', '<leader>pu', vim.pack.update, { desc = '[P]ack [U]pdate' })
-keymap('n', '<C-e>', '<cmd>Ex<CR>', { desc = '[E]xplorer' })
+keymap('n', '<C-e>', '<cmd>Hex!<CR>', { desc = '[E]xplorer' })
 
 keymap('n', '<leader>cc', ':Compile ')
+
+keymap('n', '<leader>du', vim.pack.update)

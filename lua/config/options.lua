@@ -62,6 +62,7 @@ vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
+vim.o.cmdheight = 0
 
 function _G.diagnostic_status()
   local counts = vim.diagnostic.count(0)

@@ -77,10 +77,8 @@ hi(0, 'PmenuSbar', { bg = c.bg_darker })
 hi(0, 'PmenuThumb', { bg = c.cyan })
 
 -- Status & Tab lines
--- hi(0, 'StatusLine', { fg = c.fg_light, bg = c.bg_status })
--- hi(0, 'StatusLineNC', { fg = c.fg_gutter, bg = c.bg_status })
-hi(0, 'StatusLine', { link = 'MsgSeparator' })
-hi(0, 'StatusLineNC', { link = 'MsgSeparator' })
+hi(0, 'StatusLine', { fg = c.fg_light, bg = c.bg })
+hi(0, 'StatusLineNC', { fg = c.fg_gutter, bg = c.bg })
 hi(0, 'TabLineFill', { fg = c.fg, bg = c.bg_darker })
 hi(0, 'TabLineSel', { fg = c.fg_light, bg = c.bg_status, bold = true })
 
@@ -100,7 +98,7 @@ hi(0, 'WarningMsg', { fg = c.yellow })
 hi(0, 'ModeMsg', { fg = c.orange })
 hi(0, 'MoreMsg', { fg = c.cyan })
 hi(0, 'Question', { fg = c.fg })
-hi(0, 'MsgSeparator', { bg = 'bg', fg = 'fg' })
+hi(0, 'MsgSeparator', { bg = c.bg, fg = c.fg_light })
 
 -- MatchParen
 hi(0, 'MatchParen', { fg = c.orange, bold = true })
