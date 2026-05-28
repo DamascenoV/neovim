@@ -3,16 +3,19 @@ return {
   filetypes = { 'lua' },
   root_markers = { '.emmyrc.json', '.luarc.json', '.git' },
   settings = {
-    runtime = {
-      version = 'LuaJIT',
+    emmylua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      workspace = {
+        library = {
+          vim.env.VIMRUNTIME,
+          vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
+        },
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
     },
-    workspace = {
-      library = vim.api.nvim_get_runtime_file('', true),
-    },
-    diagnostics = {
-      globals = { 'vim' },
-    },
-    codeLens = { enable = true },
-    hint = { enable = true },
   },
 }

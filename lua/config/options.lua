@@ -9,7 +9,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
-vim.g.netrw_winsize = 24
+-- vim.g.netrw_winsize = 24
 vim.opt.showmode = false
 vim.opt.title = true
 vim.opt.hlsearch = false
@@ -56,7 +56,7 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
-vim.opt.fillchars = 'msgsep:-,eob:~'
+vim.opt.fillchars = 'msgsep:-,eob:~,stl:—,stlnc:—'
 vim.opt.jumpoptions:append('view')
 vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
@@ -84,9 +84,6 @@ function _G.diagnostic_status()
   })
 end
 
-vim.opt.statusline =
-  '%< [%{toupper(mode())}**]:------- %f%=%h%m%r%{FugitiveStatusline()} %{%v:lua.diagnostic_status()%} %=%-14.(%l,%c%V%) [%P]'
-
 vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
@@ -104,5 +101,3 @@ vim.cmd('filetype plugin indent on')
 require('vim._core.ui2').enable({
   msg = { target = 'cmd' },
 })
-
-vim.api.nvim_set_hl(0, 'MsgSeparator', { bg = 'bg', fg = 'fg' })
