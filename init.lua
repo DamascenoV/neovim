@@ -7,6 +7,3 @@ require('config.lsp')
 -- plugins
 require('plugins.treesitter')
 require('plugins.fugitive')
-
--- custom
-require('util.compile').setup()
