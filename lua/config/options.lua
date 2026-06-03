@@ -9,7 +9,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
-vim.opt.showmode = false
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true
@@ -55,7 +54,7 @@ vim.opt.showmatch = true
 vim.opt.list = true
 vim.opt.formatoptions:remove('o')
 vim.opt.listchars:append('tab:  ,trail:-')
-vim.opt.fillchars = 'msgsep:-,eob:~,stl:—,stlnc:—'
+vim.opt.fillchars = 'msgsep:—,eob:~,stl:—,stlnc:—'
 vim.opt.jumpoptions:append('view')
 vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
@@ -83,7 +82,7 @@ function _G.diagnostic_status()
   })
 end
 
-vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden --glob "!.git"'
+vim.opt.grepprg = 'rg --column --no-heading --color=never --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
 vim.opt.termguicolors = true
@@ -96,7 +95,6 @@ vim.diagnostic.config({ virtual_text = true })
 
 vim.cmd('filetype plugin indent on')
 
--- vim.o.pumborder = 'bold'
 require('vim._core.ui2').enable({
   msg = { target = 'cmd' },
 })
