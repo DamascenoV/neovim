@@ -53,7 +53,7 @@ local c = {
 -- ===========================================================================
 
 hi(0, 'Normal', { fg = c.fg, bg = c.bg })
-hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_float })
+hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_darker })
 hi(0, 'FloatBorder', { fg = c.fg_gutter, bg = c.bg_float })
 hi(0, 'ColorColumn', { bg = c.bg_darker })
 hi(0, 'Cursor', { fg = c.bg, bg = c.fg_light, reverse = true })
@@ -62,7 +62,6 @@ hi(0, 'CursorLine', { bg = c.bg_darker })
 hi(0, 'CursorColumn', { bg = c.bg_darker })
 hi(0, 'CursorLineNr', { fg = c.orange, bg = c.bg_darker, bold = true })
 hi(0, 'LineNr', { fg = c.fg_gutter, bg = c.bg_darker })
-hi(0, 'Folded', { fg = '#a1a1a1', bg = c.bg_status })
 hi(0, 'FoldColumn', { fg = c.bg_alt, bg = c.bg_dark })
 hi(0, 'SignColumn', { fg = c.bg, bg = c.bg })
 hi(0, 'EndOfBuffer', { fg = c.bg_alt })
