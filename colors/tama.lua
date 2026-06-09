@@ -16,15 +16,11 @@ local c = {
   bg = '#181a1b',
   bg_dark = '#131515',
   bg_darker = '#1d2023',
-  bg_alt = '#131515',
-  bg_float = '#181a1b',
   bg_status = '#34373a',
 
   -- Foregrounds
   fg = '#d1d1d1',
-  fg_light = '#d1d1d1',
   fg_dark = '#5c6366',
-  fg_gutter = '#5c6366',
 
   -- Accents
   red = '#c15959',
@@ -54,18 +50,18 @@ local c = {
 
 hi(0, 'Normal', { fg = c.fg, bg = c.bg })
 hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_darker })
-hi(0, 'FloatBorder', { fg = c.fg_gutter, bg = c.bg_float })
+hi(0, 'FloatBorder', { fg = c.fg_dark, bg = c.bg })
 hi(0, 'ColorColumn', { bg = c.bg_darker })
-hi(0, 'Cursor', { fg = c.bg, bg = c.fg_light, reverse = true })
-hi(0, 'lCursor', { fg = c.bg, bg = c.fg_light })
+hi(0, 'Cursor', { fg = c.bg, bg = c.fg, reverse = true })
+hi(0, 'lCursor', { fg = c.bg, bg = c.fg })
 hi(0, 'CursorLine', { bg = c.bg_darker })
 hi(0, 'CursorColumn', { bg = c.bg_darker })
 hi(0, 'CursorLineNr', { fg = c.orange, bg = c.bg_darker, bold = true })
-hi(0, 'LineNr', { fg = c.fg_gutter, bg = c.bg_darker })
-hi(0, 'FoldColumn', { fg = c.bg_alt, bg = c.bg_dark })
+hi(0, 'LineNr', { fg = c.fg_dark, bg = c.bg_darker })
+hi(0, 'FoldColumn', { fg = c.bg_dark, bg = c.bg_dark })
 hi(0, 'SignColumn', { fg = c.bg, bg = c.bg })
-hi(0, 'EndOfBuffer', { fg = c.bg_alt })
-hi(0, 'NonText', { fg = c.fg_gutter, bg = c.bg })
+hi(0, 'EndOfBuffer', { fg = c.bg_dark })
+hi(0, 'NonText', { fg = c.fg_dark, bg = c.bg })
 hi(0, 'Conceal', { fg = c.red })
 hi(0, 'Directory', { fg = c.yellow })
 
@@ -76,13 +72,13 @@ hi(0, 'PmenuSbar', { bg = c.bg_darker })
 hi(0, 'PmenuThumb', { bg = c.cyan })
 
 -- Status & Tab lines
-hi(0, 'StatusLine', { fg = c.fg_light, bg = c.bg })
-hi(0, 'StatusLineNC', { fg = c.fg_gutter, bg = c.bg })
+hi(0, 'StatusLine', { fg = c.fg, bg = c.bg })
+hi(0, 'StatusLineNC', { fg = c.fg_dark, bg = c.bg })
 hi(0, 'TabLineFill', { fg = c.fg, bg = c.bg_darker })
-hi(0, 'TabLineSel', { fg = c.fg_light, bg = c.bg_status, bold = true })
+hi(0, 'TabLineSel', { fg = c.fg, bg = c.bg_status, bold = true })
 
 -- Splits & Visual
-hi(0, 'VertSplit', { fg = c.bg_alt, bg = c.bg_alt })
+hi(0, 'VertSplit', { fg = c.bg_dark, bg = c.bg_alt })
 hi(0, 'Visual', { bg = '#2d3032' })
 hi(0, 'VisualNOS', { fg = c.fg, bg = c.bg })
 
@@ -97,7 +93,7 @@ hi(0, 'WarningMsg', { fg = c.yellow })
 hi(0, 'ModeMsg', { fg = c.orange })
 hi(0, 'MoreMsg', { fg = c.cyan })
 hi(0, 'Question', { fg = c.fg })
-hi(0, 'MsgSeparator', { bg = c.bg, fg = c.fg_light })
+hi(0, 'MsgSeparator', { bg = c.bg, fg = c.fg })
 
 -- MatchParen
 hi(0, 'MatchParen', { fg = c.orange, bold = true })
@@ -116,7 +112,7 @@ hi(0, 'MiniFilesCursorLine', { bg = c.bg_status, underline = true, bold = true }
 -- SYNTAX HIGHLIGHTING
 -- ===========================================================================
 
-hi(0, 'Comment', { fg = c.fg_gutter, italic = true })
+hi(0, 'Comment', { fg = c.fg_dark, italic = true })
 
 hi(0, 'Constant', { fg = c.magenta })
 hi(0, 'String', { fg = c.green })
@@ -154,7 +150,7 @@ hi(0, 'SpecialComment', { fg = c.orange, bold = true })
 hi(0, 'Debug', { fg = c.red })
 
 hi(0, 'Underlined', { fg = c.cyan, underline = true })
-hi(0, 'Ignore', { fg = c.fg_gutter })
+hi(0, 'Ignore', { fg = c.fg_dark })
 hi(0, 'Error', { fg = c.red, bold = true })
 hi(0, 'Todo', { fg = c.bg, bg = c.green, bold = true })
 
@@ -198,16 +194,8 @@ hi(0, 'debugBreakpoint', { fg = c.red })
 -- ===========================================================================
 
 -- Vimdoc
-hi(
-  0,
-  '@markup.heading.1.delimiter.vimdoc',
-  { fg = c.bg, bg = c.bg, sp = c.fg_light, underdouble = true, nocombine = true }
-)
-hi(
-  0,
-  '@markup.heading.2.delimiter.vimdoc',
-  { fg = c.bg, bg = c.bg, sp = c.fg_light, underline = true, nocombine = true }
-)
+hi(0, '@markup.heading.1.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underdouble = true, nocombine = true })
+hi(0, '@markup.heading.2.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underline = true, nocombine = true })
 
 -- HTML / JSX
 link('htmlTag', 'Normal')
@@ -274,15 +262,15 @@ vim.g.terminal_color_3 = c.yellow
 vim.g.terminal_color_4 = c.blue
 vim.g.terminal_color_5 = c.purple
 vim.g.terminal_color_6 = c.cyan
-vim.g.terminal_color_7 = c.fg_gutter
-vim.g.terminal_color_8 = c.bg_alt
+vim.g.terminal_color_7 = c.fg_dark
+vim.g.terminal_color_8 = c.bg_dark
 vim.g.terminal_color_9 = c.red
 vim.g.terminal_color_10 = c.green
 vim.g.terminal_color_11 = c.orange
 vim.g.terminal_color_12 = c.blue
 vim.g.terminal_color_13 = c.magenta
 vim.g.terminal_color_14 = c.cyan
-vim.g.terminal_color_15 = c.fg_light
+vim.g.terminal_color_15 = c.fg
 
 -- Optional: Recommend settings
 vim.o.background = 'dark'
