@@ -47,6 +47,8 @@ keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onf
 
 keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' })
 
+keymap('n', '<leader>cc', ':Compile ', { desc = '[C]ompile' })
+
 keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
 keymap('n', '<leader>q', '<cmd>copen<CR>', { desc = '[Q]uick List Diagnostic' })
 keymap('n', '<leader>Q', function()
