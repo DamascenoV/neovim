@@ -2,9 +2,6 @@ local api = vim.api
 
 local M = {}
 
--- local default_events = { 'CursorMoved', 'CursorMovedI', 'InsertCharPre' }
--- local original_open_floating_preview = vim.lsp.util.open_floating_preview
-
 local function buf_get_var(bufnr, name)
   local ok, value = pcall(api.nvim_buf_get_var, bufnr, name)
   if ok then return value end
@@ -14,15 +11,8 @@ local function buf_del_var(bufnr, name)
   if bufnr and api.nvim_buf_is_valid(bufnr) then pcall(api.nvim_buf_del_var, bufnr, name) end
 end
 
--- local function win_get_var(winnr, name)
---   local ok, value = pcall(api.nvim_win_get_var, winnr, name)
---   if ok then return value end
--- end
-
 local function set_buf_option(bufnr, name, value) pcall(api.nvim_set_option_value, name, value, { buf = bufnr }) end
-
 local function set_win_option(winnr, name, value) pcall(api.nvim_set_option_value, name, value, { win = winnr }) end
-
 local function is_valid_win(winnr) return winnr and api.nvim_win_is_valid(winnr) end
 
 local function clear_preview_var(bufnr, winnr)
@@ -44,12 +34,6 @@ local function close_preview_later(winnr, source_bufnr, ignored_bufnrs, skip_qui
     close_preview(winnr, source_bufnr)
   end)
 end
-
--- local function find_window_by_var(name, value)
---   for _, winnr in ipairs(api.nvim_tabpage_list_wins(0)) do
---     if win_get_var(winnr, name) == value then return winnr end
---   end
--- end
 
 local function make_preview_size(contents, opts)
   local ok, popup_width, popup_height = pcall(vim.lsp.util._make_floating_popup_size, contents, opts)
@@ -82,7 +66,6 @@ local function normalize_contents(contents, syntax, opts)
 end
 
 local function preview_width() return math.max(vim.o.columns, 1) end
-
 local function preview_height() return math.max(math.floor(vim.o.lines * 0.25), 1) end
 
 local function create_preview_buf()
@@ -231,21 +214,6 @@ local function open_floating_preview(contents, syntax, opts)
   if preview_winnr then
     preview_bufnr = api.nvim_win_get_buf(preview_winnr)
   else
-    -- if opts.focus_id and opts.focusable ~= false and opts.focus then
-    -- local current_winnr = api.nvim_get_current_win()
-    -- if win_get_var(current_winnr, opts.focus_id) then
-    --   api.nvim_command('wincmd p')
-    --   return source_bufnr, current_winnr
-    -- end
-    --
-    -- local winnr = find_window_by_var(opts.focus_id, source_bufnr)
-    -- if winnr and is_valid_win(winnr) and vim.fn.pumvisible() == 0 then
-    --   api.nvim_set_current_win(winnr)
-    --   api.nvim_command('stopinsert')
-    --   return api.nvim_win_get_buf(winnr), winnr
-    -- end
-    -- end
-
     preview_winnr = buf_get_var(source_bufnr, 'lsp_floating_preview')
     if is_valid_win(preview_winnr) then preview_bufnr = api.nvim_win_get_buf(preview_winnr) end
 
@@ -284,7 +252,6 @@ local function open_floating_preview(contents, syntax, opts)
   apply_window_options(preview_winnr, opts)
   apply_syntax(preview_bufnr, preview_winnr, syntax, do_stylize)
 
-  -- if opts.focus_id then api.nvim_win_set_var(preview_winnr, opts.focus_id, source_bufnr) end
   api.nvim_buf_set_var(source_bufnr, 'lsp_floating_preview', preview_winnr)
   api.nvim_win_set_var(preview_winnr, 'lsp_floating_bufnr', source_bufnr)
 
@@ -302,7 +269,5 @@ local function open_floating_preview(contents, syntax, opts)
 end
 
 function M.setup() vim.lsp.util.open_floating_preview = open_floating_preview end
-
--- function M.teardown() vim.lsp.util.open_floating_preview = original_open_floating_preview end
 
 return M

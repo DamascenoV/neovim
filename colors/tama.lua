@@ -1,5 +1,5 @@
 -- tama.lua
--- A clean, dark, high-contrast colorscheme for Neovim
+-- A clean, dark, high-contrast colorscheme for Neovim.
 
 vim.cmd.hi('clear')
 vim.g.colors_name = 'tama'
@@ -16,11 +16,15 @@ local c = {
   bg = '#181a1b',
   bg_dark = '#131515',
   bg_darker = '#1d2023',
+  bg_alt = '#242629',
+  bg_float = '#181a1b',
   bg_status = '#34373a',
 
   -- Foregrounds
   fg = '#d1d1d1',
+  fg_light = '#d1d1d1',
   fg_dark = '#5c6366',
+  fg_gutter = '#5c6366',
 
   -- Accents
   red = '#c15959',
@@ -49,70 +53,88 @@ local c = {
 -- ===========================================================================
 
 hi(0, 'Normal', { fg = c.fg, bg = c.bg })
-hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_darker })
-hi(0, 'FloatBorder', { fg = c.fg_dark, bg = c.bg })
+hi(0, 'NormalNC', { fg = c.fg, bg = c.bg })
+hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_float })
+hi(0, 'FloatBorder', { fg = c.fg_dark, bg = c.bg_float })
+hi(0, 'FloatTitle', { fg = c.yellow, bg = c.bg_float, bold = true })
+hi(0, 'FloatFooter', { fg = c.fg_dark, bg = c.bg_float })
 hi(0, 'ColorColumn', { bg = c.bg_darker })
-hi(0, 'Cursor', { fg = c.bg, bg = c.fg, reverse = true })
-hi(0, 'lCursor', { fg = c.bg, bg = c.fg })
+hi(0, 'Cursor', { fg = c.bg, bg = c.fg_light })
+hi(0, 'lCursor', { fg = c.bg, bg = c.fg_light })
+hi(0, 'CursorIM', { fg = c.bg, bg = c.fg_light })
 hi(0, 'CursorLine', { bg = c.bg_darker })
 hi(0, 'CursorColumn', { bg = c.bg_darker })
 hi(0, 'CursorLineNr', { fg = c.orange, bg = c.bg_darker, bold = true })
-hi(0, 'LineNr', { fg = c.fg_dark, bg = c.bg_darker })
-hi(0, 'FoldColumn', { fg = c.bg_dark, bg = c.bg_dark })
-hi(0, 'SignColumn', { fg = c.bg, bg = c.bg })
+hi(0, 'LineNr', { fg = c.fg_gutter, bg = c.bg_darker })
+hi(0, 'LineNrAbove', { fg = c.fg_gutter, bg = c.bg_darker })
+hi(0, 'LineNrBelow', { fg = c.fg_gutter, bg = c.bg_darker })
+hi(0, 'FoldColumn', { fg = c.fg_gutter, bg = c.bg_dark })
+hi(0, 'Folded', { fg = c.fg_dark, bg = c.bg_dark })
+hi(0, 'SignColumn', { fg = c.fg_gutter, bg = c.bg })
 hi(0, 'EndOfBuffer', { fg = c.bg_dark })
 hi(0, 'NonText', { fg = c.fg_dark, bg = c.bg })
+hi(0, 'Whitespace', { fg = c.bg_alt })
 hi(0, 'Conceal', { fg = c.red })
 hi(0, 'Directory', { fg = c.yellow })
+hi(0, 'Title', { fg = c.yellow, bold = true })
+hi(0, 'QuickFixLine', { bg = c.bg_status })
 
--- Pmenu
+-- Pmenu / wildmenu
 hi(0, 'Pmenu', { fg = c.fg, bg = c.bg_darker })
 hi(0, 'PmenuSel', { fg = c.bg, bg = c.yellow, bold = true })
+hi(0, 'PmenuKind', { fg = c.blue, bg = c.bg_darker })
+hi(0, 'PmenuExtra', { fg = c.fg_dark, bg = c.bg_darker })
+hi(0, 'PmenuKindSel', { fg = c.bg, bg = c.yellow, bold = true })
+hi(0, 'PmenuExtraSel', { fg = c.bg, bg = c.yellow })
 hi(0, 'PmenuSbar', { bg = c.bg_darker })
 hi(0, 'PmenuThumb', { bg = c.cyan })
+hi(0, 'WildMenu', { fg = c.bg, bg = c.yellow, bold = true })
+hi(0, 'ComplMatchIns', { fg = c.green, bold = true })
 
--- Status & Tab lines
-hi(0, 'StatusLine', { fg = c.fg, bg = c.bg })
-hi(0, 'StatusLineNC', { fg = c.fg_dark, bg = c.bg })
-hi(0, 'TabLineFill', { fg = c.fg, bg = c.bg_darker })
-hi(0, 'TabLineSel', { fg = c.fg, bg = c.bg_status, bold = true })
+-- Status, tab, and window bars
+hi(0, 'StatusLine', { fg = c.fg_light, bg = c.bg })
+hi(0, 'StatusLineNC', { fg = c.fg_gutter, bg = c.bg })
+hi(0, 'TabLine', { fg = c.fg_dark, bg = c.bg_darker })
+hi(0, 'TabLineFill', { fg = c.fg_dark, bg = c.bg_darker })
+hi(0, 'TabLineSel', { fg = c.yellow, bg = c.bg, bold = true })
+hi(0, 'WinBar', { fg = c.fg_light, bg = c.bg_status })
+hi(0, 'WinBarNC', { fg = c.fg_gutter, bg = c.bg_status })
+hi(0, 'VertSplit', { fg = c.bg_alt, bg = c.bg_alt })
+hi(0, 'WinSeparator', { fg = c.bg_alt, bg = c.bg_alt })
 
 -- Splits & Visual
-hi(0, 'VertSplit', { fg = c.bg_dark, bg = c.bg_alt })
 hi(0, 'Visual', { bg = '#2d3032' })
-hi(0, 'VisualNOS', { fg = c.fg, bg = c.bg })
+hi(0, 'VisualNOS', { fg = c.fg, bg = c.bg_alt })
 
 -- Search
 hi(0, 'Search', { fg = c.orange, bg = c.bg, bold = true, reverse = true })
 hi(0, 'IncSearch', { fg = c.orange, bg = c.bg, bold = true, reverse = true })
+hi(0, 'CurSearch', { fg = c.orange, bg = c.bg, bold = true, reverse = true })
 hi(0, 'Substitute', { fg = c.orange, bg = c.bg, bold = true, reverse = true })
 
 -- Messages
-hi(0, 'ErrorMsg', { fg = c.red })
+hi(0, 'ErrorMsg', { fg = c.red, bold = true })
 hi(0, 'WarningMsg', { fg = c.yellow })
 hi(0, 'ModeMsg', { fg = c.orange })
 hi(0, 'MoreMsg', { fg = c.cyan })
 hi(0, 'Question', { fg = c.fg })
-hi(0, 'MsgSeparator', { bg = c.bg, fg = c.fg })
+hi(0, 'MsgArea', { fg = c.fg, bg = c.bg })
+hi(0, 'MsgSeparator', { fg = c.fg, bg = c.bg })
 
 -- MatchParen
 hi(0, 'MatchParen', { fg = c.orange, bold = true })
 
 -- Spell
-hi(0, 'SpellBad', { fg = c.red, sp = c.spell_bad, underline = true, bold = true })
-hi(0, 'SpellCap', { fg = c.red, sp = c.spell_cap, underline = true, bold = true })
-hi(0, 'SpellLocal', { fg = c.orange, sp = c.spell_local, underline = true, bold = true })
-hi(0, 'SpellRare', { fg = c.orange, sp = c.spell_rare, underline = true, bold = true })
-
--- Mini
-hi(0, 'MiniPickMatchCurrent', { bg = c.bg_status, underline = true, bold = true })
-hi(0, 'MiniFilesCursorLine', { bg = c.bg_status, underline = true, bold = true })
+hi(0, 'SpellBad', { sp = c.spell_bad })
+hi(0, 'SpellCap', { sp = c.spell_cap })
+hi(0, 'SpellLocal', { sp = c.spell_local })
+hi(0, 'SpellRare', { sp = c.spell_rare })
 
 -- ===========================================================================
 -- SYNTAX HIGHLIGHTING
 -- ===========================================================================
 
-hi(0, 'Comment', { fg = c.fg_dark, italic = true })
+hi(0, 'Comment', { fg = c.fg_gutter, italic = true })
 
 hi(0, 'Constant', { fg = c.magenta })
 hi(0, 'String', { fg = c.green })
@@ -140,8 +162,8 @@ hi(0, 'PreCondit', { link = 'PreProc' })
 
 hi(0, 'Type', { fg = c.blue })
 hi(0, 'StorageClass', { link = 'Statement' })
-hi(0, 'Structure', { link = 'Statement' })
-hi(0, 'Typedef', { link = 'Statement' })
+hi(0, 'Structure', { link = 'Type' })
+hi(0, 'Typedef', { link = 'Type' })
 
 hi(0, 'Special', { fg = c.orange })
 hi(0, 'SpecialKey', { fg = c.orange })
@@ -155,94 +177,227 @@ hi(0, 'Error', { fg = c.red, bold = true })
 hi(0, 'Todo', { fg = c.bg, bg = c.green, bold = true })
 
 -- ===========================================================================
--- DIFF
+-- TREESITTER
+-- ===========================================================================
+
+link('@comment', 'Comment')
+hi(0, '@comment.documentation', { fg = c.fg_gutter })
+link('@comment.error', 'Error')
+link('@comment.warning', 'WarningMsg')
+link('@comment.todo', 'Todo')
+link('@comment.note', 'MoreMsg')
+
+link('@constant', 'Constant')
+link('@constant.builtin', 'Constant')
+link('@constant.macro', 'PreProc')
+link('@string', 'String')
+hi(0, '@string.documentation', { fg = c.fg_gutter })
+link('@string.escape', 'Special')
+link('@string.regexp', 'Special')
+link('@string.special', 'Special')
+link('@string.special.path', 'String')
+link('@string.special.url', 'Underlined')
+link('@string.special.symbol', 'Constant')
+link('@character', 'Character')
+link('@character.special', 'Special')
+link('@boolean', 'Boolean')
+link('@number', 'Number')
+link('@number.float', 'Float')
+
+link('@variable', 'Identifier')
+link('@variable.parameter', 'Identifier')
+link('@variable.member', 'Identifier')
+link('@variable.builtin', 'Constant')
+link('@property', 'Identifier')
+link('@field', 'Identifier')
+link('@parameter', 'Identifier')
+
+link('@function', 'Function')
+link('@function.call', 'Function')
+link('@function.method', 'Function')
+link('@function.method.call', 'Function')
+link('@function.builtin', 'Function')
+link('@function.macro', 'Function')
+link('@method', 'Function')
+link('@method.call', 'Function')
+link('@constructor', 'Type')
+
+link('@keyword', 'Keyword')
+link('@keyword.conditional', 'Conditional')
+link('@keyword.coroutine', 'Keyword')
+link('@keyword.debug', 'Debug')
+link('@keyword.directive', 'PreProc')
+link('@keyword.directive.define', 'Define')
+link('@keyword.exception', 'Exception')
+link('@keyword.function', 'Keyword')
+link('@keyword.import', 'Include')
+link('@keyword.operator', 'Operator')
+link('@keyword.repeat', 'Repeat')
+link('@keyword.return', 'Keyword')
+link('@keyword.storage', 'StorageClass')
+link('@conditional', 'Conditional')
+link('@repeat', 'Repeat')
+link('@include', 'Include')
+link('@exception', 'Exception')
+link('@operator', 'Operator')
+
+link('@type', 'Type')
+link('@type.builtin', 'Type')
+link('@type.definition', 'Typedef')
+link('@type.qualifier', 'StorageClass')
+link('@module', 'Type')
+link('@module.builtin', 'Type')
+link('@namespace', 'Type')
+link('@label', 'Label')
+link('@attribute', 'PreProc')
+link('@annotation', 'PreProc')
+
+link('@punctuation.delimiter', 'Delimiter')
+link('@punctuation.bracket', 'Delimiter')
+link('@punctuation.special', 'Special')
+
+link('@markup.strong', 'Special')
+link('@markup.italic', 'Comment')
+link('@markup.strikethrough', 'Comment')
+link('@markup.link', 'Underlined')
+link('@markup.link.label', 'Special')
+link('@markup.link.url', 'Underlined')
+
+link('@tag', 'Keyword')
+link('@tag.attribute', 'Identifier')
+link('@tag.delimiter', 'Delimiter')
+
+link('@diff.plus', 'DiffAdd')
+link('@diff.minus', 'DiffDelete')
+link('@diff.delta', 'DiffChange')
+
+-- Elixir-specific.
+link('@module.elixir', 'Type')
+link('@string.special.symbol.elixir', 'Constant')
+hi(0, '@comment.documentation.elixir', { fg = c.fg_gutter })
+link('@function.call.elixir', 'Function')
+link('@function.elixir', 'Function')
+link('@variable.elixir', 'Identifier')
+link('@variable.parameter.elixir', 'Identifier')
+link('@variable.member.elixir', 'Identifier')
+link('@property.elixir', 'Identifier')
+
+-- LSP semantic tokens, kept in the same palette as Treesitter.
+link('@lsp.type.class', 'Type')
+link('@lsp.type.comment', 'Comment')
+link('@lsp.type.decorator', 'PreProc')
+link('@lsp.type.enum', 'Type')
+link('@lsp.type.enumMember', 'Constant')
+link('@lsp.type.event', 'Type')
+link('@lsp.type.function', 'Function')
+link('@lsp.type.interface', 'Type')
+link('@lsp.type.keyword', 'Keyword')
+link('@lsp.type.macro', 'PreProc')
+link('@lsp.type.method', 'Function')
+link('@lsp.type.modifier', 'StorageClass')
+link('@lsp.type.namespace', 'Type')
+link('@lsp.type.number', 'Number')
+link('@lsp.type.operator', 'Operator')
+link('@lsp.type.parameter', 'Identifier')
+link('@lsp.type.property', 'Identifier')
+link('@lsp.type.regexp', 'Special')
+link('@lsp.type.string', 'String')
+link('@lsp.type.struct', 'Type')
+link('@lsp.type.type', 'Type')
+link('@lsp.type.typeParameter', 'Type')
+link('@lsp.type.variable', 'Identifier')
+link('@lsp.typemod.variable.defaultLibrary', 'Constant')
+link('@lsp.typemod.function.defaultLibrary', 'Function')
+link('@lsp.typemod.method.defaultLibrary', 'Function')
+
+-- ===========================================================================
+-- DIFF / DIAGNOSTICS / LSP UI
 -- ===========================================================================
 
 hi(0, 'DiffAdd', { fg = c.green, bg = c.bg_dark })
 hi(0, 'DiffChange', { fg = c.yellow, bg = c.bg_dark })
-hi(0, 'DiffDelete', { fg = c.red, bold = true, bg = c.bg_dark })
-hi(0, 'DiffText', { fg = c.cyan, bg = c.bg_dark })
+hi(0, 'DiffDelete', { fg = c.red, bg = c.bg_dark, bold = true })
+hi(0, 'DiffText', { fg = c.cyan, bg = c.bg_status })
+
+hi(0, 'Added', { fg = c.green })
+hi(0, 'Changed', { fg = c.yellow })
+hi(0, 'Removed', { fg = c.red })
+
+hi(0, 'DiagnosticError', { fg = c.red, bold = true })
+hi(0, 'DiagnosticWarn', { fg = c.yellow })
+hi(0, 'DiagnosticInfo', { fg = c.blue })
+hi(0, 'DiagnosticHint', { fg = c.cyan })
+hi(0, 'DiagnosticOk', { fg = c.green })
+hi(0, 'DiagnosticVirtualTextError', { fg = c.red, bg = c.bg_dark })
+hi(0, 'DiagnosticVirtualTextWarn', { fg = c.yellow, bg = c.bg_dark })
+hi(0, 'DiagnosticVirtualTextInfo', { fg = c.blue, bg = c.bg_dark })
+hi(0, 'DiagnosticVirtualTextHint', { fg = c.cyan, bg = c.bg_dark })
+hi(0, 'DiagnosticVirtualTextOk', { fg = c.green, bg = c.bg_dark })
+hi(0, 'DiagnosticUnderlineError', { sp = c.red })
+hi(0, 'DiagnosticUnderlineWarn', { sp = c.yellow })
+hi(0, 'DiagnosticUnderlineInfo', { sp = c.blue })
+hi(0, 'DiagnosticUnderlineHint', { sp = c.cyan })
+hi(0, 'DiagnosticUnderlineOk', { sp = c.green })
+link('DiagnosticSignError', 'DiagnosticError')
+link('DiagnosticSignWarn', 'DiagnosticWarn')
+link('DiagnosticSignInfo', 'DiagnosticInfo')
+link('DiagnosticSignHint', 'DiagnosticHint')
+link('DiagnosticSignOk', 'DiagnosticOk')
+link('DiagnosticFloatingError', 'DiagnosticError')
+link('DiagnosticFloatingWarn', 'DiagnosticWarn')
+link('DiagnosticFloatingInfo', 'DiagnosticInfo')
+link('DiagnosticFloatingHint', 'DiagnosticHint')
+link('DiagnosticFloatingOk', 'DiagnosticOk')
+
+hi(0, 'LspReferenceText', { bg = c.bg_darker })
+hi(0, 'LspReferenceRead', { bg = c.bg_darker })
+hi(0, 'LspReferenceWrite', { bg = c.bg_darker, underline = true })
+hi(0, 'LspInlayHint', { fg = c.fg_dark, bg = c.bg_dark })
+link('LspCodeLens', 'Comment')
+link('LspCodeLensSeparator', 'Comment')
+link('LspSignatureActiveParameter', 'Search')
 
 -- ===========================================================================
--- PLUGINS & LSP
+-- PLUGINS & FILETYPE SPECIFIC
 -- ===========================================================================
 
--- Neomake
-link('NeomakeErrorSign', 'ErrorMsg')
-link('NeomakeWarningSign', 'WarningMsg')
-link('NeomakeInfoSign', 'Type')
-link('NeomakeMessageSign', 'WarningMsg')
-link('NeomakeVirtualtextError', 'ErrorMsg')
-link('NeomakeVirtualtextWarning', 'WarningMsg')
-link('NeomakeVirtualtextInfo', 'Type')
-link('NeomakeVirtualtextMessage', 'WarningMsg')
-
--- MiniSnippets
+-- Mini.nvim family
+hi(0, 'MiniPickMatchCurrent', { bg = c.bg_status, underline = true, bold = true })
+hi(0, 'MiniPickMatchMarked', { fg = c.green, bold = true })
+hi(0, 'MiniPickMatchRanges', { fg = c.orange, bold = true })
+hi(0, 'MiniPickNormal', { fg = c.fg, bg = c.bg_darker })
+hi(0, 'MiniPickPreviewLine', { bg = c.bg_status })
+hi(0, 'MiniPickPreviewRegion', { bg = c.bg_status, underline = true })
+hi(0, 'MiniPickPrompt', { fg = c.yellow, bg = c.bg_darker, bold = true })
+hi(0, 'MiniPickPromptCaret', { fg = c.orange, bg = c.bg_darker })
+hi(0, 'MiniPickPromptPrefix', { fg = c.green, bg = c.bg_darker })
+hi(0, 'MiniPickCursor', { blend = 100, nocombine = true })
+hi(0, 'MiniFilesCursorLine', { bg = c.bg_status, underline = true, bold = true })
+link('MiniFilesDirectory', 'Directory')
+link('MiniFilesFile', 'Normal')
+link('MiniFilesNormal', 'NormalFloat')
+link('MiniFilesBorder', 'FloatBorder')
+link('MiniFilesTitle', 'FloatTitle')
+link('MiniFilesTitleFocused', 'FloatTitle')
 hi(0, 'MiniSnippetsCurrent', { sp = c.snippet_cur, underdouble = true })
 hi(0, 'MiniSnippetsCurrentReplace', { sp = c.snippet_rep, underdouble = true })
 hi(0, 'MiniSnippetsFinal', { sp = c.snippet_fin, underdouble = true })
 hi(0, 'MiniSnippetsUnvisited', { sp = c.snippet_unv, underdouble = true })
 hi(0, 'MiniSnippetsVisited', { sp = c.snippet_vis, underdouble = true })
-hi(0, 'MiniPickCursor', { blend = 100, nocombine = true })
 
--- Debug
-hi(0, 'debugPC', { fg = c.red })
-hi(0, 'debugBreakpoint', { fg = c.red })
-
--- ===========================================================================
--- FILETYPE SPECIFIC
--- ===========================================================================
-
--- Vimdoc
-hi(0, '@markup.heading.1.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underdouble = true, nocombine = true })
-hi(0, '@markup.heading.2.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underline = true, nocombine = true })
-
--- HTML / JSX
-link('htmlTag', 'Normal')
-link('htmlEndTag', 'htmlTagName')
-link('htmlTagName', 'Statement')
-link('htmlSpecialTagName', 'htmlTagName')
-link('htmlArg', 'Operator')
-link('htmlBold', 'Normal')
-link('htmlItalic', 'Normal')
-link('htmlLink', 'Function')
-link('jsxComponentName', 'Statement')
-link('jsxTagName', 'Special')
-
--- Markdown
-link('markdownCode', 'String')
-link('markdownCodeBlock', 'String')
-link('markdownCodeDelimiter', 'String')
-link('markdownHeadingDelimiter', 'Type')
-link('markdownItalic', 'PreProc')
-link('markdownLinkText', 'Special')
-
--- CSS
-link('cssClassName', 'Statement')
-link('cssProp', 'Special')
-link('cssDefinition', 'Special')
-link('cssTagName', 'SpecialKey')
-
--- YAML
-link('yamlBlockMappingKey', 'Statement')
-link('yamlFlowIndicator', 'SpecialKey')
-
--- XML
-link('xmlTag', 'Statement')
-link('xmlTagName', 'Statement')
-link('xmlEndTag', 'Statement')
-
--- Others
-link('pythonBuiltin', 'Constant')
+-- Git / Fugitive
 link('fugitiveHash', 'Constant')
-link('ConId', 'Type')
-link('HelpCommand', 'Statement')
-link('HelpExample', 'Statement')
-link('Terminal', 'Normal')
-
--- Diff
+link('GitSignsAdd', 'DiffAdd')
+link('GitSignsChange', 'DiffChange')
+link('GitSignsDelete', 'DiffDelete')
 link('diffAdded', 'DiffAdd')
 link('diffRemoved', 'DiffDelete')
+link('diffChanged', 'DiffChange')
+link('diffLine', 'Statement')
+link('diffFile', 'Type')
+link('diffNewFile', 'Type')
+link('diffOldFile', 'Type')
+link('diffIndexLine', 'PreProc')
 link('diffBDiffer', 'WarningMsg')
 link('diffCommon', 'WarningMsg')
 link('diffDiffer', 'WarningMsg')
@@ -250,6 +405,56 @@ link('diffIdentical', 'WarningMsg')
 link('diffIsA', 'WarningMsg')
 link('diffNoEOL', 'WarningMsg')
 link('diffOnly', 'WarningMsg')
+
+-- Vimdoc / help
+hi(0, '@markup.heading.1.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underdouble = true, nocombine = true })
+hi(0, '@markup.heading.2.delimiter.vimdoc', { fg = c.bg, bg = c.bg, sp = c.fg, underline = true, nocombine = true })
+link('HelpCommand', 'Statement')
+link('HelpExample', 'Statement')
+link('helpHyperTextJump', 'Underlined')
+link('helpOption', 'Type')
+
+-- HTML / JSX / XML / Vue
+link('htmlTag', 'Normal')
+link('htmlEndTag', 'htmlTagName')
+link('htmlTagName', 'Statement')
+link('htmlSpecialTagName', 'htmlTagName')
+link('htmlArg', 'Identifier')
+link('htmlBold', 'Normal')
+link('htmlItalic', 'Normal')
+link('htmlLink', 'Underlined')
+link('jsxComponentName', 'Type')
+link('jsxTagName', 'Statement')
+link('xmlTag', 'Statement')
+link('xmlTagName', 'Statement')
+link('xmlEndTag', 'Statement')
+link('vueComponentName', 'Type')
+
+-- Markdown
+link('markdownCode', 'Comment')
+link('markdownCodeBlock', 'Comment')
+link('markdownCodeDelimiter', 'Comment')
+link('markdownHeadingDelimiter', 'Comment')
+link('markdownItalic', 'Comment')
+link('markdownLinkText', 'Underlined')
+link('markdownUrl', 'Underlined')
+
+-- CSS / YAML / common filetypes
+link('cssClassName', 'Statement')
+link('cssProp', 'Identifier')
+link('cssDefinition', 'Identifier')
+link('cssTagName', 'SpecialKey')
+link('yamlBlockMappingKey', 'Statement')
+link('yamlFlowIndicator', 'SpecialKey')
+link('jsonKeyword', 'Identifier')
+link('jsonString', 'String')
+link('pythonBuiltin', 'Constant')
+link('ConId', 'Type')
+link('Terminal', 'Normal')
+
+-- Debug
+hi(0, 'debugPC', { fg = c.red })
+hi(0, 'debugBreakpoint', { fg = c.red })
 
 -- ===========================================================================
 -- TERMINAL COLORS
@@ -263,15 +468,14 @@ vim.g.terminal_color_4 = c.blue
 vim.g.terminal_color_5 = c.purple
 vim.g.terminal_color_6 = c.cyan
 vim.g.terminal_color_7 = c.fg_dark
-vim.g.terminal_color_8 = c.bg_dark
+vim.g.terminal_color_8 = c.bg_alt
 vim.g.terminal_color_9 = c.red
 vim.g.terminal_color_10 = c.green
 vim.g.terminal_color_11 = c.orange
 vim.g.terminal_color_12 = c.blue
 vim.g.terminal_color_13 = c.magenta
 vim.g.terminal_color_14 = c.cyan
-vim.g.terminal_color_15 = c.fg
+vim.g.terminal_color_15 = c.fg_light
 
--- Optional: Recommend settings
 vim.o.background = 'dark'
 vim.o.termguicolors = true
