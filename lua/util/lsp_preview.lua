@@ -20,21 +20,6 @@ local function clear_preview_var(bufnr, winnr)
   if buf_get_var(bufnr, 'lsp_floating_preview') == winnr then buf_del_var(bufnr, 'lsp_floating_preview') end
 end
 
-local function close_preview(winnr, source_bufnr)
-  if is_valid_win(winnr) then pcall(api.nvim_win_close, winnr, true) end
-  clear_preview_var(source_bufnr, winnr)
-end
-
-local function close_preview_later(winnr, source_bufnr, ignored_bufnrs, skip_quickfix)
-  vim.schedule(function()
-    if ignored_bufnrs and vim.list_contains(ignored_bufnrs, api.nvim_get_current_buf()) then return end
-    if skip_quickfix and api.nvim_get_option_value('filetype', { buf = 0 }) == 'qf' then return end
-
-    pcall(api.nvim_del_augroup_by_name, ('util.lsp_preview.%d'):format(winnr))
-    close_preview(winnr, source_bufnr)
-  end)
-end
-
 local function make_preview_size(contents, opts)
   local ok, popup_width, popup_height = pcall(vim.lsp.util._make_floating_popup_size, contents, opts)
   if ok and popup_width and popup_height then return popup_width, popup_height end
@@ -125,35 +110,9 @@ local function resize_for_conceal(winnr, opts, do_stylize)
   end
 end
 
-local function setup_close_autocmds(events, winnr, preview_bufnr, source_bufnr, source_winnr, source_cursor)
+local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
   local group_name = ('util.lsp_preview.%d'):format(winnr)
   local group = api.nvim_create_augroup(group_name, { clear = true })
-
-  local function cursor_moved()
-    if not is_valid_win(source_winnr) then return true end
-
-    local ok, cursor = pcall(api.nvim_win_get_cursor, source_winnr)
-    return not ok or cursor[1] ~= source_cursor[1] or cursor[2] ~= source_cursor[2]
-  end
-
-  api.nvim_create_autocmd('BufLeave', {
-    group = group,
-    buffer = source_bufnr,
-    callback = function() close_preview_later(winnr, source_bufnr, { preview_bufnr, source_bufnr }, true) end,
-  })
-
-  if events and not vim.tbl_isempty(events) then
-    api.nvim_create_autocmd(events, {
-      group = group,
-      buffer = source_bufnr,
-      callback = function(args)
-        if (args.event == 'CursorMoved' or args.event == 'CursorMovedI') and not cursor_moved() then return end
-
-        close_preview_later(winnr, source_bufnr)
-        return true
-      end,
-    })
-  end
 
   api.nvim_create_autocmd('WinClosed', {
     group = group,
@@ -263,7 +222,7 @@ local function open_floating_preview(contents, syntax, opts)
     pcall(vim.fn.winrestview, source_view)
   end
 
-  setup_close_autocmds(opts.close_events, preview_winnr, preview_bufnr, source_bufnr, source_winnr, source_cursor)
+  setup_close_autocmds(preview_winnr, preview_bufnr, source_bufnr)
 
   return preview_bufnr, preview_winnr
 end
