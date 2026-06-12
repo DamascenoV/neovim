@@ -2,6 +2,9 @@ local api = vim.api
 
 local M = {}
 
+local active_preview_bufnr ---@type integer?
+local active_preview_winnr ---@type integer?
+
 local function buf_get_var(bufnr, name)
   local ok, value = pcall(api.nvim_buf_get_var, bufnr, name)
   if ok then return value end
@@ -11,6 +14,11 @@ local function buf_del_var(bufnr, name)
   if bufnr and api.nvim_buf_is_valid(bufnr) then pcall(api.nvim_buf_del_var, bufnr, name) end
 end
 
+local function win_get_var(winnr, name)
+  local ok, value = pcall(api.nvim_win_get_var, winnr, name)
+  if ok then return value end
+end
+
 local function set_buf_option(bufnr, name, value) pcall(api.nvim_set_option_value, name, value, { buf = bufnr }) end
 local function set_win_option(winnr, name, value) pcall(api.nvim_set_option_value, name, value, { win = winnr }) end
 local function is_valid_win(winnr) return winnr and api.nvim_win_is_valid(winnr) end
@@ -18,6 +26,24 @@ local function is_valid_win(winnr) return winnr and api.nvim_win_is_valid(winnr)
 local function clear_preview_var(bufnr, winnr)
   if not (bufnr and api.nvim_buf_is_valid(bufnr)) then return end
   if buf_get_var(bufnr, 'lsp_floating_preview') == winnr then buf_del_var(bufnr, 'lsp_floating_preview') end
+end
+
+local function clear_hover_range(bufnr)
+  if not (bufnr and api.nvim_buf_is_valid(bufnr)) then return end
+
+  local hover_ns = api.nvim_create_namespace('nvim.lsp.hover_range')
+  api.nvim_buf_clear_namespace(bufnr, hover_ns, 0, -1)
+end
+
+local function find_preview_window()
+  local winnr = active_preview_winnr
+  if winnr and api.nvim_win_is_valid(winnr) and vim.list_contains(api.nvim_tabpage_list_wins(0), winnr) then
+    return winnr, api.nvim_win_get_buf(winnr)
+  end
+
+  for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
+    if win_get_var(win, 'util_lsp_preview') then return win, api.nvim_win_get_buf(win) end
+  end
 end
 
 local function make_preview_size(contents, opts)
@@ -120,6 +146,10 @@ local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
     once = true,
     callback = function()
       clear_preview_var(source_bufnr, winnr)
+      if active_preview_winnr == winnr then
+        active_preview_winnr = nil
+        active_preview_bufnr = nil
+      end
       pcall(api.nvim_del_augroup_by_name, group_name)
     end,
   })
@@ -130,6 +160,10 @@ local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
     once = true,
     callback = function()
       clear_preview_var(source_bufnr, winnr)
+      if active_preview_bufnr == preview_bufnr then
+        active_preview_winnr = nil
+        active_preview_bufnr = nil
+      end
       pcall(api.nvim_del_augroup_by_name, group_name)
     end,
   })
@@ -173,8 +207,7 @@ local function open_floating_preview(contents, syntax, opts)
   if preview_winnr then
     preview_bufnr = api.nvim_win_get_buf(preview_winnr)
   else
-    preview_winnr = buf_get_var(source_bufnr, 'lsp_floating_preview')
-    if is_valid_win(preview_winnr) then preview_bufnr = api.nvim_win_get_buf(preview_winnr) end
+    preview_winnr, preview_bufnr = find_preview_window()
 
     if not (preview_bufnr and api.nvim_buf_is_valid(preview_bufnr)) then
       preview_bufnr = create_preview_buf()
@@ -211,8 +244,18 @@ local function open_floating_preview(contents, syntax, opts)
   apply_window_options(preview_winnr, opts)
   apply_syntax(preview_bufnr, preview_winnr, syntax, do_stylize)
 
+  local previous_source_bufnr = win_get_var(preview_winnr, 'lsp_floating_bufnr')
+  if previous_source_bufnr and previous_source_bufnr ~= source_bufnr then
+    clear_preview_var(previous_source_bufnr, preview_winnr)
+    clear_hover_range(previous_source_bufnr)
+  end
+
+  active_preview_bufnr = preview_bufnr
+  active_preview_winnr = preview_winnr
+
   api.nvim_buf_set_var(source_bufnr, 'lsp_floating_preview', preview_winnr)
   api.nvim_win_set_var(preview_winnr, 'lsp_floating_bufnr', source_bufnr)
+  api.nvim_win_set_var(preview_winnr, 'util_lsp_preview', true)
 
   resize_for_conceal(preview_winnr, opts, do_stylize)
 
