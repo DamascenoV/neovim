@@ -11,16 +11,26 @@ local function vue_language_server_location()
   end
 
   local exe = vim.fn.exepath('vue-language-server')
-  if exe ~= '' then
-    add(vim.fs.dirname(vim.fs.dirname(exe)) .. '/lib/node_modules/@vue/language-server')
-  end
+  if exe ~= '' then add(vim.fs.dirname(vim.fs.dirname(exe)) .. '/lib/node_modules/@vue/language-server') end
 
   local home = vim.env.HOME
   if home then
-    for _, path in ipairs(vim.fn.glob(home .. '/.local/share/mise/installs/npm-vue-language-server/*/lib/node_modules/@vue/language-server', true, true)) do
+    for _, path in
+      ipairs(
+        vim.fn.glob(
+          home .. '/.local/share/mise/installs/npm-vue-language-server/*/lib/node_modules/@vue/language-server',
+          true,
+          true
+        )
+      )
+    do
       add(path)
     end
-    for _, path in ipairs(vim.fn.glob(home .. '/.local/share/mise/installs/node/*/lib/node_modules/@vue/language-server', true, true)) do
+    for _, path in
+      ipairs(
+        vim.fn.glob(home .. '/.local/share/mise/installs/node/*/lib/node_modules/@vue/language-server', true, true)
+      )
+    do
       add(path)
     end
   end

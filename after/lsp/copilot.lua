@@ -4,11 +4,11 @@ return {
   init_options = {
     editorInfo = {
       name = 'Neovim',
-      version = tostring(vim.version()),
+      version = '0.12.3',
     },
     editorPluginInfo = {
       name = 'Neovim',
-      version = tostring(vim.version()),
+      version = '0.12.3',
     },
   },
   settings = {
