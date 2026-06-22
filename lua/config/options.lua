@@ -96,5 +96,16 @@ vim.diagnostic.config({ virtual_text = true })
 vim.cmd('filetype plugin indent on')
 
 require('vim._core.ui2').enable({
-  msg = { target = 'cmd' },
+  msg = {
+    target = 'cmd',
+    cmd = {
+      height = 0.2,
+    },
+    msg = {
+      height = 0.2,
+    },
+    dialog = {
+      height = 0.2,
+    },
+  },
 })
