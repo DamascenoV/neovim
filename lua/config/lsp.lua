@@ -12,8 +12,6 @@ vim.lsp.enable({
   'gopls',
   'golangci_lint_ls',
   'zls',
-  'ols',
-  -- 'elixirls',
   'expert',
 })
 
