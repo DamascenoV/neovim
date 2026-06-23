@@ -1,13 +1,8 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
-vim.cmd([[
-  let g:did_install_default_menus = 1
-]])
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
-vim.g.netrw_banner = 0
 vim.g.netrw_preview = 1
 vim.opt.title = true
 vim.opt.hlsearch = false
