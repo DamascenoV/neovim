@@ -61,27 +61,6 @@ vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
 
-function _G.diagnostic_status()
-  local counts = vim.diagnostic.count(0)
-
-  local errors = counts[vim.diagnostic.severity.ERROR] or 0
-  local warns = counts[vim.diagnostic.severity.WARN] or 0
-  local hint = counts[vim.diagnostic.severity.HINT] or 0
-
-  return table.concat({
-    '[',
-    '%#DiagnosticError#',
-    tostring(errors),
-    '%*, ',
-    '%#DiagnosticWarn#',
-    tostring(warns),
-    '%*, ',
-    '%#DiagnosticInfo#',
-    tostring(hint),
-    '%*]',
-  })
-end
-
 vim.opt.grepprg = 'rg --column --no-heading --color=never --vimgrep --smart-case --hidden --glob "!.git"'
 vim.opt.grepformat = '%f:%l:%c:%m'
 
