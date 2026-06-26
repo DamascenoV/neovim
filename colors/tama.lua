@@ -36,6 +36,11 @@ local c = {
   cyan = '#a3db81',
   magenta = '#a29bfe',
 
+  diff_add_bg = '#365a35',
+  diff_delete_bg = '#6a3334',
+  diff_hunk_bg = '#242629',
+  diff_file_bg = '#34373a',
+
   -- Spell & special underlines
   spell_bad = '#ffc0b9',
   spell_cap = '#fce094',
@@ -314,10 +319,10 @@ link('@lsp.typemod.method.defaultLibrary', 'Function')
 -- DIFF / DIAGNOSTICS / LSP UI
 -- ===========================================================================
 
-hi(0, 'DiffAdd', { fg = c.green, bg = c.bg_dark })
-hi(0, 'DiffChange', { fg = c.yellow, bg = c.bg_dark })
-hi(0, 'DiffDelete', { fg = c.red, bg = c.bg_dark, bold = true })
-hi(0, 'DiffText', { fg = c.cyan, bg = c.bg_status })
+hi(0, 'DiffAdd', { fg = c.fg_light, bg = c.diff_add_bg })
+hi(0, 'DiffChange', { fg = c.fg_light, bg = c.bg_dark })
+hi(0, 'DiffDelete', { fg = c.fg_light, bg = c.diff_delete_bg })
+hi(0, 'DiffText', { fg = c.fg_light, bg = c.bg_status })
 
 hi(0, 'Added', { fg = c.green })
 hi(0, 'Changed', { fg = c.yellow })
@@ -386,17 +391,35 @@ hi(0, 'MiniSnippetsUnvisited', { sp = c.snippet_unv, underdouble = true })
 hi(0, 'MiniSnippetsVisited', { sp = c.snippet_vis, underdouble = true })
 
 -- Git / Fugitive
-link('fugitiveHash', 'Constant')
+hi(0, 'fugitiveHeader', { fg = c.fg_light, bold = true })
+hi(0, 'fugitiveHelpHeader', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveHelpTag', { fg = c.yellow })
+hi(0, 'fugitiveHeading', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveUntrackedHeading', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveUnstagedHeading', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveStagedHeading', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveCount', { fg = c.fg_light })
+hi(0, 'fugitiveSymbolicRef', { fg = c.green, bold = true })
+hi(0, 'fugitiveHash', { fg = c.blue })
+hi(0, 'fugitiveModifier', { fg = c.blue, bold = true })
+hi(0, 'fugitiveUntrackedModifier', { fg = c.yellow, bold = true })
+hi(0, 'fugitiveUnstagedModifier', { fg = c.blue, bold = true })
+hi(0, 'fugitiveStagedModifier', { fg = c.green, bold = true })
+hi(0, 'fugitiveInstruction', { fg = c.blue })
+hi(0, 'fugitiveStop', { fg = c.red, bold = true })
+hi(0, 'fugitiveHunk', { bg = c.diff_hunk_bg })
+hi(0, 'fugitiveUnstagedSection', { bg = c.bg_darker })
+hi(0, 'fugitiveStagedSection', { bg = c.bg_darker })
 link('GitSignsAdd', 'DiffAdd')
 link('GitSignsChange', 'DiffChange')
 link('GitSignsDelete', 'DiffDelete')
 link('diffAdded', 'DiffAdd')
 link('diffRemoved', 'DiffDelete')
 link('diffChanged', 'DiffChange')
-link('diffLine', 'Statement')
-link('diffFile', 'Type')
-link('diffNewFile', 'Type')
-link('diffOldFile', 'Type')
+hi(0, 'diffLine', { fg = c.fg_light, bg = c.diff_hunk_bg, bold = true })
+hi(0, 'diffFile', { fg = c.fg_light, bg = c.diff_file_bg, bold = true })
+hi(0, 'diffNewFile', { fg = c.green, bg = c.diff_file_bg, bold = true })
+hi(0, 'diffOldFile', { fg = c.red, bg = c.diff_file_bg, bold = true })
 link('diffIndexLine', 'PreProc')
 link('diffBDiffer', 'WarningMsg')
 link('diffCommon', 'WarningMsg')
