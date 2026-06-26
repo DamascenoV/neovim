@@ -17,7 +17,6 @@ local c = {
   bg_dark = '#131515',
   bg_darker = '#1d2023',
   bg_alt = '#242629',
-  bg_float = '#181a1b',
   bg_status = '#34373a',
 
   -- Foregrounds
@@ -38,8 +37,6 @@ local c = {
 
   diff_add_bg = '#365a35',
   diff_delete_bg = '#6a3334',
-  diff_hunk_bg = '#242629',
-  diff_file_bg = '#34373a',
 
   -- Spell & special underlines
   spell_bad = '#ffc0b9',
@@ -59,10 +56,10 @@ local c = {
 
 hi(0, 'Normal', { fg = c.fg, bg = c.bg })
 hi(0, 'NormalNC', { fg = c.fg, bg = c.bg })
-hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg_float })
-hi(0, 'FloatBorder', { fg = c.fg_dark, bg = c.bg_float })
-hi(0, 'FloatTitle', { fg = c.yellow, bg = c.bg_float, bold = true })
-hi(0, 'FloatFooter', { fg = c.fg_dark, bg = c.bg_float })
+hi(0, 'NormalFloat', { fg = c.fg, bg = c.bg })
+hi(0, 'FloatBorder', { fg = c.fg_dark, bg = c.bg })
+hi(0, 'FloatTitle', { fg = c.yellow, bg = c.bg, bold = true })
+hi(0, 'FloatFooter', { fg = c.fg_dark, bg = c.bg })
 hi(0, 'ColorColumn', { bg = c.bg_darker })
 hi(0, 'Cursor', { fg = c.bg, bg = c.fg_light })
 hi(0, 'lCursor', { fg = c.bg, bg = c.fg_light })
@@ -407,7 +404,7 @@ hi(0, 'fugitiveUnstagedModifier', { fg = c.blue, bold = true })
 hi(0, 'fugitiveStagedModifier', { fg = c.green, bold = true })
 hi(0, 'fugitiveInstruction', { fg = c.blue })
 hi(0, 'fugitiveStop', { fg = c.red, bold = true })
-hi(0, 'fugitiveHunk', { bg = c.diff_hunk_bg })
+hi(0, 'fugitiveHunk', { bg = c.bg_alt })
 hi(0, 'fugitiveUnstagedSection', { bg = c.bg_darker })
 hi(0, 'fugitiveStagedSection', { bg = c.bg_darker })
 link('GitSignsAdd', 'DiffAdd')
@@ -416,10 +413,10 @@ link('GitSignsDelete', 'DiffDelete')
 link('diffAdded', 'DiffAdd')
 link('diffRemoved', 'DiffDelete')
 link('diffChanged', 'DiffChange')
-hi(0, 'diffLine', { fg = c.fg_light, bg = c.diff_hunk_bg, bold = true })
-hi(0, 'diffFile', { fg = c.fg_light, bg = c.diff_file_bg, bold = true })
-hi(0, 'diffNewFile', { fg = c.green, bg = c.diff_file_bg, bold = true })
-hi(0, 'diffOldFile', { fg = c.red, bg = c.diff_file_bg, bold = true })
+hi(0, 'diffLine', { fg = c.fg_light, bg = c.bg_alt, bold = true })
+hi(0, 'diffFile', { fg = c.fg_light, bg = c.bg_status, bold = true })
+hi(0, 'diffNewFile', { fg = c.green, bg = c.bg_status, bold = true })
+hi(0, 'diffOldFile', { fg = c.red, bg = c.bg_status, bold = true })
 link('diffIndexLine', 'PreProc')
 link('diffBDiffer', 'WarningMsg')
 link('diffCommon', 'WarningMsg')
