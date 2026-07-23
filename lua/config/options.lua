@@ -63,6 +63,7 @@ vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 
 vim.o.pumheight = 10
+vim.o.pummaxwidth = 69
 vim.o.pumborder = 'bold'
 vim.o.writebackup = false
 
