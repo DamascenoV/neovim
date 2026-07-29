@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "jujutsu.nvim": {
-      "rev": "543d03fe546a4ffef365ded389492d23b0e8885c",
-      "src": "https://github.com/mistweaverco/jujutsu.nvim"
-    },
     "nvim-treesitter": {
       "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
