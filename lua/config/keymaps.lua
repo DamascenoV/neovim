@@ -55,5 +55,3 @@ keymap('n', '<leader>s', '<cmd>cwindow<CR>', { desc = '[Q]uick List' })
 keymap('n', '<leader>ff', ':find ', { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fg', ':Grep ', { desc = '[F]ind [G]rep' })
 keymap('n', '<leader>pu', vim.pack.update, { desc = '[P]ack [U]pdate' })
-
-keymap('n', '<leader>du', vim.pack.update)
