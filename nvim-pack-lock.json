@@ -1,7 +1,11 @@
 {
   "plugins": {
+    "jiejie.nvim": {
+      "rev": "29050c87d408e5dff0762eabe86aa8e2b3fff3f9",
+      "src": "https://github.com/jceb/jiejie.nvim"
+    },
     "nvim-treesitter": {
-      "rev": "a45a920ec04cda5624f6dea0ff6454c81c3ad2d5",
+      "rev": "61df84986b4b4ec469ee745a182e433d49f8c27e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "vim-fugitive": {
