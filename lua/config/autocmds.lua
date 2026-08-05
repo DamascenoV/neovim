@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd('FileType', {
 if vim.fn.executable('rg') == 1 then
   ---@diagnostic disable-next-line: duplicate-set-field
   function _G.RgFindFiles(cmdarg)
-    local fnames = vim.fn.systemlist('rg --files --hidden --color=never --glob="!.git" --glob="!node_modules/"')
+    local fnames = vim.fn.systemlist('rg --files --hidden --color=never --glob="!.git" --glob="!node_modules" --glob "!dist" --glob "!build" --glob "!target" --glob "!out" --glob "!coverage" --glob "!*.lock" --glob "!*.log" --glob "!*.tmp" --glob "!*.cache" --glob "!*.bak" --glob "!*.swp" --glob "!*.swo" --glob "!*.DS_Store"')
     if #cmdarg == 0 then
       return fnames
     else
