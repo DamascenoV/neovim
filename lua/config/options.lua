@@ -84,5 +84,8 @@ require('vim._core.ui2').enable({
     dialog = {
       height = 0.2,
     },
+    pager = {
+      height = 0.2,
+    },
   },
 })
