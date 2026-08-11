@@ -119,6 +119,7 @@ local function apply_window_options(winnr, opts)
   set_win_option(winnr, 'breakindent', true)
   set_win_option(winnr, 'smoothscroll', true)
   set_win_option(winnr, 'winfixheight', true)
+  set_win_option(winnr, 'winfixbuf', true)
   set_win_option(winnr, 'number', false)
   set_win_option(winnr, 'relativenumber', false)
   set_win_option(winnr, 'signcolumn', 'no')
@@ -126,14 +127,21 @@ local function apply_window_options(winnr, opts)
   set_win_option(winnr, 'winbar', opts.title and (' ' .. escape_statusline(tostring(opts.title)) .. ' ') or '')
 end
 
+local function win_set_height(winnr, height)
+  if api.nvim_win_resize then
+    -- Neovim 0.13+: nvim_win_resize with anchor keeps the bottom edge fixed
+    pcall(api.nvim_win_resize, winnr, -1, height, { anchor = 'bottom' })
+  else
+    pcall(api.nvim_win_set_height, winnr, height)
+  end
+end
+
 local function resize_for_conceal(winnr, opts, do_stylize)
   if not (do_stylize and not opts.height and api.nvim_win_text_height) then return end
 
   local win_height = api.nvim_win_get_height(winnr)
   local ok, text_height = pcall(api.nvim_win_text_height, winnr, { max_height = win_height })
-  if ok and text_height.all > 0 and text_height.all < win_height then
-    api.nvim_win_set_height(winnr, text_height.all)
-  end
+  if ok and text_height.all > 0 and text_height.all < win_height then win_set_height(winnr, text_height.all) end
 end
 
 local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
@@ -170,18 +178,28 @@ local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
 end
 
 local function open_below_preview_window(bufnr, source_winnr, height)
+  -- Neovim 0.11+: nvim_open_win with split = "below" and win = -1 creates a
+  -- full-width bottom split without changing the current window focus.
+  local ok, preview_winnr = pcall(api.nvim_open_win, bufnr, false, {
+    split = 'below',
+    win = -1,
+    height = height,
+  })
+  if ok and preview_winnr and preview_winnr ~= 0 then return preview_winnr end
+
+  -- Fallback: botright split command (pre-0.11 or if nvim_open_win split fails)
   local current_winnr = api.nvim_get_current_win()
 
   if is_valid_win(source_winnr) then api.nvim_set_current_win(source_winnr) end
 
-  local ok, err = pcall(api.nvim_command, ('botright %dsplit'):format(height))
-  if not ok then
+  local ok2, err = pcall(api.nvim_command, ('botright %dsplit'):format(height))
+  if not ok2 then
     if is_valid_win(current_winnr) then api.nvim_set_current_win(current_winnr) end
     vim.notify(('Unable to open LSP preview split: %s'):format(err), vim.log.levels.WARN)
     return
   end
 
-  local preview_winnr = api.nvim_get_current_win()
+  preview_winnr = api.nvim_get_current_win()
   api.nvim_win_set_buf(preview_winnr, bufnr)
   return preview_winnr
 end
@@ -233,7 +251,7 @@ local function open_floating_preview(contents, syntax, opts)
   set_preview_lines(preview_bufnr, preview_contents)
 
   if preview_winnr and is_valid_win(preview_winnr) then
-    if api.nvim_win_get_height(preview_winnr) ~= height then pcall(api.nvim_win_set_height, preview_winnr, height) end
+    if api.nvim_win_get_height(preview_winnr) ~= height then win_set_height(preview_winnr, height) end
   else
     preview_winnr = open_below_preview_window(preview_bufnr, source_winnr, height)
     if not preview_winnr then return nil, nil end

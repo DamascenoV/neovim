@@ -16,14 +16,6 @@ vim.api.nvim_create_autocmd({ 'VimResized' }, {
   callback = function() vim.cmd('tabdo wincmd =') end,
 })
 
--- Redraw the statusline when the UI2 pager changes height
-local ui2 = require('vim._core.ui2')
-vim.api.nvim_create_autocmd('WinResized', {
-  callback = function()
-    if vim.list_contains(vim.v.event.windows, ui2.wins.pager) then vim.cmd.redrawstatus() end
-  end,
-})
-
 -- Cursorline control
 local cursorline_group = vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
 local set_cursor_line = function(event, value, pattern)
