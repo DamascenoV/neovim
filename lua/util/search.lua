@@ -49,6 +49,9 @@ function M.grep(query)
 end
 
 function M.setup()
+  vim.opt.grepprg = 'rg --column --no-heading --color=never --vimgrep --smart-case --hidden --glob "!.git" --glob "!node_modules" --glob "!dist" --glob "!build" --glob "!target" --glob "!out" --glob "!coverage" --glob "!*.log" --glob "!*.tmp" --glob "!*.cache" --glob "!*.bak" --glob "!*.swp" --glob "!*.swo" --glob "!*.DS_Store"'
+  vim.opt.grepformat = '%f:%l:%c:%m'
+
   vim.api.nvim_create_user_command('Grep', function(opts) M.grep(opts.args) end, {
     nargs = '+',
     desc = 'Search the project with ripgrep (spaces are supported)',

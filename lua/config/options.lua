@@ -56,9 +56,6 @@ vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
 
-vim.opt.grepprg = 'rg --column --no-heading --color=never --vimgrep --smart-case --hidden --glob "!.git" --glob "!node_modules" --glob "!dist" --glob "!build" --glob "!target" --glob "!out" --glob "!coverage" --glob "!*.log" --glob "!*.tmp" --glob "!*.cache" --glob "!*.bak" --glob "!*.swp" --glob "!*.swo" --glob "!*.DS_Store"'
-vim.opt.grepformat = '%f:%l:%c:%m'
-
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
 
