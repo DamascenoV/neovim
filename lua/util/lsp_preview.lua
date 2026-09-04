@@ -1,4 +1,5 @@
 local api = vim.api
+local win = require('util.win')
 
 local M = {}
 
@@ -110,8 +111,6 @@ local function apply_syntax(bufnr, winnr, syntax, do_stylize)
   set_win_option(winnr, 'conceallevel', 0)
 end
 
-local function escape_statusline(value) return value:gsub('%%', '%%%%') end
-
 local function apply_window_options(winnr, opts)
   set_win_option(winnr, 'foldenable', false)
   set_win_option(winnr, 'wrap', opts.wrap)
@@ -124,7 +123,7 @@ local function apply_window_options(winnr, opts)
   set_win_option(winnr, 'relativenumber', false)
   set_win_option(winnr, 'signcolumn', 'no')
   set_win_option(winnr, 'colorcolumn', '')
-  set_win_option(winnr, 'winbar', opts.title and (' ' .. escape_statusline(tostring(opts.title)) .. ' ') or '')
+  set_win_option(winnr, 'winbar', opts.title and (' ' .. win.escape_statusline(tostring(opts.title)) .. ' ') or '')
 end
 
 local function win_set_height(winnr, height)
@@ -178,30 +177,11 @@ local function setup_close_autocmds(winnr, preview_bufnr, source_bufnr)
 end
 
 local function open_below_preview_window(bufnr, source_winnr, height)
-  -- Neovim 0.11+: nvim_open_win with split = "below" and win = -1 creates a
-  -- full-width bottom split without changing the current window focus.
-  local ok, preview_winnr = pcall(api.nvim_open_win, bufnr, false, {
-    split = 'below',
-    win = -1,
-    height = height,
-  })
-  if ok and preview_winnr and preview_winnr ~= 0 then return preview_winnr end
+  local preview_winnr = win.open_bottom(bufnr, { height = height })
+  if preview_winnr then return preview_winnr end
 
-  -- Fallback: botright split command (pre-0.11 or if nvim_open_win split fails)
-  local current_winnr = api.nvim_get_current_win()
-
+  -- open_bottom already notified on failure; restore focus to the source window
   if is_valid_win(source_winnr) then api.nvim_set_current_win(source_winnr) end
-
-  local ok2, err = pcall(api.nvim_command, ('botright %dsplit'):format(height))
-  if not ok2 then
-    if is_valid_win(current_winnr) then api.nvim_set_current_win(current_winnr) end
-    vim.notify(('Unable to open LSP preview split: %s'):format(err), vim.log.levels.WARN)
-    return
-  end
-
-  preview_winnr = api.nvim_get_current_win()
-  api.nvim_win_set_buf(preview_winnr, bufnr)
-  return preview_winnr
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field

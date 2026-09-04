@@ -52,6 +52,37 @@ keymap('n', '<leader>Q', function()
   vim.cmd('botright copen')
 end, { desc = 'Project [Q]uick Diagnostics' })
 keymap('n', '<leader>s', '<cmd>cwindow<CR>', { desc = '[Q]uick List' })
-keymap('n', '<leader>ff', ':find ', { desc = '[F]ind [F]iles' })
 keymap('n', '<leader>fg', ':Grep ', { desc = '[F]ind [G]rep' })
 keymap('n', '<leader>pu', vim.pack.update, { desc = '[P]ack [U]pdate' })
+
+-- Picker & explorer (native, bottom splits)
+keymap({ 'n', 'v' }, ',', '<cmd>Pick commands<CR>', { desc = '[C]ommands' })
+keymap('n', '<leader>gg', function() require('util.vcs').open() end, { desc = '[G]it/jj panel' })
+keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
+keymap('n', '<leader>gs', '<cmd>Pick git_status<CR>', { desc = '[G]it [S]tatus' })
+keymap('n', '<leader>fc', '<cmd>Pick git_hunks<CR>', { desc = '[F]ind [C]hanges' })
+keymap('n', '<leader>fb', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
+keymap('n', '<leader>fe', function() require('util.explorer').open() end, { desc = '[F]ile [E]xplorer' })
+keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
+keymap('n', '<leader>fh', '<cmd>Pick hidden<CR>', { desc = '[F]ind [H]idden' })
+keymap('n', '<leader>fH', '<cmd>Pick history_search<CR>', { desc = '[F]ind search [H]istory' })
+keymap('n', '<leader>f:', '<cmd>Pick history_cmd<CR>', { desc = '[F]ind command history' })
+keymap(
+  'n',
+  '<leader>sw',
+  function() require('util.picker_sources').get('grep').start({ query = vim.fn.expand('<cword>') }) end,
+  { desc = '[S]earch current [W]ord' }
+)
+keymap('n', '<leader>sg', '<cmd>Pick grep<CR>', { desc = '[S]earch by [G]rep' })
+keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
+keymap('n', '<leader>fD', '<cmd>Pick diagnostic all<CR>', { desc = '[F]ind [D]iagnostics All' })
+keymap('n', '<leader>fr', '<cmd>Pick lsp references<CR>', { desc = '[F]ind [R]eferences' })
+keymap('n', '<leader>fi', '<cmd>Pick lsp implementation<CR>', { desc = '[F]ind [I]mplementation' })
+keymap('n', '<leader>/', '<cmd>Pick buf_lines<CR>', { desc = '[/] in Buffer' })
+keymap('n', '<leader>fo', '<cmd>Pick oldfiles<CR>', { desc = '[F]ind recently [O]pened files' })
+keymap(
+  'n',
+  '<C-e>',
+  function() require('util.explorer').open(vim.api.nvim_buf_get_name(0)) end,
+  { silent = true, desc = 'File explorer at current file' }
+)
