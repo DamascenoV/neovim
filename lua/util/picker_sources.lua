@@ -1,42 +1,12 @@
 local api = vim.api
+local ansi = require('util.ansi')
 local picker = require('util.picker')
+local repo = require('util.repo')
+local rg = require('util.rg')
 
 local M = {}
 
-local FILE_GLOBS = {
-  '--glob=!.git',
-  '--glob=!node_modules',
-  '--glob=!dist',
-  '--glob=!build',
-  '--glob=!target',
-  '--glob=!out',
-  '--glob=!coverage',
-  '--glob=!*.lock',
-  '--glob=!*.log',
-  '--glob=!*.tmp',
-  '--glob=!*.cache',
-  '--glob=!*.bak',
-  '--glob=!*.swp',
-  '--glob=!*.swo',
-  '--glob=!*.DS_Store',
-}
-
 local function notify(msg, level) vim.notify(msg, level or vim.log.levels.INFO, { title = 'Pick' }) end
-
-local function rg_file_list(extra_args)
-  if vim.fn.executable('rg') ~= 1 then
-    notify('ripgrep (rg) is not installed', vim.log.levels.ERROR)
-    return {}
-  end
-
-  local args = { 'rg', '--files', '--hidden', '--color', 'never' }
-  vim.list_extend(args, extra_args or {})
-  vim.list_extend(args, FILE_GLOBS)
-
-  local ok, files = pcall(vim.fn.systemlist, args)
-  if not ok then return {} end
-  return files
-end
 
 local function path_items(paths)
   local items = {}
@@ -77,46 +47,71 @@ local function set_cmdline(prefix, text)
   api.nvim_feedkeys(prefix .. text, 'n', false)
 end
 
-local function git_lines(args, title)
+local function git_lines(args, title, cwd)
   if vim.fn.executable('git') ~= 1 then
     notify('git is not installed', vim.log.levels.ERROR)
     return nil
   end
-  local ok, lines = pcall(vim.fn.systemlist, args)
-  if not ok then return nil end
-  if vim.v.shell_error ~= 0 then
-    notify(('%s failed: %s'):format(title, table.concat(lines, ' '):sub(1, 200)), vim.log.levels.ERROR)
+  local ok, res = pcall(function() return vim.system(args, { text = true, cwd = cwd }):wait() end)
+  if not ok or not res then return nil end
+  if res.code ~= 0 then
+    notify(('%s failed: %s'):format(title, vim.trim(res.stderr or ''):sub(1, 200)), vim.log.levels.ERROR)
     return nil
   end
-  return lines
+  return vim.split(res.stdout or '', '\n', { trimempty = true })
+end
+
+--- Like `git_lines` but returns the raw stdout (used with --color=always so the
+--- ansi module can turn git's own palette into highlight spans).
+---@param args string[]
+---@param title string
+---@param cwd string?
+---@return string? stdout
+local function git_raw(args, title, cwd)
+  if vim.fn.executable('git') ~= 1 then
+    notify('git is not installed', vim.log.levels.ERROR)
+    return nil
+  end
+  local ok, res = pcall(function() return vim.system(args, { text = true, cwd = cwd }):wait() end)
+  if not ok or not res then return nil end
+  if res.code ~= 0 then
+    notify(('%s failed: %s'):format(title, vim.trim(res.stderr or ''):sub(1, 200)), vim.log.levels.ERROR)
+    return nil
+  end
+  return res.stdout or ''
 end
 
 local sources = {}
 
+local function file_source(opts, ignored)
+  local cwd = repo.project(opts.cwd)
+  local cancel
+  local ctx = picker.open({
+    title = ignored and 'Hidden & ignored files' or 'Files',
+    query = opts.query,
+    on_choose = jump_on_choose,
+    on_teardown = function()
+      if cancel then cancel() end
+    end,
+  })
+  ctx.set_status('loading…')
+  cancel = rg.start('files', { cwd = cwd, ignored = ignored }, function(items, result)
+    if not ctx.is_active() then return end
+    if result.code > 1 or result.code < 0 then notify(result.error, vim.log.levels.ERROR) end
+    ctx.set_status(result.truncated and 'limit reached' or '')
+    ctx.set_items(items)
+  end)
+  return ctx
+end
+
 sources.files = {
   title = 'Files',
-  start = function(opts)
-    local ctx = picker.open({
-      title = 'Files',
-      query = opts.query,
-      on_choose = jump_on_choose,
-    })
-    ctx.set_items(path_items(rg_file_list()))
-    return ctx
-  end,
+  start = function(opts) return file_source(opts, false) end,
 }
 
 sources.hidden = {
   title = 'Hidden & ignored files',
-  start = function(opts)
-    local ctx = picker.open({
-      title = 'Hidden & ignored files',
-      query = opts.query,
-      on_choose = jump_on_choose,
-    })
-    ctx.set_items(path_items(rg_file_list({ '--ignored' })))
-    return ctx
-  end,
+  start = function(opts) return file_source(opts, true) end,
 }
 
 sources.buffers = {
@@ -135,7 +130,8 @@ sources.buffers = {
       return items
     end
 
-    local ctx = picker.open({
+    local ctx
+    ctx = picker.open({
       title = 'Buffers',
       query = opts.query,
       delete_action = function(item)
@@ -210,11 +206,12 @@ sources.buf_lines = {
 sources.grep = {
   title = 'Live grep',
   start = function(opts)
+    local cwd = repo.project(opts.cwd)
     local req_id = 0
-    local active_job ---@type vim.SystemObj?
+    local active_job
     local function stop_job()
       if active_job then
-        pcall(active_job.kill, active_job, 'sigterm')
+        active_job()
         active_job = nil
       end
     end
@@ -236,6 +233,7 @@ sources.grep = {
       stop_job()
 
       if vim.trim(query) == '' then
+        ctx.set_status('')
         ctx.set_items({})
         return
       end
@@ -245,28 +243,18 @@ sources.grep = {
         return
       end
 
-      local args = { 'rg', '--vimgrep', '--smart-case', '--color', 'never', '--hidden' }
-      vim.list_extend(args, FILE_GLOBS)
-      vim.list_extend(args, { '--', query, '.' })
-
-      active_job = vim.system(args, { text = true }, function(result)
-        vim.schedule(function()
-          if not ctx.is_active() or id ~= req_id then return end
-          if result.code > 1 then
-            notify(vim.trim(result.stderr or 'rg failed'), vim.log.levels.ERROR)
-            ctx.set_items({})
-            return
-          end
-
-          local items = {}
-          for line in vim.gsplit(result.stdout or '', '\n', { trimempty = true }) do
-            local file, lnum, col = line:match('^(.-):(%d+):(%d+):')
-            if file then
-              items[#items + 1] = { text = line, path = file, lnum = tonumber(lnum), col = tonumber(col) }
-            end
-          end
-          ctx.set_items(items)
-        end)
+      ctx.set_status('searching…')
+      ctx.set_items({})
+      active_job = rg.start('grep', { cwd = cwd, query = query }, function(items, result)
+        if not ctx.is_active() or id ~= req_id or query ~= ctx.get_query() then return end
+        if result.code > 1 or result.code < 0 then
+          notify(vim.trim(result.error or 'rg failed'), vim.log.levels.ERROR)
+          ctx.set_status('search failed')
+          ctx.set_items({})
+          return
+        end
+        ctx.set_status(result.truncated and 'limit reached' or '')
+        ctx.set_items(items)
       end)
     end
 
@@ -318,9 +306,11 @@ sources.lsp = {
   start = function(opts)
     local kind = opts.query or 'references'
     local method = kind == 'implementation' and 'textDocument/implementation' or 'textDocument/references'
+    local source_win = api.nvim_get_current_win()
     -- Per-client params: each server gets positions in its own offset encoding
-    local params_fn = function(client, bufnr)
-      local ok, params = pcall(vim.lsp.util.make_position_params, bufnr, client.offset_encoding)
+    local params_fn = function(client)
+      if not api.nvim_win_is_valid(source_win) then return nil end
+      local ok, params = pcall(vim.lsp.util.make_position_params, source_win, client.offset_encoding)
       if not ok or not params then return nil end
       if method == 'textDocument/references' then params.context = { includeDeclaration = false } end
       return params
@@ -372,19 +362,28 @@ sources.lsp = {
 sources.git_commits = {
   title = 'Git commits',
   start = function(opts)
-    local lines = git_lines(
-      { 'git', 'log', '-n', '300', '--no-color', '--date=short', '--pretty=format:%h %H %an %ad %s' },
-      'git log'
-    )
-    if not lines or #lines == 0 then
+    local cwd = repo.root('.git', opts.cwd)
+    if not cwd then return notify('Not inside a Git repository', vim.log.levels.WARN) end
+    -- --color=always so git's native palette becomes highlight spans (see util.ansi)
+    local raw = git_raw({
+      'git',
+      'log',
+      '-n',
+      '300',
+      '--color=always',
+      '--date=short',
+      '--pretty=format:%C(yellow)%h%C(reset) %C(blue)%an%C(reset) %C(dim white)%ad%C(reset) %s',
+    }, 'git log', cwd)
+    if not raw or raw == '' then
       notify('No commits found')
       return
     end
 
+    local lines, spans = ansi.parse(raw)
     local items = {}
-    for _, line in ipairs(lines) do
-      local sha = line:match('^(%x+) ')
-      items[#items + 1] = { text = line, sha = sha }
+    for i, line in ipairs(lines) do
+      local sha = line:match('^(%x+)')
+      if sha then items[#items + 1] = { text = line, sha = sha, hl = spans[i] } end
     end
 
     local ctx = picker.open({
@@ -392,7 +391,7 @@ sources.git_commits = {
       query = opts.query,
       items = items,
       on_choose = function(item)
-        local show = git_lines({ 'git', 'show', '--no-color', '--patch', item.sha }, 'git show')
+        local show = git_lines({ 'git', 'show', '--no-color', '--patch', item.sha }, 'git show', cwd)
         if not show then return end
 
         local bufnr = api.nvim_create_buf(false, true)
@@ -412,7 +411,13 @@ sources.git_commits = {
 sources.git_hunks = {
   title = 'Git hunks',
   start = function(opts)
-    local lines = git_lines({ 'git', 'diff', 'HEAD', '--no-color', '-U0', '--no-renames' }, 'git diff')
+    local cwd = repo.root('.git', opts.cwd)
+    if not cwd then return notify('Not inside a Git repository', vim.log.levels.WARN) end
+    local lines = git_lines(
+      { 'git', '-c', 'core.quotePath=false', 'diff', 'HEAD', '--no-color', '-U0', '--no-renames' },
+      'git diff',
+      cwd
+    )
     if not lines or #lines == 0 then
       notify('No uncommitted changes')
       return
@@ -434,7 +439,8 @@ sources.git_hunks = {
           if file and lnum then
             lnum = tonumber(lnum)
             if lnum > 0 then
-              items[#items + 1] = { text = ('%s:%d %s'):format(file, lnum, header or ''), path = file, lnum = lnum }
+              items[#items + 1] =
+                { text = ('%s:%d %s'):format(file, lnum, header or ''), path = vim.fs.joinpath(cwd, file), lnum = lnum }
             end
           end
         end
@@ -459,14 +465,16 @@ sources.git_hunks = {
 sources.git_status = {
   title = 'Git status',
   start = function(opts)
+    local cwd = repo.root('.git', opts.cwd)
+    if not cwd then return notify('Not inside a Git repository', vim.log.levels.WARN) end
     -- -z: NUL-delimited records, no quoting/escaping of paths.
     -- vim.system preserves NUL bytes; vim.fn.system would replace them with \x01.
     local ok, res = pcall(
-      function() return vim.system({ 'git', 'status', '--porcelain=v1', '-z' }, { text = true }):wait() end
+      function() return vim.system({ 'git', 'status', '--porcelain=v1', '-z' }, { text = true, cwd = cwd }):wait() end
     )
     if not ok or res.code ~= 0 then
       notify(
-        ('git status failed: %s'):format(res and vim.trim(res.stderr or '') or 'unknown error'),
+        ('git status failed: %s'):format(ok and res and vim.trim(res.stderr or '') or tostring(res)),
         vim.log.levels.ERROR
       )
       return
@@ -492,7 +500,7 @@ sources.git_status = {
         if nul2 then pos = nul2 + 1 end
       end
 
-      items[#items + 1] = { text = ('%s%s'):format(xy, path), path = path }
+      items[#items + 1] = { text = ('%s%s'):format(xy, path), path = vim.fs.joinpath(cwd, path) }
     end
 
     local ctx = picker.open({

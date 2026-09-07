@@ -23,7 +23,11 @@ local function to_entry(item, format)
   elseif type(item) == 'table' then
     text = item.text or (format and format(item) or nil)
   end
-  return { text = text or tostring(item), item = item }
+  return {
+    text = (text or tostring(item)):gsub('[\r\n]', ' '),
+    item = item,
+    hl = type(item) == 'table' and item.hl or nil,
+  }
 end
 
 local function clear_extmarks()
@@ -42,7 +46,8 @@ local function update_winbar()
     s.title,
     #s.filtered,
     #s.items,
-    marked > 0 and (' · %d marked'):format(marked) or ''
+    (marked > 0 and (' · %d marked'):format(marked) or '')
+      .. (s.status and s.status ~= '' and (' · ' .. s.status) or '')
   )
   pcall(api.nvim_set_option_value, 'winbar', win.escape_statusline(title), { win = s.winnr })
 end
@@ -212,6 +217,21 @@ local function render()
       line_hl_group = 'UtilPickerCurrent',
       priority = 50,
     })
+  end
+
+  -- Per-row custom spans from the source (entry.hl = { { start0, end0, group }, ... })
+  for i = first, last do
+    local spans = s.filtered[i].hl
+    if spans then
+      local buf_row = i - first
+      for _, sp in ipairs(spans) do
+        pcall(api.nvim_buf_set_extmark, s.bufnr, s.ns_id, buf_row, sp[1], {
+          end_col = sp[2],
+          hl_group = sp[3],
+          priority = 55,
+        })
+      end
+    end
   end
 
   -- Fuzzy match highlights: merge consecutive positions into runs.
@@ -451,7 +471,7 @@ local function send_to_quickfix()
     vim.notify('Picker: no items with a file path to send to the quickfix', vim.log.levels.INFO)
     return
   end
-  vim.fn.setqflist(qf_items, ' ', { title = title })
+  vim.fn.setqflist({}, ' ', { title = title, items = qf_items })
   vim.cmd('botright copen')
 end
 
@@ -630,6 +650,11 @@ function M.open(opts)
   end
 
   s.ctx = {
+    set_status = function(value)
+      if state ~= s then return end
+      s.status = value
+      update_winbar()
+    end,
     set_items = function(items)
       if state ~= s then return end
       M.set_items(items)
