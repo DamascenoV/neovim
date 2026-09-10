@@ -1,75 +1,32 @@
-return {
-  'nvim-treesitter/nvim-treesitter',
-  config = function()
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = { 'go', 'lua', 'typescript', 'vim', 'php', 'vue', 'markdown', 'markdown_inline' },
+vim.pack.add({
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+})
 
-      highlight = { enable = true },
-      indent = { enable = true, disable = { 'python' } },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<c-space>',
-          node_incremental = '<c-space>',
-          scope_incremental = '<c-s>',
-          node_decremental = '<c-backspace>',
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>a'] = '@parameter.inner',
-          },
-          swap_previous = {
-            ['<leader>A'] = '@parameter.inner',
-          },
-        },
-      },
-    }
-
-    -- For Work with Flex
-    vim.filetype.add {
-      extension = {
-        pfxml = 'pfxml',
-      },
-    }
-
-    vim.treesitter.language.register('php', 'pfxml')
-
-    vim.cmd [[highlight IncludedC guibg=#373b41]]
-  end
+local languages = {
+  'go',
+  'lua',
+  'typescript',
+  'javascript',
+  'css',
+  'vim',
+  'php',
+  'vue',
+  'markdown',
+  'markdown_inline',
+  'elixir',
+  'heex',
+  'zig',
 }
+
+require('nvim-treesitter').install(languages)
+
+local filetypes = vim.iter(languages):map(vim.treesitter.language.get_filetypes):flatten():totable()
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = filetypes,
+  callback = function(ev)
+    vim.treesitter.start(ev.buf)
+    vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+  end,
+  desc = 'Ensure enabled tree-sitter',
+})
