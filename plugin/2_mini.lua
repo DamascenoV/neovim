@@ -1,4 +1,4 @@
-local later = Config.now
+local later, now_if_args = Config.now, Config.now_if_args
 local helper = require('util.mini_helper')
 
 later(function() require('mini.ai').setup() end)
@@ -113,44 +113,34 @@ later(function()
   })
 end)
 
--- Mini keymaps
-local keymap = vim.keymap.set
+now_if_args(function()
+  local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
+  local process_items = function(items, base)
+    return MiniCompletion.default_process_items(items, base, process_items_opts)
+  end
+  require('mini.completion').setup({
+    lsp_completion = {
+      source_func = 'omnifunc',
+      auto_setup = false,
+      process_items = process_items,
+    },
+  })
 
--- Pick
-keymap({ 'n', 'v' }, ',', '<cmd>Pick commands<CR>', { desc = '[C]ommands' })
-keymap('n', '<leader>gc', '<cmd>Pick git_commits<CR>', { desc = '[G]it [C]ommits' })
-keymap('n', '<leader>gs', '<cmd>Pick git_hunks<CR>', { desc = '[G]it [S]tatus' })
-keymap('n', '<leader>fc', '<cmd>Pick list scope="change"<CR>', { desc = '[F]ind [C]hange' })
-keymap('n', '<leader>fh', '<cmd>Pick history<CR>', { desc = '[F]ind [H]istory' })
-keymap('n', '<leader>fb', '<cmd>Pick buffers<CR>', { desc = '[F]ind existing buffers' })
-keymap('n', '<leader>fe', '<cmd>Pick explorer<CR>', { desc = '[F]ind [E]xplorer' })
-keymap('n', '<leader>ff', '<cmd>Pick files<CR>', { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fg', '<cmd>Pick grep_live<CR>', { desc = '[F]ind by [G]rep' })
-keymap('n', '<leader>fw', '<cmd>Pick grep<CR>', { desc = '[F]ind by [W]ord' })
-keymap('n', '<leader>fW', '<cmd>Pick grep pattern="<cword>"<CR>', { desc = '[F]ind current [W]ord' })
-keymap('n', '<leader>fd', '<cmd>Pick diagnostic<CR>', { desc = '[F]ind [D]iagnostics' })
-keymap('n', '<leader>fD', '<cmd>Pick diagnostic scope="all"<CR>', { desc = '[F]ind [D]iagnostics All' })
-keymap('n', '<leader>fr', '<cmd>Pick lsp scope="references"<CR>', { desc = '[F]ind [R]eferences' })
-keymap('n', '<leader>fi', '<cmd>Pick lsp scope="implementation"<CR>', { desc = '[F]ind [I]mplementation' })
-keymap('n', '<leader>f/', '<cmd>Pick history scope="/"<CR>', { desc = '[F]ind [/]' })
-keymap('n', '<leader>f:', '<cmd>Pick history scope=":"<CR>', { desc = '[F]ind [:]' })
-keymap('n', '<leader>/', '<cmd>Pick buf_lines<CR>', { desc = '[/] in Buffer' })
-keymap('n', '<leader>fh', '<cmd>Pick git_files scope="ignored"<CR>', { desc = '[F]ind [H]idden' })
-keymap('n', '<leader>fo', '<cmd>Pick oldfiles<CR>', { desc = '[F]ind recently [O]pened files' })
+  local on_attach = function(ev)
+    vim.bo[ev.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+  end
+  Config.new_autocmd('LspAttach', nil, on_attach, "Set 'omnifunc'")
 
--- Git
-keymap('n', '<leader>GD', '<cmd>Git diff<CR>', { desc = '[G]it [d]iff' })
-keymap('n', '<leader>GS', '<cmd>Git status<CR>', { desc = '[G]it [S]tatus' })
-keymap('n', '<leader>sc', '<cmd>lua MiniGit.show_at_cursor()<CR>', { desc = 'Git [S]how at [C]ursor' })
-keymap('n', '<leader>sh', '<cmd>lua MiniGit.show_range_history()<CR>', { desc = 'Git [S]how range [H]istory' })
+  vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
+end)
 
--- Diff
-keymap('n', '<leader>go', '<cmd>lua MiniDiff.toggle_overlay()<CR>', { desc = '[G]it [O]verlay' })
+now_if_args(function()
+  require('mini.misc').setup()
 
--- Files
-keymap('', '<C-e>', function()
-  require('mini.files').open(vim.api.nvim_buf_get_name(0))
-end, { silent = true })
+  MiniMisc.setup_auto_root()
+  MiniMisc.setup_restore_cursor()
+  MiniMisc.setup_termbg_sync()
+end)
 
 -- MiniFiles autocmds
 local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path) end
@@ -158,7 +148,7 @@ local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path
 Config.new_autocmd('User', 'MiniFilesBufferCreate',
   function(args)
     local b = args.data.buf_id
-    keymap('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
+    vim.keymap.set('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
   end
 )
 

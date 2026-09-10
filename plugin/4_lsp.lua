@@ -1,8 +1,6 @@
 local now_if_args = Config.now_if_args
 
 now_if_args(function()
-  require('util.lsp_preview').setup()
-
   vim.lsp.enable({
     'cssls',
     'emmet_ls',
