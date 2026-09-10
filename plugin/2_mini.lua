@@ -37,14 +37,6 @@ later(function()
 end)
 
 later(function()
-  require('util.jj').setup({
-    command = {
-      split = 'horizontal',
-    },
-  })
-end)
-
-later(function()
   local mini_indentscope = require('mini.indentscope')
   mini_indentscope.setup({
     draw = {
