@@ -40,18 +40,4 @@ keymap('v', '<', '<gv', { silent = true })
 keymap('v', '>', '>gv', { silent = true })
 
 keymap('n', '<leader>Nc', '<cmd>e ~/.config/nvim<CR>', { desc = '[N]eovim [c]onfig' })
-
-keymap('n', '<leader>x', '<cmd>bdelete!<CR>', { desc = 'Close Buffer' })
-
-keymap('n', '<leader>cp', ':Compile ', { desc = '[C]ompile' })
-
-keymap('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open Float Diagnostic' })
-keymap('n', '<leader>q', '<cmd>copen<CR>', { desc = '[Q]uick List Diagnostic' })
-keymap('n', '<leader>Q', function()
-  vim.diagnostic.setqflist({ title = 'Project Diagnostics' })
-  vim.cmd('botright copen')
-end, { desc = 'Project [Q]uick Diagnostics' })
-keymap('n', '<leader>s', '<cmd>cwindow<CR>', { desc = '[Q]uick List' })
-keymap('n', '<leader>ff', ':find ', { desc = '[F]ind [F]iles' })
-keymap('n', '<leader>fg', ':Grep ', { desc = '[F]ind [G]rep' })
 keymap('n', '<leader>pu', vim.pack.update, { desc = '[P]ack [U]pdate' })
