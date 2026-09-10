@@ -383,6 +383,8 @@ hi(0, 'UtilVcsDeleted', { fg = c.red, bold = true })
 hi(0, 'UtilVcsRenamed', { fg = c.blue, bold = true })
 hi(0, 'UtilVcsUntracked', { fg = c.fg_dark, bold = true })
 hi(0, 'UtilVcsConflict', { fg = c.red, bg = c.bg_status, bold = true })
+hi(0, 'UtilVcsCommit', { fg = c.blue })
+hi(0, 'UtilVcsGraph', { fg = c.fg_dark })
 hi(0, 'UtilVcsMarked', { fg = c.green, bold = true })
 hi(0, 'UtilVcsFlash', { bg = c.diff_add_bg })
 

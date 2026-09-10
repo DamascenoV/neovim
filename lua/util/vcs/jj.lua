@@ -1,6 +1,4 @@
 local exec = require('util.vcs.exec')
-local ansi = require('util.ansi')
-
 local M = { name = 'jj' }
 
 local RUN = 'jj'
@@ -8,6 +6,9 @@ local RUN = 'jj'
 ---Header template: "jj · <change id> · (empty) · <description first line> · bookmarks"
 local HEADER_TMPL =
   'concat("jj · ", change_id.short(8), if(empty, " · (empty)", ""), if(description.first_line(), " · " ++ description.first_line(), ""), if(bookmarks, " · " ++ bookmarks.join(", "), ""))'
+
+local LOG_TMPL =
+  'concat(commit_id, "\\t", if(current_working_copy, "1", "0"), "\\t", change_id.short(12), "  ", commit_id.short(8), if(current_working_copy, " @", ""), if(conflict, " conflict", ""), if(empty, " (empty)", ""), if(bookmarks, "  " ++ bookmarks.join(", "), ""), if(description.first_line(), "  " ++ description.first_line(), "  (no description)"), "  ", author.name(), "  ", author.timestamp().ago(), "\\n")'
 
 ---@return boolean
 function M.available() return require('util.repo').root('.jj') ~= nil and vim.fn.executable(RUN) == 1 end
@@ -138,41 +139,82 @@ function M.push(root, cb) exec.run({ RUN, 'git', 'push' }, root, cb) end
 ---@param cb fun(res: vim.SystemCompleted)
 function M.pull(root, cb) exec.run({ RUN, 'git', 'fetch' }, root, cb) end
 
----Create a nofile scratch buffer holding `lines`.
----@param lines string[]
----@return integer bufnr
-local function open_scratch(lines)
-  local buf = vim.api.nvim_create_buf(false, true)
-  pcall(vim.api.nvim_set_option_value, 'bufhidden', 'wipe', { buf = buf })
-  pcall(vim.api.nvim_set_option_value, 'buftype', 'nofile', { buf = buf })
-  pcall(vim.api.nvim_set_option_value, 'swapfile', false, { buf = buf })
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-  pcall(vim.api.nvim_set_option_value, 'filetype', 'jj', { buf = buf })
-  return buf
+---Load graph rows without snapshotting the working copy. The full revision ID
+---is parsed separately from its rendered graph row.
+---@param root string
+---@param revset string
+---@param cb fun(res: vim.SystemCompleted, rows: table[]?)
+function M.log_data(root, revset, cb)
+  exec.run(
+    {
+      RUN,
+      'log',
+      '--at-operation',
+      '@',
+      '--ignore-working-copy',
+      '-r',
+      revset,
+      '--limit',
+      '300',
+      '--color=never',
+      '-T',
+      LOG_TMPL,
+    },
+    root,
+    function(res)
+      if res.code ~= 0 then
+        cb(res)
+        return
+      end
+      local rows = {}
+      for line in vim.gsplit(res.stdout or '', '\n', { trimempty = true }) do
+        local graph, revision, working_copy, text = line:match('^(.-)([0-9a-f]+)\t([01])\t(.*)$')
+        if revision then
+          rows[#rows + 1] = {
+            text = graph .. text,
+            graph_end = #graph,
+            revision = revision,
+            working_copy = working_copy == '1',
+          }
+        else
+          rows[#rows + 1] = { text = line }
+        end
+      end
+      cb(res, rows)
+    end
+  )
 end
 
----Open the jj log in a scratch split anchored to the panel window. Requires
----the panel to still own that window (no fallback into unrelated windows).
 ---@param root string
----@param panel_win integer? panel window
----@param panel_buf integer? panel buffer
+---@param revision string
+---@param cb fun(res: vim.SystemCompleted)
+function M.show(root, revision, cb)
+  exec.run({
+    RUN,
+    'show',
+    '--at-operation',
+    '@',
+    '--ignore-working-copy',
+    '--stat',
+    '--color=never',
+    '-r',
+    revision,
+  }, root, cb)
+end
+
+---Open the persistent interactive JJ revision graph.
+---@param root string
+---@param panel_win integer? panel window used to anchor the split
+---@param panel_buf integer? panel buffer; inferred from panel_win when omitted
 function M.log(root, panel_win, panel_buf)
-  -- --color=always so jj's native palette becomes highlight spans (see util.ansi)
-  exec.run({ RUN, 'log', '--limit', '50', '--color=always' }, root, function(res)
-    local ok = exec.report(res)
-    if not ok then return end
-    vim.schedule(function()
-      local anchored = panel_win
-        and panel_buf
-        and vim.api.nvim_win_is_valid(panel_win)
-        and vim.api.nvim_win_get_buf(panel_win) == panel_buf
-      if not anchored then return end
-      local lines, spans = ansi.parse(res.stdout or '')
-      local buf = open_scratch(lines)
-      ansi.apply(buf, vim.api.nvim_create_namespace('util.vcs.jjlog'), spans)
-      vim.api.nvim_open_win(buf, true, { split = 'below', win = panel_win, height = math.floor(vim.o.lines / 2) })
-    end)
-  end)
+  if not (panel_win and vim.api.nvim_win_is_valid(panel_win)) then return end
+  panel_buf = panel_buf or vim.api.nvim_win_get_buf(panel_win)
+  require('util.vcs.jj_log').open({
+    root = root,
+    panel_win = panel_win,
+    panel_buf = panel_buf,
+    backend = M,
+  })
 end
 
 ---@param root string
