@@ -37,6 +37,7 @@ end
 local function update_winbar(s)
   if state ~= s or not (s.winnr and api.nvim_win_is_valid(s.winnr)) then return end
   local suffix = s.loading and ' · loading…' or ''
+  if s.action then suffix = suffix .. (' · %s…'):format(s.action) end
   local count = mark_count(s)
   if count > 0 then suffix = suffix .. (' · %d selected'):format(count) end
   pcall(
@@ -115,13 +116,18 @@ local function render(s)
   local rows = {
     { text = ('JJ revisions · %s'):format(s.revset), hl = 'UtilVcsHeader' },
     {
-      text = '  j/k navigate · Space select · / search · L revset · d show · p preview · R refresh · ? help · q close',
+      text = '  j/k navigate · Space select · d show · p preview · e edit · D describe · a new-after · ? help',
       hl = 'UtilVcsHelp',
     },
   }
   if s.show_help then
     vim.list_extend(rows, {
-      { text = '  gg/G first/last · n/N next/previous search · Esc clear selection/close', hl = 'UtilVcsHelp' },
+      {
+        text = '  S squash · b bookmark · U undo · / search · n/N match · L revset · R refresh · q close',
+        hl = 'UtilVcsHelp',
+      },
+      { text = '  Visual Line + Space selects a range; Visual Line + a creates a merge change', hl = 'UtilVcsHelp' },
+      { text = '  gg/G first/last · Esc clear selection/close', hl = 'UtilVcsHelp' },
       { text = '  Enter/d opens the selected revision; an open preview follows the cursor', hl = 'UtilVcsHelp' },
     })
   end
@@ -307,7 +313,107 @@ local function edit_revset(s)
   end)
 end
 
----@param opts { root: string, panel_win: integer, panel_buf: integer, backend: table, revset: string? }
+local function selected_revisions(s)
+  local revisions = {}
+  if next(s.marks) then
+    for _, row in ipairs(s.rows) do
+      if row.revision and s.marks[row.revision] then revisions[#revisions + 1] = row.revision end
+    end
+  else
+    local row = current_row(s)
+    if row then revisions[1] = row.revision end
+  end
+  return revisions
+end
+
+local function single_revision(s, action)
+  local revisions = selected_revisions(s)
+  if #revisions == 1 then return revisions[1] end
+  vim.notify(('%s requires exactly one JJ revision'):format(action), vim.log.levels.WARN, { title = 'VCS' })
+end
+
+local function run_mutation(s, label, invoke)
+  if state ~= s or s.action then return end
+  if exec.busy[s.root] then
+    vim.notify('VCS operation in progress: ' .. exec.busy[s.root], vim.log.levels.WARN, { title = 'VCS' })
+    return
+  end
+  s.action = label
+  exec.busy[s.root] = label
+  s.preview_gen = s.preview_gen + 1
+  update_winbar(s)
+  local completed = false
+  local function done(res)
+    if completed then return end
+    completed = true
+    if exec.busy[s.root] == label then exec.busy[s.root] = nil end
+    if state ~= s then return end
+    s.action = nil
+    if not exec.report(res, label .. ' complete') then
+      update_winbar(s)
+      return
+    end
+    s.marks = {}
+    if s.on_change then pcall(s.on_change) end
+    refresh(s)
+  end
+  local ok, err = pcall(invoke, done)
+  if not ok then done({ code = -1, stdout = '', stderr = tostring(err) }) end
+end
+
+local function action(s, name)
+  if state ~= s or s.action then return end
+  if name == 'edit' then
+    local revision = single_revision(s, 'Edit')
+    if revision then run_mutation(s, 'Edit revision', function(done) s.backend.edit(s.root, revision, done) end) end
+  elseif name == 'describe' then
+    local revision = single_revision(s, 'Describe')
+    if not revision then return end
+    vim.ui.input({ prompt = 'Change description: ' }, function(message)
+      if state == s and message and message ~= '' then
+        run_mutation(s, 'Describe revision', function(done) s.backend.commit(s.root, message, done, revision) end)
+      end
+    end)
+  elseif name == 'new' then
+    local revisions = selected_revisions(s)
+    if #revisions == 0 then return end
+    local prompt = #revisions == 1 and 'Create a new change after this revision?'
+      or ('Create a merge change with %d parents?'):format(#revisions)
+    if vim.fn.confirm(prompt, '&Create\n&Cancel', 2) == 1 then
+      run_mutation(s, 'Create change', function(done) s.backend.new_change(s.root, done, revisions) end)
+    end
+  elseif name == 'squash' then
+    local revision = single_revision(s, 'Squash')
+    if revision and vim.fn.confirm('Squash this revision into its parent?', '&Squash\n&Cancel', 2) == 1 then
+      run_mutation(s, 'Squash revision', function(done) s.backend.squash(s.root, done, revision) end)
+    end
+  elseif name == 'bookmark' then
+    local revision = single_revision(s, 'Bookmark')
+    if not revision then return end
+    vim.ui.input({ prompt = 'Bookmark name: ' }, function(name_value)
+      name_value = name_value and vim.trim(name_value) or nil
+      if state == s and name_value and name_value ~= '' then
+        run_mutation(s, 'Set bookmark', function(done) s.backend.bookmark(s.root, name_value, revision, done) end)
+      end
+    end)
+  elseif name == 'undo' then
+    if vim.fn.confirm('Undo the last JJ operation?', '&Undo\n&Cancel', 2) == 1 then
+      run_mutation(s, 'Undo operation', function(done) s.backend.undo(s.root, done) end)
+    end
+  end
+end
+
+local function visual_marks(s, first, last)
+  first, last = math.min(first, last), math.max(first, last)
+  s.marks = {}
+  for line = first, last do
+    local row = s.rows[line]
+    if row and row.revision then s.marks[row.revision] = true end
+  end
+  render(s)
+end
+
+---@param opts { root: string, panel_win: integer, panel_buf: integer, backend: table, revset: string?, on_change: fun()? }
 function M.open(opts)
   if state then close(state) end
   if
@@ -326,6 +432,7 @@ function M.open(opts)
     panel_win = opts.panel_win,
     panel_buf = opts.panel_buf,
     backend = opts.backend,
+    on_change = opts.on_change,
     revset = opts.revset or 'all()',
     data = {},
     rows = {},
@@ -383,6 +490,26 @@ function M.open(opts)
   keymap('R', '<Cmd>lua require("util.vcs.jj_log")._refresh()<CR>')
   keymap('<C-r>', '<Cmd>lua require("util.vcs.jj_log")._refresh()<CR>')
   keymap('?', '<Cmd>lua require("util.vcs.jj_log")._help()<CR>')
+  keymap('e', '<Cmd>lua require("util.vcs.jj_log")._action("edit")<CR>')
+  keymap('D', '<Cmd>lua require("util.vcs.jj_log")._action("describe")<CR>')
+  keymap('a', '<Cmd>lua require("util.vcs.jj_log")._action("new")<CR>')
+  keymap('S', '<Cmd>lua require("util.vcs.jj_log")._action("squash")<CR>')
+  keymap('b', '<Cmd>lua require("util.vcs.jj_log")._action("bookmark")<CR>')
+  keymap('U', '<Cmd>lua require("util.vcs.jj_log")._action("undo")<CR>')
+  api.nvim_buf_set_keymap(
+    s.bufnr,
+    'x',
+    '<Space>',
+    ':<C-u>lua require("util.vcs.jj_log")._visual_toggle()<CR>',
+    { noremap = true, silent = true, nowait = true }
+  )
+  api.nvim_buf_set_keymap(
+    s.bufnr,
+    'x',
+    'a',
+    ':<C-u>lua require("util.vcs.jj_log")._visual_action("new")<CR>',
+    { noremap = true, silent = true, nowait = true }
+  )
 
   s.augroup = ('util.vcs.jj_log.%d'):format(s.bufnr)
   local group = api.nvim_create_augroup(s.augroup, { clear = true })
@@ -467,6 +594,18 @@ function M._help()
   if not state then return end
   state.show_help = not state.show_help
   render(state)
+end
+function M._action(name)
+  if state then action(state, name) end
+end
+function M._visual_toggle(first, last)
+  if not state then return end
+  visual_marks(state, first or vim.fn.line("'<"), last or vim.fn.line("'>"))
+end
+function M._visual_action(name, first, last)
+  if not state then return end
+  visual_marks(state, first or vim.fn.line("'<"), last or vim.fn.line("'>"))
+  action(state, name)
 end
 
 return M

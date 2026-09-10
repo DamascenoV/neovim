@@ -116,12 +116,28 @@ end
 ---Create a new empty change on top of `@`.
 ---@param root string
 ---@param cb fun(res: vim.SystemCompleted)
-function M.new_change(root, cb) exec.run({ RUN, 'new' }, root, cb) end
+---@param revisions string[]? parents for the new change
+function M.new_change(root, cb, revisions)
+  local cmd = { RUN, 'new' }
+  if revisions and #revisions > 0 then
+    cmd[#cmd + 1] = '--'
+    vim.list_extend(cmd, revisions)
+  end
+  exec.run(cmd, root, cb)
+end
 
 ---Squash `@` into its parent.
 ---@param root string
 ---@param cb fun(res: vim.SystemCompleted)
-function M.squash(root, cb) exec.run({ RUN, 'squash', '--use-destination-message' }, root, cb) end
+---@param revision string? revision to squash into its parent
+function M.squash(root, cb, revision)
+  local cmd = { RUN, 'squash', '--use-destination-message' }
+  if revision then
+    cmd[#cmd + 1] = '--revision'
+    cmd[#cmd + 1] = revision
+  end
+  exec.run(cmd, root, cb)
+end
 
 function M.undo(root, cb) exec.run({ RUN, 'undo' }, root, cb) end
 
@@ -206,7 +222,8 @@ end
 ---@param root string
 ---@param panel_win integer? panel window used to anchor the split
 ---@param panel_buf integer? panel buffer; inferred from panel_win when omitted
-function M.log(root, panel_win, panel_buf)
+---@param on_change fun()? refresh callback for the parent VCS panel
+function M.log(root, panel_win, panel_buf, on_change)
   if not (panel_win and vim.api.nvim_win_is_valid(panel_win)) then return end
   panel_buf = panel_buf or vim.api.nvim_win_get_buf(panel_win)
   require('util.vcs.jj_log').open({
@@ -214,6 +231,7 @@ function M.log(root, panel_win, panel_buf)
     panel_win = panel_win,
     panel_buf = panel_buf,
     backend = M,
+    on_change = on_change,
   })
 end
 

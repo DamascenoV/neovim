@@ -496,11 +496,15 @@ local function act_commit(s)
     })
   end
   if s.backend.name == 'jj' then
-    exec.run({ 'jj', 'log', '--no-graph', '-r', '@', '-T', 'concat(change_id, "\n", description)' }, s.root, function(res)
-      if not exec.report(res) then return end
-      local revision, description = (res.stdout or ''):match('^(%a+)\n(.*)$')
-      if revision then open(description, revision) end
-    end)
+    exec.run(
+      { 'jj', 'log', '--no-graph', '-r', '@', '-T', 'concat(change_id, "\n", description)' },
+      s.root,
+      function(res)
+        if not exec.report(res) then return end
+        local revision, description = (res.stdout or ''):match('^(%a+)\n(.*)$')
+        if revision then open(description, revision) end
+      end
+    )
   else
     open('')
   end
@@ -700,7 +704,9 @@ local ACTS = {
   end,
   log = function(s)
     if not s.backend.log then return not_supported(s) end
-    s.backend.log(s.root, s.winnr, s.bufnr)
+    s.backend.log(s.root, s.winnr, s.bufnr, function()
+      if state == s then refresh(s) end
+    end)
   end,
   refresh = function(s) refresh(s) end,
 }

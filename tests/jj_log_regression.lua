@@ -88,16 +88,44 @@ local ok, err = xpcall(function()
   jj_log.close()
   assert(api.nvim_get_current_win() == panel_win)
 
-  local pending, show_callback = {}, nil
+  local pending, show_callback, created_parents, new_done = {}, nil, nil, nil
+  local parent_refreshes = 0
   local fake_backend = {
     log_data = function(_, revset, cb) pending[revset] = cb end,
     show = function(_, _, cb) show_callback = cb end,
+    new_change = function(_, cb, revisions)
+      created_parents = vim.deepcopy(revisions)
+      new_done = cb
+    end,
   }
-  jj_log.open({ root = root, panel_win = panel_win, panel_buf = panel_buf, backend = fake_backend })
+  jj_log.open({
+    root = root,
+    panel_win = panel_win,
+    panel_buf = panel_buf,
+    backend = fake_backend,
+    on_change = function() parent_refreshes = parent_refreshes + 1 end,
+  })
   pending['all()']({ code = 0, stdout = '', stderr = '' }, {
     { text = '@  first revision', revision = string.rep('a', 40), working_copy = true },
+    { text = '○  second revision', revision = string.rep('b', 40) },
   })
   local fake_log_win = api.nvim_get_current_win()
+
+  local original_confirm = vim.fn.confirm
+  vim.fn.confirm = function() return 1 end
+  jj_log._visual_action('new', 4, 5)
+  vim.fn.confirm = original_confirm
+  assert(#created_parents == 2, 'Visual Line action did not use both revisions')
+  assert(created_parents[1] == string.rep('a', 40) and created_parents[2] == string.rep('b', 40))
+  assert(require('util.vcs.exec').busy[root] == 'Create change', 'JJ log mutation did not acquire repository lock')
+  assert(parent_refreshes == 0, 'parent refreshed before mutation completed')
+  new_done({ code = 0, stdout = '', stderr = '' })
+  assert(require('util.vcs.exec').busy[root] == nil, 'JJ log mutation did not release repository lock')
+  assert(parent_refreshes == 1, 'mutation did not refresh the parent VCS panel')
+  pending['all()']({ code = 0, stdout = '', stderr = '' }, {
+    { text = '@  refreshed revision', revision = string.rep('d', 40), working_copy = true },
+  })
+
   local inputs = { 'first()', 'second()' }
   original_input = vim.ui.input
   vim.ui.input = function(_, cb) cb(table.remove(inputs, 1)) end
