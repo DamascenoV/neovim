@@ -4,6 +4,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.netrw_preview = 1
+vim.opt.showmode = false
 vim.opt.title = true
 vim.opt.hlsearch = false
 vim.opt.number = true

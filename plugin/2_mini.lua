@@ -1,5 +1,7 @@
-local later, now_if_args = Config.now, Config.now_if_args
+local now, later, now_if_args = Config.now, Config.later, Config.now_if_args
 local helper = require('util.mini_helper')
+
+now(function() require('mini.statusline').setup() end)
 
 later(function() require('mini.ai').setup() end)
 later(function() require('mini.align').setup() end)
@@ -94,7 +96,7 @@ later(function()
       synchronize = '<C-y>'
     },
     options = {
-      use_as_default_explorer = false
+      use_as_default_explorer = true
     },
   })
 end)
@@ -114,11 +116,12 @@ later(function()
 end)
 
 now_if_args(function()
+  local completion = require('mini.completion')
   local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
   local process_items = function(items, base)
-    return MiniCompletion.default_process_items(items, base, process_items_opts)
+    return completion.default_process_items(items, base, process_items_opts)
   end
-  require('mini.completion').setup({
+  completion.setup({
     lsp_completion = {
       source_func = 'omnifunc',
       auto_setup = false,
@@ -131,15 +134,13 @@ now_if_args(function()
   end
   Config.new_autocmd('LspAttach', nil, on_attach, "Set 'omnifunc'")
 
-  vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
+  vim.lsp.config('*', { capabilities = completion.get_lsp_capabilities() })
 end)
 
 now_if_args(function()
-  require('mini.misc').setup()
-
-  MiniMisc.setup_auto_root()
-  MiniMisc.setup_restore_cursor()
-  MiniMisc.setup_termbg_sync()
+  local misc = require('mini.misc')
+  misc.setup()
+  misc.setup_auto_root()
 end)
 
 -- MiniFiles autocmds
@@ -155,7 +156,7 @@ Config.new_autocmd('User', 'MiniFilesBufferCreate',
 Config.new_autocmd('User', 'MiniFilesWindowUpdate', function(args)
     local win_id = args.data.win_id
     local config = vim.api.nvim_win_get_config(win_id)
-    local opts = vim.tbl_deep_extend('force', config, require('util.mini_helper').win_config())
+    local opts = vim.tbl_deep_extend('force', config, helper.win_config())
     vim.api.nvim_win_set_config(win_id, opts)
   end
 )
