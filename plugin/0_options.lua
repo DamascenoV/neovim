@@ -56,6 +56,7 @@ vim.opt.cpoptions:remove('_')
 vim.o.splitkeep = 'topline'
 vim.o.iskeyword = '@,48-57,_,192-255,-'
 vim.o.ruler = false
+vim.o.autoread = true
 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tama')
