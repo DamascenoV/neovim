@@ -73,7 +73,7 @@ require('vim._core.ui2').enable({
   msg = {
     target = 'cmd',
     cmd = {
-      height = 0.2,
+      max_height = 0.2,
     },
     msg = {
       height = 0.2,

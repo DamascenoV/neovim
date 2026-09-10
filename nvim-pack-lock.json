@@ -1,11 +1,11 @@
 {
   "plugins": {
-    "neogit": {
-      "rev": "5adc81b26232954cd7a90f158aa7844c18fc3165",
-      "src": "https://github.com/NeogitOrg/neogit"
+    "mini.nvim": {
+      "rev": "25f25d3e6661d942323e56711096de1850d814ec",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-treesitter": {
-      "rev": "0d0969030ad955b510d7c8012b40252a25c12a6d",
+      "rev": "32dbd2e8fd6079ae4d69e7ed621320369b75b563",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     }
   }

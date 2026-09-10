@@ -364,10 +364,10 @@ link('LspSignatureActiveParameter', 'Search')
 -- ===========================================================================
 
 -- Mini.nvim family
-hi(0, 'MiniPickMatchCurrent', { bg = c.bg_status, underline = true, bold = true })
+hi(0, 'MiniPickMatchCurrent', { bg = c.bg_status, bold = true })
 hi(0, 'MiniPickMatchMarked', { fg = c.green, bold = true })
 hi(0, 'MiniPickMatchRanges', { fg = c.orange, bold = true })
-hi(0, 'MiniPickNormal', { fg = c.fg, bg = c.bg_darker })
+hi(0, 'MiniPickNormal', { fg = c.fg, bg = c.bg })
 hi(0, 'MiniPickPreviewLine', { bg = c.bg_status })
 hi(0, 'MiniPickPreviewRegion', { bg = c.bg_status, underline = true })
 hi(0, 'MiniPickPrompt', { fg = c.yellow, bg = c.bg_darker, bold = true })
