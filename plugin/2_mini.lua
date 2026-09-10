@@ -154,20 +154,18 @@ end, { silent = true })
 
 -- MiniFiles autocmds
 local ui_open = function() vim.ui.open(require('mini.files').get_fs_entry().path) end
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    local b = args.data.buf_id
-    vim.keymap.set('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
-  end,
-})
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MiniFilesWindowUpdate',
-  callback = function(args)
+Config.new_autocmd('User', 'MiniFilesBufferCreate',
+  function(args)
+    local b = args.data.buf_id
+    keymap('n', 'gX', ui_open, { buffer = b, desc = 'OS open' })
+  end
+)
+
+Config.new_autocmd('User', 'MiniFilesWindowUpdate', function(args)
     local win_id = args.data.win_id
     local config = vim.api.nvim_win_get_config(win_id)
     local opts = vim.tbl_deep_extend('force', config, require('util.mini_helper').win_config())
     vim.api.nvim_win_set_config(win_id, opts)
-  end,
-})
+  end
+)
